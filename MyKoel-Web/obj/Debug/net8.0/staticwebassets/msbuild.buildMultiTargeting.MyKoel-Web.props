@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MyKoel-Web.props" />
+</Project>
