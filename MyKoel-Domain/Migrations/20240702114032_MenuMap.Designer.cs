@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyKoel_Domain.Data;
 
@@ -11,9 +12,11 @@ using MyKoel_Domain.Data;
 namespace MyKoel_Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240702114032_MenuMap")]
+    partial class MenuMap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +283,7 @@ namespace MyKoel_Domain.Migrations
                     b.Property<bool>("IsChild")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MainMenuGroupId")
+                    b.Property<int>("MainMenuGroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("Route")
@@ -333,7 +336,7 @@ namespace MyKoel_Domain.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MenuGroupId")
+                    b.Property<int>("MenuGroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("MenuName")
@@ -350,46 +353,6 @@ namespace MyKoel_Domain.Migrations
                     b.HasIndex("MenuGroupId");
 
                     b.ToTable("Menus");
-                });
-
-            modelBuilder.Entity("MyKoel_Domain.Models.Masters.QuickLinks", b =>
-                {
-                    b.Property<int>("QuickLinkId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuickLinkId"));
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("QuickLinkId");
-
-                    b.ToTable("QuickLinks");
                 });
 
             modelBuilder.Entity("API.Entities.AppUserRole", b =>
@@ -452,7 +415,8 @@ namespace MyKoel_Domain.Migrations
                     b.HasOne("MyKoel_Domain.Models.Master.MainMenuGroup", "MainMenuGroup")
                         .WithMany("MenuGroups")
                         .HasForeignKey("MainMenuGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("MainMenuGroup");
                 });
@@ -481,7 +445,8 @@ namespace MyKoel_Domain.Migrations
                     b.HasOne("MyKoel_Domain.Models.Master.MenuGroup", "MenuGroup")
                         .WithMany("Menus")
                         .HasForeignKey("MenuGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("MenuGroup");
                 });
