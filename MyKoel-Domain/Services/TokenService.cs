@@ -10,6 +10,7 @@ using System.Text;
 
 namespace industry4_Domain.Services
 {
+    #nullable disable
     public class TokenService:ITokenService
     {
         private readonly SymmetricSecurityKey _key;
