@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using MyKoel_Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using MyKoel_Domain.Interfaces;
+using MyKoel_Domain.Models.Master;
+using MyKoel_Domain.Models.Masters;
 
 namespace MyKoel_Domain.Data
 {
@@ -34,9 +36,15 @@ namespace MyKoel_Domain.Data
             
 
         }
+             public DbSet<MenuGroup> MenuGroups { get; set; }
+             public DbSet<MainMenuGroup> MainMenuGroups { get; set; }
+             public DbSet<Menus>Menus { get; set; }
+             public DbSet<UserAccessMapping> UserMenuMap { get; set; }
+             public DbSet<QuickLinks> QuickLinks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+       
             base.OnModelCreating(builder);
 
             builder.Entity<AppUser>()
@@ -50,6 +58,44 @@ namespace MyKoel_Domain.Data
             .WithOne(u => u.Role)
             .HasForeignKey(ur => ur.RoleId)
             .IsRequired();
+
+           builder.Entity<MenuGroup>()
+            .HasKey(m => m.MenuGroupId);
+
+            builder.Entity<MenuGroup>()
+                .HasOne<MainMenuGroup>(mg => mg.MainMenuGroup)
+                .WithMany(m => m.MenuGroups)
+                .HasForeignKey(st => st.MainMenuGroupId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<MainMenuGroup>()
+                .HasKey(m => m.MainMenuGroupId);
+
+                builder.Entity<Menus>()
+            .HasKey(m => m.MenuId);
+
+              builder.Entity<Menus>()
+                .HasOne<MenuGroup>(mg => mg.MenuGroup)
+                .WithMany(m => m.Menus)
+                .HasForeignKey(st => st.MenuGroupId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<UserAccessMapping>()
+                 .HasKey(m => m.AccessMappingId);
+
+            builder.Entity<UserAccessMapping>()
+                 .HasOne<Menus>(m => m.Menu)
+                 .WithMany(m => m.userMenuMaps)
+                 .HasForeignKey(st => st.MenuId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserAccessMapping>()
+                 .HasOne<AppUser>(a => a.User)
+                 .WithMany(m => m.userMenuMaps)
+                 .HasForeignKey(st => st.UserId)
+                 .OnDelete(DeleteBehavior.Restrict);
+                 
+           builder.Entity<QuickLinks>()
+            .HasKey(m => m.QuickLinkId);
 
         }
 
