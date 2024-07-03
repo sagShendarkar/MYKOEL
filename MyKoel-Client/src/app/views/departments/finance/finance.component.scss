@@ -1,0 +1,137 @@
+.feature-divs{
+background-color: #289F91;
+color: #fff;
+padding: 18px 11px;
+height: 80px;
+}
+.feature-text{
+  margin-top: 10px;
+}
+.feature-img{
+  width: 100%;
+}
+.wid-100
+{
+  width: 100%;
+}
+.department-gead-img{
+}
+.department-gead-img img{
+  width: 90%;
+  border-radius: 100px 100px;
+  border: 17px solid #289F91;
+}
+
+
+.projects-title-divs{
+  background-color: #F3F2F2;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  color: #000;
+}
+.projects-title{
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+.projects-counts {
+  width: 40px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #fff;
+  font-weight: 900;
+  font-size: 20px;
+  border: 2px solid #fff;
+  color: #289F91;
+}
+.projects-arrow{
+
+}
+.box-shadow{
+
+  box-shadow: 0px 1px 0px 1px #D4D4D4
+}
+////////
+///
+
+
+.card1 {
+  display: flex;
+  background-color: #42b7a7;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-content {
+  padding: 40px;
+  color: white;
+  flex: 1;
+  position: relative;
+}
+
+.text-content h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.text-content .date {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.text-content h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.text-content p {
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.read-more {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #c44c00;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.image-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(to right, #42b7a7 50%, transparent 50%);
+}
+
+.image-content img {
+  margin: auto;
+  height: 100%;
+  border-radius: 50% 0 0 50%;
+  object-fit: cover;
+}
+@media (min-width: 768px) {
+  .feature-text  {
+    margin-top: 0px;
+    font-size: 14px;
+}
+}
+
+
+@media (min-width: 992px) {
+  .feature-text  {
+    margin-top: 0px;
+    font-size: 16px;
+}
+}
+@media (min-width: 1400px) {
+  .feature-text  {
+    margin-top: 10px;
+    font-size: 16px;
+}
+}

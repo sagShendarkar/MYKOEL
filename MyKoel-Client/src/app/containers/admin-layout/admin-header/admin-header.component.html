@@ -1,0 +1,272 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+<ng-container>
+  <c-container [fluid]="false">
+    <!-- <button
+        toggle="visible"
+        cHeaderToggler
+        [cSidebarToggle]="sidebarId"
+        class="ps-1"
+      >
+        <svg cIcon
+          name="cilMenu"
+          size="lg"
+        ></svg>
+      </button> -->
+    <c-header-nav class="d-none d-lg-flex">
+      <c-nav-item>
+        <a cNavLink routerLink="/dashboard" routerLinkActive="active">
+          <img src="../../../../assets/images/logo.png" alt=" Logo" />
+        </a>
+      </c-nav-item>
+      <!-- <c-nav-item>
+          <a cNavLink routerLink="/users" routerLinkActive="active">Users</a>
+        </c-nav-item>
+        <c-nav-item>
+          <a cNavLink routerLink="/settings" routerLinkActive="active">
+            Settings
+          </a>
+        </c-nav-item> -->
+    </c-header-nav>
+
+    <c-header-nav class="d-none d-lg-flex">
+      <c-nav-item>
+        <a cNavLink routerLink="/home" routerLinkActive="active"> HOME </a>
+      </c-nav-item>
+      <c-nav-item>
+        <!-- <a cNavLink routerLink="/users" (click)="toggleLiveDemo()" routerLinkActive="active" >DEPARTMENT HUB
+          </a> -->
+        <c-dropdown variant="nav-item">
+          <a cDropdownToggle href> DEPARTMENT HUB </a>
+          <div cDropdownMenu class="mega-menus  ">
+            <div class="row mb-2 mt-3">
+              <div class="col-md-8">
+                <div class="row">
+                  <span class="text-underline"><b>B2B</b>  (Business To Business)</span>
+                </div>
+
+                <div class="row mega-menu-border mb-2 pb-1">
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">AE-PG</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li>
+                      <a cDropdownItem routerLink="./">Business Excellence</a>
+                    </li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">IT</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">Supply Chain</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">AE- Industrial</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="/departments/finance">Finance</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">Legal</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">Utilities</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">CRE</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">HR</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">QA</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">CME & Projects</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">Corporate Logistics</a></li>
+                  </div>
+                  <div class="col-md-3">
+                    <li><a cDropdownItem routerLink="./">Secretarial</a></li>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4  ps-3">
+                <div class="row">
+                  <span class="text-underline"> <b>B2C</b>  (Business To Customer)</span>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">Industrial</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">Pune Plant</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">Cust Support</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">LEBG</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">Kegal Mfg</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">PGBG</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">Agri & Allied</a></li>
+                  </div>
+                  <div class="col-md-6">
+                    <li><a cDropdownItem routerLink="./">International Business</a></li>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </c-dropdown>
+      </c-nav-item>
+      <c-nav-item>
+        <a cNavLink routerLink="/my-page" routerLinkActive="active">
+          MY PAGE
+        </a>
+      </c-nav-item>
+      <c-nav-item>
+        <a cNavLink routerLink="/settings" routerLinkActive="active">
+          AI HUB
+        </a>
+      </c-nav-item>
+      <c-nav-item>
+        <a cNavLink routerLink="/settings" routerLinkActive="active"> BLOGS </a>
+      </c-nav-item>
+      <!-- <c-nav-item>
+          <a routerLink="./" cNavLink>
+            <svg cIcon name="cilBell" size="lg"></svg>
+          </a>
+        </c-nav-item>
+        <c-nav-item>
+          <a routerLink="./" cNavLink>
+            <svg cIcon name="cilList" size="lg"></svg>
+          </a>
+        </c-nav-item>
+        <c-nav-item>
+          <a routerLink="./" cNavLink>
+            <svg cIcon name="cilEnvelopeOpen" size="lg"></svg>
+          </a>
+        </c-nav-item> -->
+    </c-header-nav>
+    <c-header-nav class="ms-3">
+      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+      <c-nav-item class="pt-1">
+        <div class="user-name">Deepa Patil</div>
+        <div class="user-name">Manager</div>
+      </c-nav-item>
+    </c-header-nav>
+  </c-container>
+  <c-header-divider  *ngIf="(headerService.isDisplayBreadcrumb$|async)"></c-header-divider>
+    <c-container [fluid]="true" *ngIf="(headerService.isDisplayBreadcrumb$|async)">
+      <div class="body flex-grow-1  ">
+        <c-container breakpoint="lg" class="h-auto">
+          <div class="mt-2 ms-2">
+            <img
+              class="wid-100 "
+              src="../../../../assets/images/back.png"
+              alt="My Happy SVG"
+
+            />
+
+            <span class="page-title  ms-3"> My Page </span>
+          </div>
+        </c-container>
+      </div>
+    </c-container>
+</ng-container>
+<!--</c-header>-->
+
+<ng-template #userDropdown>
+  <c-dropdown alignment="end" variant="nav-item">
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
+      <c-avatar
+        cTextColor="primary"
+        shape="rounded-1"
+        size="md"
+        src="./assets/img/avatars/8.jpg"
+        status="success"
+      >
+      </c-avatar>
+    </button>
+    <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+      <li>
+        <h6 cDropdownHeader class="bg-light fw-semibold py-2">Account</h6>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilBell"></svg>
+          Updates
+          <c-badge class="ms-2 float-end" color="info"> 42 </c-badge>
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilEnvelopeOpen"></svg>
+          Messages
+          <c-badge class="ms-2 float-end" color="success"> 42 </c-badge>
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilTask"></svg>
+          Tasks
+          <c-badge class="ms-2 float-end" color="danger"> 42 </c-badge>
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilCommentSquare"></svg>
+          Comments
+          <c-badge class="ms-auto" color="warning"> 42 </c-badge>
+        </a>
+      </li>
+      <li>
+        <h6 cDropdownHeader class="bg-light fw-semibold py-2">Settings</h6>
+      </li>
+      <li></li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilUser"></svg>
+          Profile
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilSettings"></svg>
+          Settings
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilCreditCard"></svg>
+          Payments
+          <c-badge class="ms-2 float-end" color="secondary"> 42 </c-badge>
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilFile"></svg>
+          Projects
+          <c-badge class="ms-2 float-end" color="primary"> 42 </c-badge>
+        </a>
+      </li>
+      <li>
+        <hr cDropdownDivider />
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilLockLocked"></svg>
+          Lock Account
+        </a>
+      </li>
+      <li></li>
+    </ul>
+  </c-dropdown>
+</ng-template>

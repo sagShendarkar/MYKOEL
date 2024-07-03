@@ -1,0 +1,42 @@
+.header-nav .nav-link {
+  padding: 0px 12px !important;
+  color: #000 !important;
+}
+.user-name{
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+
+
+
+:host ::ng-deep   .mega-menus {
+
+  inset: 26px auto auto 0px !important;
+  left: -15px !important;
+  --cui-dropdown-min-width: 1497px;
+  border-radius: 0 !important;
+  padding: 0 122px !important;
+  font-size: 18px;
+  color: #000;
+}
+.mega-menu-border{
+  border-right: 1px solid #B15A1F;
+}
+
+:host ::ng-deep   .dropdown-item {
+
+  padding: 5px 0 !important;
+  color: #000;
+  font-size: 18px;
+}
+.page-title
+{
+  font-size: 20px;
+  font-weight: 600;
+}
+::ng-deep .nav-link .active{
+  color: #289F91 !important;
+  text-decoration: underline !important;
+}

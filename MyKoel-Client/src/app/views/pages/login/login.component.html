@@ -1,0 +1,48 @@
+<div class="login-bg min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col md="3">
+         <div class="mt-4 pt-4 ms-4 p-4">
+          <form cForm class="mt-4 pt-4 ms-4 ">
+            <!-- <h1>Login</h1>
+            <p class="text-medium-emphasis">Sign In to your account</p> -->
+            <div class="mt-4 pt-4">
+
+              <label class="login-label">Username</label>
+            <c-input-group class="mb-2"> 
+              <input autoComplete="username" cFormControl placeholder="Username"
+              class="login-input" />
+            </c-input-group>
+            </div>   <div>
+              <label class="login-label">
+                Password
+              </label>
+               <c-input-group class="mb-4">
+              <input
+                autoComplete="current-password"
+                cFormControl
+                class="login-input"
+                placeholder="Password"
+                type="password"
+              />
+            </c-input-group>
+            </div>
+
+            <c-row class="justify-content-center">
+              <c-col xs="12">
+                <button cButton class="  login-btn"  size="sm">
+                  Login
+                </button>
+              </c-col>
+              <!-- <c-col class="text-right" xs="6">
+                <button cButton class="px-0" color="link">
+                  Forgot password?
+                </button>
+              </c-col> -->
+            </c-row>
+          </form>
+         </div>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

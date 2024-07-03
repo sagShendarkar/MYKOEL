@@ -1,0 +1,232 @@
+.banner-div{
+  background: url(../../../../assets/images/banner.png) no-repeat;
+  height: 400px;
+  background-size: cover;
+  border-radius: 10px;
+}
+.Welcome-text{
+  color: #fff;
+  font-size: 45px;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+}
+.search-input{
+
+  border-radius: 25px;
+}
+.banner-menus
+{
+background-color: #fff;
+color: #000;
+  border-radius: 25px;
+  text-align: center;
+  padding: 5px 0px;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap into the next line */
+  gap: 10px; /* Adjust the gap between items as needed */
+}
+
+.grid-item {
+  flex: 1 0 0%; /* Flex-grow, flex-shrink, and flex-basis */
+  /* 20% to evenly distribute 5 items per row */
+  /* Adjust flex-basis as needed for spacing */
+  text-align: center; /* Optional: Center content horizontally */
+  // border: 1px solid #ccc; /* Optional: Border for visualization */
+background-color: #289F91;
+  padding: 15px 5px; /* Optional: Padding around grid items */
+  box-sizing: border-box; /* Ensure padding is included in width */
+  // border: 1px solid #000;
+   border-radius:5px ;
+  color: #fff;
+}
+.feature-div{
+
+}
+.section-headings{
+font-weight: 700;
+font-size: 24px;
+color: #000;
+}
+.wid-100
+{
+  width: 100%;
+}
+.title{
+  color: #000;
+  font-weight: 500;
+  margin-top: 3%;
+}
+.news-title{
+  color: #000;
+  font-weight: 500;
+  margin-top: 3%;
+}
+.news-title-text{
+  color: #000;
+}
+.sections{
+
+}
+.new-c-items{
+  height: 241px !important;
+}
+.new-c-items-img{
+  height: 241px !important;
+}
+
+#news-div .carousel-caption {
+  position: absolute;
+   right: 0% !important;
+   bottom: 0 !important;
+  top: 0px;
+  padding: 0 15px;
+   left: 0% !important;
+
+  color: var(--cui-carousel-caption-color, rgba(255, 255, 255, 0.87));
+  text-align: justify;
+}
+::ng-deep .carousel-indicators  button {
+  box-sizing: content-box;
+  flex: 0 1 auto;
+  width: 3px !important;
+  height: 2px !important;
+  padding: 3px !important;
+  margin-right: 8px !important;
+  margin-left: 8px !important;
+  border-radius: 50% !important;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: var(--cui-carousel-indicator-active-bg, #fff);
+  background-clip: padding-box;
+  border: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  opacity: 0.5;
+  transition: opacity 0.6s ease;
+}
+
+::ng-deep .carousel-indicators   .active {
+  background-color: #B15A1F !important;
+  opacity: 1;
+}
+// ::ng-deep .carousel-dark .carousel-indicators  button{
+//   background-color: #eee !important;
+// }
+
+#Birthday-div .carousel-caption {
+  position: absolute;
+   right: 0% !important;
+   bottom: 0 !important;
+  top: 0px;
+  padding: 0 15px;
+   left: 0% !important;
+
+  color: var(--cui-carousel-caption-color, rgba(255, 255, 255, 0.87));
+  text-align: center;
+}
+
+.Birthday-c-items{
+  height: 380px !important;
+}
+.Birthday-c-items-img{
+  height: 380px !important;
+}
+
+
+.ht-100{
+  height: 100px;
+}
+
+.vacancy-title-divs{
+  background-color: #F3F2F2;
+  margin-bottom: 21px;
+  padding: 6px 10px;
+  color: #000;
+}
+.vacancy-title{
+  margin-top: 5px;
+}
+.vacancy-counts {
+  width: 40px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #fff;
+  font-weight: 900;
+  font-size: 20px;
+  border: 2px solid #fff;
+  color: #289F91;
+}
+.view-more-text{
+  color: #B15A1F;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.read-more-text{
+
+  color: #B15A1F;
+  font-size: 14px;
+  position: absolute;
+  right: 11px;
+  bottom: 5px;
+  font-weight: 100;
+}
+
+
+.vision-title{
+  color: #B15A1F;
+  font-size: 26px;
+  font-weight: 600;
+
+}
+
+.vision-title-div{
+  border-bottom: 2px solid #289F91;
+
+}
+.vision-img-div{
+  background: url(../../../../assets/images/vision-img.png) no-repeat;
+  height: 250px;
+  background-size: contain;
+  border-radius: 10px;
+  background-size: 100% 100%;
+}
+.mission-img-div{
+  background: url(../../../../assets/images/mission-img.png) no-repeat;
+  height: 250px;
+  background-size: contain;
+  border-radius: 10px;
+  background-size: 100% 100%;
+}
+.value-img-div{
+  background: url(../../../../assets/images/value-img.png) no-repeat;
+  height: 250px;
+  background-size: contain;
+  border-radius: 10px;
+  background-size: 100% 100%;
+}
+.vision-text
+{
+  font-size: 24px;
+  color: #000;
+}
+.value-title-text
+{
+
+  font-size: 20px;
+  font-weight: 400;
+  color: #000;
+  text-decoration: underline;
+}
+.value-desc{
+
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  margin-left: 15px;
+}
