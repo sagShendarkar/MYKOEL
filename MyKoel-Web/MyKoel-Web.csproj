@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Industry4.TPAIntegrations\Industry4.TPAIntegrations.csproj" />
     <ProjectReference Include="..\MyKoel-Domain\MyKoel-Domain.csproj" />
   </ItemGroup>
 

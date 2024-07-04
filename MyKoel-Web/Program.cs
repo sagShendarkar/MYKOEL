@@ -1,5 +1,6 @@
 using System.Text;
 using API.Entities;
+using Industry4.TPAIntegrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,7 @@ builder.Services.AddApplicationServices(configuration)
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<DataContext>();
+builder.Services.AddTransient<AssetDetails>();
 
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<DataContext>()
