@@ -29,12 +29,54 @@
     </c-header-nav>
 
     <c-header-nav class="d-none d-lg-flex">
-      <c-nav-item>
-        <a cNavLink routerLink="/home" routerLinkActive="active"> HOME </a>
+      <c-nav-item *ngFor="let mainMenu of (headerService.menuList$|async)">
+        <div *ngIf="mainMenu.route!==null">
+
+        <a cNavLink [routerLink]="mainMenu.route" routerLinkActive="active"> {{mainMenu.menuGroupName}} </a>
+        </div>
+         <div *ngIf="mainMenu.route===null">
+          <c-dropdown variant="nav-item">
+            <a cDropdownToggle href> {{mainMenu.menuGroupName}} </a>
+            <div cDropdownMenu class="mega-menus  ">
+              <div class="row mb-2 mt-3">
+                <ng-container  *ngFor="let menuGroup of mainMenu.menuGroupData">
+                     <div class="col-md-6" *ngIf="menuGroup.menusData.length>0" >
+
+                  <div class="row">
+                    <span class="text-underline"> {{menuGroup.groupName}}</span>
+                  </div>
+
+                  <div class="row mega-menu-border mb-2 pb-1">
+                    <div class="col-md-3"  *ngFor="let menu  of menuGroup.menusData" >
+                      <li><a cDropdownItem [routerLink]="menu.route" class="cursor">{{menu.menuName}} </a></li>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-md-3" *ngIf="menuGroup.menusData.length===0" >
+                  <li><a cDropdownItem [routerLink]="menuGroup.route">{{menuGroup.groupName}} </a></li>
+</div>
+
+               </ng-container>
+
+
+                <!-- <div class="col-md-4  ps-3">
+                  <div class="row">
+                    <span class="text-underline"> <b>B2C</b>  (Business To Customer)</span>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <li><a cDropdownItem routerLink="./">International Business</a></li>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </c-dropdown>
+</div>
       </c-nav-item>
-      <c-nav-item>
-        <!-- <a cNavLink routerLink="/users" (click)="toggleLiveDemo()" routerLinkActive="active" >DEPARTMENT HUB
-          </a> -->
+      <!-- <c-nav-item>
         <c-dropdown variant="nav-item">
           <a cDropdownToggle href> DEPARTMENT HUB </a>
           <div cDropdownMenu class="mega-menus  ">
@@ -125,23 +167,21 @@
             </div>
           </div>
         </c-dropdown>
-      </c-nav-item>
-      <c-nav-item>
+      </c-nav-item> -->
+      <!-- <c-nav-item>
         <a cNavLink routerLink="/my-page" routerLinkActive="active">
           MY PAGE
         </a>
-      </c-nav-item>
-      <c-nav-item>
+      </c-nav-item> -->
+      <!-- <c-nav-item>
         <a cNavLink routerLink="/settings" routerLinkActive="active">
           AI HUB
         </a>
-      </c-nav-item>
-      <c-nav-item>
+      </c-nav-item> -->
+      <!-- <c-nav-item>
         <a cNavLink routerLink="/settings" routerLinkActive="active"> BLOGS </a>
-      </c-nav-item>
-      <c-nav-item>
-        <!-- <a cNavLink routerLink="/users" (click)="toggleLiveDemo()" routerLinkActive="active" >DEPARTMENT HUB
-          </a> -->
+      </c-nav-item> -->
+      <!-- <c-nav-item>
         <c-dropdown variant="nav-item">
           <a cDropdownToggle href> Admin </a>
           <div cDropdownMenu class="mega-menus  ">
@@ -184,7 +224,7 @@
             </div>
           </div>
         </c-dropdown>
-      </c-nav-item>
+      </c-nav-item> -->
       <!-- <c-nav-item>
           <a routerLink="./" cNavLink>
             <svg cIcon name="cilBell" size="lg"></svg>

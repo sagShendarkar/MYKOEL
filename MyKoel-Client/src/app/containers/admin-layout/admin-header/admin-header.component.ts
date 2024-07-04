@@ -39,7 +39,8 @@ ngOnInit(): void {
   }
   getMenuHierarchy(){
     this.unsubscribe.add(
-      this.headerService.getMenuHierarchy(1).subscribe((res:any)=>{
+      this.headerService.getMenuHierarchy(1).subscribe((res:any[])=>{
+        this.headerService.menuList$.next(res);
         let menuList:any[]=[]
         let tempMenuList:any[]=res;
         console.log(res);

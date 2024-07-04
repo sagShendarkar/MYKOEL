@@ -17,6 +17,7 @@ addBtnDetails={
   backBtnUrl$=  new BehaviorSubject<string>('');
   isDisplayBreadcrumb$=  new BehaviorSubject<boolean>(true);
   addBtn$=  new BehaviorSubject<any>(this.addBtnDetails);
+  menuList$=  new BehaviorSubject<any[]>([]);
   isDisplayAddBtn$=  new BehaviorSubject<boolean>(false);
   constructor(private http:HttpClient,private router: Router) { }
 
