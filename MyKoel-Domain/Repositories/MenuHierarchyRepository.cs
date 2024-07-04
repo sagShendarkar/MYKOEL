@@ -36,7 +36,10 @@ namespace MyKoel_Domain.Repositories
                     IsActive = grouped.FirstOrDefault().IsActive,
                     Route = grouped.FirstOrDefault().Route,
                     MenuGroupData = (from mg in _context.MenuGroups
+                                    join u in _context.UserMenuMap
+                                    on mg.MenuGroupId equals u.MenuGroupId
                                      where mg.MainMenuGroupId == grouped.Key
+                                      &&  u.UserId == UserId
                                      select new MenuGroupDto
                                      {
                                          MenuGroupId = mg.MenuGroupId,
@@ -63,7 +66,6 @@ namespace MyKoel_Domain.Repositories
                                                           Route = mainmenu.Route
                                                       }).OrderBy(a => a.Sequence).ToList()
                                      }).OrderBy(a => a.Sequence).ToList(),
-
                                  }).OrderBy(s=>s.MainMenuGroupId).ToList();
            return menuData;
         }
