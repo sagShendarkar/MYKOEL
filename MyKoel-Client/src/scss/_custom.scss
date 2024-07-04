@@ -1,0 +1,74 @@
+// Here you can add other styles
+
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.bg-white
+{
+  background-color: #fff;
+}
+.border-rad{
+  border-radius: 5px;
+}
+.footer{
+  background: #fff !important;
+margin-top: 20px;
+  --cui-footer-border-color: #fff !important;
+  --cui-footer-padding-x: 7rem !important;
+}
+
+.text-underline{
+  text-decoration: underline;
+}
+.cursor{
+  cursor: pointer;
+}
+
+.title{
+  color: #000;
+  font-weight: 500;
+  margin-top: 3%;
+}
+
+.section-headings{
+  font-weight: 700;
+  font-size: 24px;
+  color: #000;
+  }
+.ht-200px{
+
+  height: 200px;
+}
+.invalid-feedback {
+  // display: block !important;
+}
+
+.cancel-btn{
+  background-color: #FF4949!important;
+  color: #fff!important;
+  width:  120px;
+}
+
+.save-btn{
+  background-color: #38CF47!important;
+  width:  120px;
+  color: #fff!important;
+}
+.add-btn{
+  background-color: #38CF47!important;
+  color: #fff!important;
+}
+.add-btn :hover{
+  background-color: #38CF47 !important;
+  color: #fff !important;
+}
+.form-label{
+  color: #000 !important;
+}
+.btn.add-btn:hover {
+  background-color: #38CF47 !important;
+  color: #fff !important;
+}

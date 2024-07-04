@@ -1,0 +1,67 @@
+<div class="login-bg min-vh-100 d-flex flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-3" md="3">
+         <div class="mt-4 pt-4 ms-4 p-4">
+          <form cForm class="mt-4 pt-4 ms-4 " [formGroup]="loginForm" >
+            <!-- <h1>Login</h1>
+            <p class="text-medium-emphasis">Sign In to your account</p> -->
+            <div class="mt-4 pt-4 justify-content-center">
+
+              <label class="login-label">Username</label>
+            <div class="mb-2 input-group">
+              <div>
+              <input autoComplete="username" cFormControl placeholder="Username"
+              formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && loginForm.controls['username'].errors}"
+              class="login-input" />
+<div class="invalid-feedback"
+*ngIf="loginForm.get('username')?.hasError('required') && submitted"> Username is required.</div>
+
+</div>
+            </div>
+            </div>   <div>
+              <label class="login-label">
+                Password
+              </label>
+               <div class="mb-4 input-group">
+                <div>
+
+              <input
+                autoComplete="current-password"
+                cFormControl
+                class="login-input"
+                formControlName="password"
+                placeholder="Password"
+                [ngClass]="{ 'is-invalid': submitted && loginForm.controls['password'].errors}"
+                type="password"
+              /><div class="invalid-feedback"
+              *ngIf="loginForm.get('password')?.hasError('required') && submitted"> Password is required.</div>
+
+                </div>
+              </div>
+            </div>
+ <div class="row" *ngIf="isInvalidUser" >
+                <div class="col-md-12">
+                <p class="errMsg">Invalid Username or Password!</p>
+                </div>
+                                </div>
+            <div class="justify-content-center row">
+
+              <div class="col-12"  >
+                <button cButton type="button" class="  login-btn"  size="sm"  (click)="login()"  >
+                  Login
+                </button>
+              </div>
+              <!-- <c-col class="text-right" xs="6">
+                <button cButton class="px-0" color="link">
+                  Forgot password?
+                </button>
+              </c-col> -->
+            </div>
+          </form>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>

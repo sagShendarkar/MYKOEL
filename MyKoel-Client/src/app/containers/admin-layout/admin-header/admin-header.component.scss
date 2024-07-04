@@ -1,0 +1,74 @@
+
+
+
+.nav-link.active {
+
+  color: #289F91 !important;
+  text-decoration: underline;
+}
+ .nav-link {
+  padding: 0px 12px !important;
+  color: #000 !important;
+}
+.user-name{
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+
+
+
+:host ::ng-deep   .mega-menus {
+
+  inset: 26px auto auto 0px !important;
+  left: -15px !important;
+  --cui-dropdown-min-width: 1497px;
+  border-radius: 0 !important;
+  padding: 0 122px !important;
+  font-size: 18px;
+  color: #000;
+}
+.mega-menu-border{
+  border-right: 1px solid #B15A1F;
+}
+
+:host ::ng-deep   .dropdown-item {
+
+  padding: 5px 0 !important;
+  color: #000;
+  font-size: 18px;
+}
+.page-title
+{
+  font-size: 20px;
+  font-weight: 600;
+}
+::ng-deep .nav-link .active{
+  color: #289F91 !important;
+  text-decoration: underline !important;
+}
+.user-menu-dd{
+
+  inset: 0px -115px auto auto !important;
+
+  --cui-dropdown-border-radius: 0 !important;
+}
+.menu-name{
+  color: #289F91;
+  font-size: 14px;
+}
+.dropdown-item .active, .dropdown-item:active {
+  color: #289F91;
+  text-decoration: none;
+  background-color: #fff !important;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #289F91;
+  background-color: #fff !important;
+}
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+  color: var(--cui-btn-active-color);
+  background-color: var(--cui-btn-active-bg);
+  border-color: #fff !important
+}
