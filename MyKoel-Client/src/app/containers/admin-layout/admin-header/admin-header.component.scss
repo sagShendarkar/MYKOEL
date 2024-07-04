@@ -1,4 +1,12 @@
-.header-nav .nav-link {
+
+
+
+.nav-link.active {
+
+  color: #289F91 !important;
+  text-decoration: underline;
+}
+ .nav-link {
   padding: 0px 12px !important;
   color: #000 !important;
 }
@@ -39,4 +47,28 @@
 ::ng-deep .nav-link .active{
   color: #289F91 !important;
   text-decoration: underline !important;
+}
+.user-menu-dd{
+
+  inset: 0px -115px auto auto !important;
+
+  --cui-dropdown-border-radius: 0 !important;
+}
+.menu-name{
+  color: #289F91;
+  font-size: 14px;
+}
+.dropdown-item .active, .dropdown-item:active {
+  color: #289F91;
+  text-decoration: none;
+  background-color: #fff !important;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #289F91;
+  background-color: #fff !important;
+}
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+  color: var(--cui-btn-active-color);
+  background-color: var(--cui-btn-active-bg);
+  border-color: #fff !important
 }

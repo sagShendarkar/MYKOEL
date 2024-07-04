@@ -38,6 +38,7 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { HttpClientModule } from '@angular/common/http';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -53,6 +54,7 @@ const ADMIN_APP_CONTAINERS = [
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS,...ADMIN_APP_CONTAINERS],
   imports: [
+    
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -78,12 +80,13 @@ const ADMIN_APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule,ModalModule
+    NgScrollbarModule,ModalModule,HttpClientModule
   ],
   providers: [
+
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: PathLocationStrategy
     },
     IconSetService,
     Title

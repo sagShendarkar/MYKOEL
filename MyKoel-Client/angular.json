@@ -50,7 +50,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/scss/styles.scss"
+              "@ng-select/ng-select/themes/default.theme.css",
+              "src/scss/styles.scss",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -115,7 +118,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/scss/styles.scss"
+              "@ng-select/ng-select/themes/default.theme.css",
+              "src/scss/styles.scss",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": []
           }

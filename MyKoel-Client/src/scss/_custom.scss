@@ -42,3 +42,33 @@ margin-top: 20px;
 
   height: 200px;
 }
+.invalid-feedback {
+  // display: block !important;
+}
+
+.cancel-btn{
+  background-color: #FF4949!important;
+  color: #fff!important;
+  width:  120px;
+}
+
+.save-btn{
+  background-color: #38CF47!important;
+  width:  120px;
+  color: #fff!important;
+}
+.add-btn{
+  background-color: #38CF47!important;
+  color: #fff!important;
+}
+.add-btn :hover{
+  background-color: #38CF47 !important;
+  color: #fff !important;
+}
+.form-label{
+  color: #000 !important;
+}
+.btn.add-btn:hover {
+  background-color: #38CF47 !important;
+  color: #fff !important;
+}

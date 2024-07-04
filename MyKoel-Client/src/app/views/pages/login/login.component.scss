@@ -17,5 +17,17 @@ color: #fff;
 }
 .login-input
 {
-  border-radius: 25px 25px; 
+  border-radius: 25px 25px;
+}
+.errMsg{
+  color: red;
+  font-size: 12px;
+}
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  justify-content: space-around;
 }
