@@ -20,49 +20,52 @@ namespace MyKoel_Domain.Repositories
             _mapper=mapper; 
         }
 
-        public async Task<List<MenusDto>> GetMenuData(int UserId)
+        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId)
         {
-            var menuData = (from menu in _context.Menus
-                            join u in _context.UserMenuMap
-                            on menu.MenuId equals u.MenuId
-                            where u.UserId == UserId
-                           select new MenusDto{
-                             MenuId=menu.MenuId,
-                             MenuName=menu.MenuName,
-                             Icon=menu.Icon,
-                             Sequence=menu.Sequence,
-                             IsActive=menu.IsActive,
-                             Route=menu.Route,
-                             MenuGroupId=menu.MenuGroupId,
-                             MenuGroupData= (from mg in _context.MenuGroups
-                                            where mg.MenuGroupId==menu.MenuGroupId
-                                             select new MenuGroupDto
-                                             { 
-                                                 MenuGroupId=mg.MenuGroupId,
-                                                 MainMenuGroupId=mg.MainMenuGroupId,
-                                                 GroupName=mg.GroupName,
-                                                 Sequence=mg.Sequence,
-                                                 Icon=mg.Icon,
-                                                 IsActive=mg.IsActive,
-                                                 IsChild=mg.IsChild,
-                                                 Route=mg.Route ,
-                                                 MainMenuData= (from mainmenu in _context.MainMenuGroups
-                                                                where mg.MainMenuGroupId==mainmenu.MainMenuGroupId
-                                                    select new MainMenuGroupDto
-                                                    { 
-                                                        MainMenuGroupId=mainmenu.MainMenuGroupId,
-                                                        MenuGroupName=mainmenu.MenuGroupName,
-                                                        Sequence=mainmenu.Sequence,
-                                                        Icon=mainmenu.Icon,
-                                                        IsActive=mainmenu.IsActive,
-                                                        IsChild=mainmenu.IsChild,
-                                                        Route=mainmenu.Route 
-                                                    }).OrderBy(a=>a.Sequence).ToList()
+          var menuData = (from menu in _context.MainMenuGroups
+                join u in _context.UserMenuMap
+                on menu.MainMenuGroupId equals u.MainMenuGroupId
+                where u.UserId == UserId
+                group menu by menu.MainMenuGroupId into grouped
+                select new MainMenuGroupDto
+                {
+                    MainMenuGroupId = grouped.Key,
+                    MenuGroupName = grouped.FirstOrDefault().MenuGroupName,
+                    Icon = grouped.FirstOrDefault().Icon,
+                    Sequence = grouped.FirstOrDefault().Sequence,
+                    IsActive = grouped.FirstOrDefault().IsActive,
+                    Route = grouped.FirstOrDefault().Route,
+                    MenuGroupData = (from mg in _context.MenuGroups
+                                     where mg.MainMenuGroupId == grouped.Key
+                                     select new MenuGroupDto
+                                     {
+                                         MenuGroupId = mg.MenuGroupId,
+                                         MainMenuGroupId = mg.MainMenuGroupId,
+                                         GroupName = mg.GroupName,
+                                         Sequence = mg.Sequence,
+                                         Icon = mg.Icon,
+                                         IsActive = mg.IsActive,
+                                         IsChild = mg.IsChild,
+                                         Route = mg.Route,
+                                         MenusData = (from mainmenu in _context.Menus
+                                                      join um in _context.UserMenuMap
+                                                      on mainmenu.MenuId equals um.MenuId
+                                                      where um.UserId == UserId 
+                                                      && um.MenuId==mainmenu.MenuId
+                                                      && um.MenuGroupId==mg.MenuGroupId
+                                                      select new MenusDto
+                                                      {
+                                                          MenuId = mainmenu.MenuId,
+                                                          MenuName = mainmenu.MenuName,
+                                                          Sequence = mainmenu.Sequence,
+                                                          Icon = mainmenu.Icon,
+                                                          IsActive = mainmenu.IsActive,
+                                                          Route = mainmenu.Route
+                                                      }).OrderBy(a => a.Sequence).ToList()
+                                     }).OrderBy(a => a.Sequence).ToList(),
 
-                                             }).OrderBy(a=>a.Sequence).ToList(),
-
-                           }).ToList();
-            return menuData;
+                                 }).OrderBy(s=>s.MainMenuGroupId).ToList();
+           return menuData;
         }
     }
 }
