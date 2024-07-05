@@ -8,8 +8,11 @@ namespace MyKoel_Domain.DTOs
     public class UserAccessMappingDto
     {
         public int AccessMappingId{get;set;}
-        public int MenuId { get; set; }
+        public int? MainMenuGroupId { get; set; }
+        public int? MenuGroupId { get; set; } 
+        public int? MenuId { get; set; }
         public int UserId { get; set; }
+
        
     }
 }

@@ -10,6 +10,9 @@ using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Interfaces;
 using Newtonsoft.Json;
 using Industry4.TPAIntegrations;
+using MyKoel_Domain.Extensions;
+using MyKoel_Domain.Models.Master;
+using AutoMapper;
 
 namespace MyKoel_Web.Controllers
 {
@@ -24,10 +27,10 @@ namespace MyKoel_Web.Controllers
           private readonly IConfiguration _configuration;
           private readonly SymmetricSecurityKey _key;
         private readonly AssetDetails _assetDetails;
+        private readonly IMapper _mapper;
 
-
-  public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, DataContext context, 
-      IConfiguration configuration, ITokenService tokenService,AssetDetails assetDetails)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, DataContext context, 
+      IConfiguration configuration, ITokenService tokenService,AssetDetails assetDetails,IMapper mapper)
   {
       _userManager = userManager;
       _signInManager = signInManager;
@@ -35,7 +38,8 @@ namespace MyKoel_Web.Controllers
       _context = context;
       _configuration = configuration;
       _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
-                  _assetDetails = assetDetails;
+        _assetDetails = assetDetails;
+        _mapper=mapper;
 
   }
 
@@ -107,7 +111,8 @@ namespace MyKoel_Web.Controllers
                    MANAGERID = employeeDetails.Table[0].MANAGERID,
                    AppName = employeeDetails.Table[0].AppName,
                    ManagerEmailID = employeeDetails.Table[0].ManagerEmailID,
-                   ManagerTicketNo = employeeDetails.Table[0].ManagerTicketNo
+                   ManagerTicketNo = employeeDetails.Table[0].ManagerTicketNo,
+                   DOB= employeeDetails.Table[0].DOB
 
                 };
                 var resultdata = await _userManager.CreateAsync(usermodel, loginDto.Password);               
@@ -124,8 +129,23 @@ namespace MyKoel_Web.Controllers
                 };
                     return JsonConvert.SerializeObject(Data);
                 }
+                // added default access for wallpaper,links and footer menus
+                 var menulist= await _context.MainMenuGroups.Where(s=>s.Flag.ToLower().Contains(("WallPaper Menus,Quick Links,Footer").ToLower())).ToListAsync();
+                 var userAccess = new List<UserAccessMappingDto>();
+                   foreach (var item in menulist)
+                   {
+                       var mainMenuGroup = new UserAccessMappingDto
+                       {
+                           MainMenuGroupId = item.MainMenuGroupId, 
+                           UserId = userdata.Id
+                       };
+                       userAccess.Add(mainMenuGroup);
+                   }
+                     var userAccessMappings = _mapper.Map<List<UserAccessMapping>>(userAccess);
+                    _context.UserMenuMap.AddRange(userAccessMappings);       
+                   await _context.SaveChangesAsync();
+               //
                 var generatedToken = await _tokenService.CreateToken(usermodel, 7 * 24 * 60);
-
                 var responseData = new
                 {
                     Status = 200,

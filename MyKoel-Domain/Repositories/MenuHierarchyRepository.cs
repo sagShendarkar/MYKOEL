@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyKoel_Domain.Data;
 using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Interfaces;
@@ -35,6 +36,7 @@ namespace MyKoel_Domain.Repositories
                     Sequence = grouped.FirstOrDefault().Sequence,
                     IsActive = grouped.FirstOrDefault().IsActive,
                     Route = grouped.FirstOrDefault().Route,
+                    Flag=grouped.FirstOrDefault().Flag,
                     MenuGroupData = (from mg in _context.MenuGroups
                                       join u in _context.UserMenuMap
                                     on mg.MenuGroupId equals u.MenuGroupId
@@ -69,6 +71,60 @@ namespace MyKoel_Domain.Repositories
                                                       }).OrderBy(a => a.Sequence).ToList()
                                      }).OrderBy(a => a.Sequence).ToList(),
                                  }).OrderBy(s=>s.MainMenuGroupId).ToList();
+           return menuData;
+        }
+
+        // public async Task<List<MainMenuGroupDto>> GetWallpaperData(int UserId)
+        // {
+
+        //      var menuData = await (from menu in _context.MainMenuGroups
+        //                      where menu.Flag.ToLower()=="Wallpaper Menus".ToLower()
+        //         // join u in _context.UserMenuMap
+        //         // on menu.MainMenuGroupId equals u.MainMenuGroupId
+        //         // where u.UserId == UserId
+        //         // group menu by new {menu.MainMenuGroupId, u.UserId} into grouped
+        //         select new MainMenuGroupDto
+        //         {
+        //             MainMenuGroupId = menu.MainMenuGroupId,
+        //             MenuGroupName = menu.MenuGroupName,
+        //             Icon = menu.Icon,
+        //             Sequence = menu.Sequence,
+        //             IsActive = menu.IsActive,
+        //             Route = menu.Route,
+        //             Flag=menu.Flag,
+        //             ImageIcon=menu.ImageIcon,
+        //             IsIcon=menu.IsIcon,
+        //             IsImage=menu.IsImage,
+        //             IsPopup=menu.IsPopup,
+        //             IsRoute=menu.IsRoute,
+        //             IsChild=menu.IsChild
+        //         }).ToListAsync();
+        //         return menuData;  
+        // }
+
+        public async Task<List<MainMenuGroupDto>> GetWallpaperData(int UserId,string Flag)
+        {
+            var menuData = await (from menu in _context.MainMenuGroups
+                             join u in _context.UserMenuMap
+                             on menu.MainMenuGroupId equals u.MainMenuGroupId
+                             where menu.Flag.ToLower().Contains(Flag.ToLower())
+                             && u.UserId == UserId 
+                select new MainMenuGroupDto
+                {
+                    MainMenuGroupId = menu.MainMenuGroupId,
+                    MenuGroupName = menu.MenuGroupName,
+                    Icon = menu.Icon,
+                    Sequence = menu.Sequence,
+                    IsActive = menu.IsActive,
+                    Route = menu.Route,
+                    Flag=menu.Flag,
+                    ImageIcon=menu.ImageIcon,
+                    IsIcon=menu.IsIcon,
+                    IsImage=menu.IsImage,
+                    IsPopup=menu.IsPopup,
+                    IsRoute=menu.IsRoute,
+                    IsChild=menu.IsChild
+                }).ToListAsync();
            return menuData;
         }
     }

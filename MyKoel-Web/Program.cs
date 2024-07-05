@@ -55,7 +55,11 @@ builder.Services.AddApplicationServices(configuration)
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddTransient<AssetDetails>();
-
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireUppercase = false;
+    // other password requirements
+});
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();

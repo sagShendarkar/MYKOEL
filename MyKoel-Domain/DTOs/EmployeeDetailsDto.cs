@@ -37,6 +37,8 @@ namespace MyKoel_Domain.DTOs
         public string AppName { get; set; }
         public string ManagerEmailID { get; set; }
         public string ManagerTicketNo { get; set; }
+        public DateTime DOB {get; set; }
+
     }
 
 }

@@ -27,6 +27,12 @@ namespace MyKoel_Web.Controllers
             var menu=await _menuHierarchy.GetMenuData(UserId);
             return menu;
         }
+        [HttpGet("HomePageMenuList")]
+        public async Task<List<MainMenuGroupDto>> GetWallpaperData(int UserId,string Flag)
+        {
+            var menulist=await _menuHierarchy.GetWallpaperData(UserId,Flag);
+            return menulist;
+        }
 
     }
 }

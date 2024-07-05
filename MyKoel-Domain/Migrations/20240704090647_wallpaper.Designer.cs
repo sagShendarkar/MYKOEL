@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyKoel_Domain.Data;
 
@@ -11,9 +12,11 @@ using MyKoel_Domain.Data;
 namespace MyKoel_Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240704090647_wallpaper")]
+    partial class wallpaper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +77,6 @@ namespace MyKoel_Domain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Department")
@@ -276,31 +276,13 @@ namespace MyKoel_Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MainMenuGroupId"));
 
-                    b.Property<string>("Flag")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageIcon")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsChild")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsIcon")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsImage")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsPopup")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsRoute")
                         .HasColumnType("bit");
 
                     b.Property<string>("MenuGroupName")
@@ -474,7 +456,7 @@ namespace MyKoel_Domain.Migrations
 
                     b.HasKey("WallpaperId");
 
-                    b.ToTable("wallpaper");
+                    b.ToTable("Wallpaper");
                 });
 
             modelBuilder.Entity("API.Entities.AppUserRole", b =>

@@ -22,7 +22,7 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<ICurrentUserService,CurrentUserService>();
             services.AddScoped<IDateTime,DateTimeService>();
             services.AddScoped<IMenuHierarchyRepository,MenuHierarchyRepository>();
-            
+            services.AddScoped<IWallpaperRepository,WallPaperRepository>();
             return services;
         }
     }

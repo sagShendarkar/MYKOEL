@@ -31,4 +31,10 @@
     <ProjectReference Include="..\MyKoel-Domain\MyKoel-Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Arati\Wallpapers\43c5aeb5-294d-4fe1-91b1-715abd1a24bc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

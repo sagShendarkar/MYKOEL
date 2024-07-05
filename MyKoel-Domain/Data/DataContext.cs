@@ -41,6 +41,7 @@ namespace MyKoel_Domain.Data
              public DbSet<Menus>Menus { get; set; }
              public DbSet<UserAccessMapping> UserMenuMap { get; set; }
              public DbSet<QuickLinks> QuickLinks { get; set; }
+             public DbSet<Wallpaper> wallpaper { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -96,6 +97,9 @@ namespace MyKoel_Domain.Data
                  
            builder.Entity<QuickLinks>()
             .HasKey(m => m.QuickLinkId);
+            
+           builder.Entity<Wallpaper>()
+            .HasKey(m => m.WallpaperId);
 
         }
 
