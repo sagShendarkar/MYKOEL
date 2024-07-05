@@ -21,12 +21,12 @@ namespace MyKoel_Domain.Repositories
             _mapper=mapper; 
         }
 
-        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId)
+        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId,string Flag)
         {
           var menuData = (from menu in _context.MainMenuGroups
                 join u in _context.UserMenuMap
                 on menu.MainMenuGroupId equals u.MainMenuGroupId
-                where u.UserId == UserId
+                where u.UserId == UserId 
                 group menu by new {menu.MainMenuGroupId, u.UserId} into grouped
                 select new MainMenuGroupDto
                 {
@@ -37,6 +37,12 @@ namespace MyKoel_Domain.Repositories
                     IsActive = grouped.FirstOrDefault().IsActive,
                     Route = grouped.FirstOrDefault().Route,
                     Flag=grouped.FirstOrDefault().Flag,
+                    ImageIcon=grouped.FirstOrDefault().ImageIcon,
+                    IsIcon=grouped.FirstOrDefault().IsIcon,
+                    IsImage=grouped.FirstOrDefault().IsImage,
+                    IsPopup=grouped.FirstOrDefault().IsPopup,
+                    IsRoute=grouped.FirstOrDefault().IsRoute,
+                    IsChild=grouped.FirstOrDefault().IsChild,
                     MenuGroupData = (from mg in _context.MenuGroups
                                       join u in _context.UserMenuMap
                                     on mg.MenuGroupId equals u.MenuGroupId
@@ -71,6 +77,10 @@ namespace MyKoel_Domain.Repositories
                                                       }).OrderBy(a => a.Sequence).ToList()
                                      }).OrderBy(a => a.Sequence).ToList(),
                                  }).OrderBy(s=>s.MainMenuGroupId).ToList();
+                 if(!string.IsNullOrEmpty(Flag))
+                 {
+                  menuData=menuData.Where(s=>s.Flag==Flag).ToList();
+                 }
            return menuData;
         }
 

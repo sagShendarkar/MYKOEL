@@ -22,17 +22,12 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("ShowMenuList")]
-        public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(int UserId)
+        public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(int UserId,string? Flag)
         {
-            var menu=await _menuHierarchy.GetMenuData(UserId);
+            var menu=await _menuHierarchy.GetMenuData(UserId,Flag);
             return menu;
         }
-        [HttpGet("HomePageMenuList")]
-        public async Task<List<MainMenuGroupDto>> GetWallpaperData(int UserId,string Flag)
-        {
-            var menulist=await _menuHierarchy.GetWallpaperData(UserId,Flag);
-            return menulist;
-        }
+        
 
     }
 }

@@ -130,16 +130,24 @@ namespace MyKoel_Web.Controllers
                     return JsonConvert.SerializeObject(Data);
                 }
                 // added default access for wallpaper,links and footer menus
-                 var menulist= await _context.MainMenuGroups.Where(s=>s.Flag.ToLower().Contains(("WallPaper Menus,Quick Links,Footer").ToLower())).ToListAsync();
+                 var menulist= await _context.MainMenuGroups.Where(s=>s.Flag.ToLower().Contains(("WallPaper Menus").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower()) 
+                 || s.Flag.ToLower().Contains(("Footer Menus").ToLower())).ToListAsync();
                  var userAccess = new List<UserAccessMappingDto>();
                    foreach (var item in menulist)
                    {
-                       var mainMenuGroup = new UserAccessMappingDto
-                       {
-                           MainMenuGroupId = item.MainMenuGroupId, 
-                           UserId = userdata.Id
-                       };
-                       userAccess.Add(mainMenuGroup);
+if (item.MainMenuGroupId > 0 ) 
+    {
+        var mainMenuGroup = new UserAccessMappingDto
+        {
+            AccessMappingId = 0,
+            MainMenuGroupId = item.MainMenuGroupId, 
+            UserId = usermodel.Id,
+            MenuGroupId = null,
+            MenuId = null
+        };
+        userAccess.Add(mainMenuGroup);
+    }
+
                    }
                      var userAccessMappings = _mapper.Map<List<UserAccessMapping>>(userAccess);
                     _context.UserMenuMap.AddRange(userAccessMappings);       
