@@ -1,5 +1,7 @@
+import { LandingPageService } from './../services/landing-page.service';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { HeaderService } from 'src/app/containers/admin-layout/services/header.service';
 
 @Component({
@@ -9,6 +11,7 @@ import { HeaderService } from 'src/app/containers/admin-layout/services/header.s
 })
 export class LandingPageComponent {
 
+  private unsubscribe: Subscription = new Subscription();
   public liveDemoVisible = false;
   public liveDemoVisible1 = false;
   public liveDemoVisible2 = false;
@@ -23,7 +26,7 @@ export class LandingPageComponent {
   ];
   slides: any[] = [];
   constructor(
-    private domSanitizer: DomSanitizer,public headerService:HeaderService
+    private domSanitizer: DomSanitizer,public headerService:HeaderService,public landingPageService:LandingPageService
   ) {
 
     headerService.isDisplayBreadcrumb$.next(false);
@@ -91,7 +94,18 @@ export class LandingPageComponent {
     ];
 
   }
+ngOnInit(): void {
+  this.getWallpaperMenus();
 
+}
+getWallpaperMenus(){
+  this.unsubscribe.add(
+    this.landingPageService.getLandingPageMenus(1,'Wallpaper Menus').subscribe((res)=>{
+console.log(res);
+
+    })
+  );
+}
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
   }
