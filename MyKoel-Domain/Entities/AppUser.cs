@@ -24,5 +24,6 @@ namespace API.Entities
         public string ManagerEmailID { get; set; }
         public string ManagerTicketNo { get; set; }
         public DateTime DOB {get; set; }
+        public string? ProfileImage {get;set;}
     }
 }

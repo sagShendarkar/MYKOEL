@@ -28,6 +28,11 @@ namespace MyKoel_Web.Controllers
             return menu;
         }
         
-
+        [HttpGet("MenuList")]
+        public async Task<List<MainMenuGroupDto>> MenuList(string? Name)
+        {
+            var menu=await _menuHierarchy.GetMenuList(Name);
+            return menu;
+        }
     }
 }

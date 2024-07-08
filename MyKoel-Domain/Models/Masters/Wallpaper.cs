@@ -12,6 +12,7 @@ namespace MyKoel_Domain.Models.Masters
         public string WallpaperName { get; set;}
         public string WallpaperPath { get;set;}
         public bool IsActive { get; set; }
+        public int UserId{get;set;}
 
     }
 }

@@ -13,6 +13,7 @@ namespace MyKoel_Domain.DTOs
         public string WallpaperPath { get;set;}
         public bool IsActive { get; set; }
         public string WallpaperSrc { get; set; }
+        public int UserId{get;set;}
 
     }
 }

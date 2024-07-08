@@ -9,8 +9,7 @@ namespace MyKoel_Domain.Interfaces
     public interface IMenuHierarchyRepository
     {
         Task<List<MainMenuGroupDto>> GetMenuData(int UserId,string Flag);
-       // Task<List<MainMenuGroupDto>> GetWallpaperData(int UserId, string Flag);
-        //Task<List<MainMenuGroupDto>> GetQuickLinksData(int UserId);
+        Task<List<MainMenuGroupDto>> GetMenuList(string Name);
 
     }
 }

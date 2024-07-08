@@ -23,6 +23,8 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<IDateTime,DateTimeService>();
             services.AddScoped<IMenuHierarchyRepository,MenuHierarchyRepository>();
             services.AddScoped<IWallpaperRepository,WallPaperRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
+
             return services;
         }
     }

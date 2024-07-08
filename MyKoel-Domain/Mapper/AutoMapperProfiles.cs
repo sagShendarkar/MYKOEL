@@ -15,7 +15,8 @@ namespace API.Mapper
          CreateMap<Wallpaper,WallpaperDto>();
         CreateMap<UserAccessMappingDto, UserAccessMapping>();
         CreateMap<UserAccessMapping, UserAccessMappingDto>();
-
+         CreateMap<UserProfileDto,AppUser>();
+         CreateMap<AppUser,UserProfileDto>();
         }
     }
 }

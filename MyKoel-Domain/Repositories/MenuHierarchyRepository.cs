@@ -137,5 +137,56 @@ namespace MyKoel_Domain.Repositories
                 }).ToListAsync();
            return menuData;
         }
+
+        public async Task<List<MainMenuGroupDto>> GetMenuList(string? Name)
+        {
+            var mainMenuData = await (from mainmenu in _context.MainMenuGroups
+                                      where mainmenu.Flag=="Top MenuBar"
+                select new MainMenuGroupDto
+                {
+                    MainMenuGroupId = mainmenu.MainMenuGroupId,
+                    MenuGroupName = mainmenu.MenuGroupName,
+                    Icon = mainmenu.Icon,
+                    Sequence = mainmenu.Sequence,
+                    IsActive = mainmenu.IsActive,
+                    Route = mainmenu.Route,
+                    Flag=mainmenu.Flag,
+                    ImageIcon=mainmenu.ImageIcon,
+                    IsIcon=mainmenu.IsIcon,
+                    IsImage=mainmenu.IsImage,
+                    IsPopup=mainmenu.IsPopup,
+                    IsRoute=mainmenu.IsRoute,
+                    IsChild=mainmenu.IsChild,
+                    MenuGroupData = (from mg in _context.MenuGroups
+                                     where mg.MainMenuGroupId == mainmenu.MainMenuGroupId
+                                     select new MenuGroupDto
+                                     {
+                                         MenuGroupId = mg.MenuGroupId,
+                                         MainMenuGroupId = mg.MainMenuGroupId,
+                                         GroupName = mg.GroupName,
+                                         Sequence = mg.Sequence,
+                                         Icon = mg.Icon,
+                                         IsActive = mg.IsActive,
+                                         IsChild = mg.IsChild,
+                                         Route = mg.Route,
+                                         MenusData = (from menu in _context.Menus
+                                                      where menu.MenuGroupId == mg.MenuGroupId 
+                                                      select new MenusDto
+                                                      {
+                                                          MenuId = menu.MenuId,
+                                                          MenuName = menu.MenuName,
+                                                          Sequence = menu.Sequence,
+                                                          Icon = menu.Icon,
+                                                          IsActive = menu.IsActive,
+                                                          Route = menu.Route
+                                                      }).OrderBy(a => a.Sequence).ToList()
+                                     }).OrderBy(a => a.Sequence).ToList()
+                         }).ToListAsync();
+            if(!string.IsNullOrEmpty(Name))
+            {
+                mainMenuData=mainMenuData.Where(s=>s.MenuGroupName.ToLower().Contains(Name.ToLower())).ToList();
+            }
+           return mainMenuData;
+        }
     }
 }

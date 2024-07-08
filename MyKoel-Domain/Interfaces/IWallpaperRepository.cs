@@ -11,7 +11,7 @@ namespace MyKoel_Domain.Interfaces
           void UpdateWallpaper(Wallpaper wallpaper);
           Task<bool> SaveAllAsync();
           void DeleteWallpaper(Wallpaper wallpaper);
-          Task<Wallpaper> GetWallpaperById(int id);
+          Task<Wallpaper> GetWallpaperById(int Id);
           void AddNewWallpaper(Wallpaper wallpaper);
 
     }
