@@ -166,7 +166,7 @@ namespace MyKoel_Web.Controllers
                             Token = generatedToken,
                             UserId = usermodel.Id,
                             ProfileImage=!string.IsNullOrEmpty(usermodel.ProfileImage)? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage): null,
-                            WaallPaperDetails=await( from w in _context.wallpaper
+                            WallPaperDetails=await( from w in _context.wallpaper
                                                where w.UserId == usermodel.Id
                                                select new WallpaperDto{
                                                 WallpaperId=w.WallpaperId,
