@@ -168,7 +168,7 @@ namespace MyKoel_Web.Controllers
 
 
                     userProfileDto.ProfileImage = Path.Combine(profileFolderPath, fileName);
-                     user = _mapper.Map<AppUser>(userProfileDto);
+                     user = _mapper.Map(userProfileDto, user);
                     _userRepository.UpdateUser(user);
                  if (await _userRepository.SaveAllAsync())
                 {
