@@ -103,7 +103,7 @@ getWallpaperMenus(){
   this.unsubscribe.add(
     this.landingPageService.getLandingPageMenus(1,'Wallpaper Menus').subscribe((res)=>{
 console.log(res);
-
+this.landingPageService.wallpaperMenus$.next(res);
     })
   );
 }
@@ -111,6 +111,7 @@ getQuickLinksMenus(){
   this.unsubscribe.add(
     this.landingPageService.getLandingPageMenus(1,'Quick Links').subscribe((res)=>{
 console.log(res);
+this.landingPageService.quickLinksMenus$.next(res);
 
     })
   );

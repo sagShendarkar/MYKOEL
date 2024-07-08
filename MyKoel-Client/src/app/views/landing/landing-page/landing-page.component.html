@@ -98,23 +98,23 @@
 <c-row class="mt-4">
   <div   class="feature-div col-md-12  col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
     <div class="grid-container">
-      <div class="grid-item">
+      <div class="grid-item" *ngFor="let quickLinks of(landingPageService.quickLinksMenus$|async) ; let i=index">
         <div class="row">
           <div class="col-md-12  col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
             <span>
               <img
-                src="../../../../assets/SVG/itMitra.svg"
+                [src]="quickLinks.imageIcon"
                 alt="My Happy SVG"
               />
             </span>
           </div>
 
           <div class="col-md-12">
-            <span> IT Mitra </span>
+            <span> {{quickLinks.menuGroupName}} </span>
           </div>
         </div>
       </div>
-      <div class="grid-item">
+      <!-- <div class="grid-item">
         <div class="row">
           <div class="col-md-12">
             <span>
@@ -255,7 +255,7 @@
             <span> HR Queries </span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </c-row>
