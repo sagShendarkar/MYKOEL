@@ -26,7 +26,8 @@ addBtnDetails={
   getMenuHierarchy(id:number=1)
   {
     let params=new HttpParams();
-    params=params.append('UserId',id);
+    // params=params.append('UserId',id);
+    params=params.append('Flag',"Top MenuBar");
     return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
   }
 }

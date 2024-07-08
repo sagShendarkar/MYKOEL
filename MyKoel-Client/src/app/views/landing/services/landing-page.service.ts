@@ -19,8 +19,8 @@ export class LandingPageService {
   getLandingPageMenus(id:number=1,Flag:string='')
   {
     let params=new HttpParams();
-    params=params.append('UserId',id);
+    // params=params.append('UserId',id);
     params=params.append('Flag',Flag);
-    return this.http.get<any>(this.baseUrl+'MenuHierarchy/HomePageMenuList',{params});
+    return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
   }
 }

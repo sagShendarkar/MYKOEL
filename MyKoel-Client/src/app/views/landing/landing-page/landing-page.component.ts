@@ -96,11 +96,20 @@ export class LandingPageComponent {
   }
 ngOnInit(): void {
   this.getWallpaperMenus();
+  this.getQuickLinksMenus();
 
 }
 getWallpaperMenus(){
   this.unsubscribe.add(
     this.landingPageService.getLandingPageMenus(1,'Wallpaper Menus').subscribe((res)=>{
+console.log(res);
+
+    })
+  );
+}
+getQuickLinksMenus(){
+  this.unsubscribe.add(
+    this.landingPageService.getLandingPageMenus(1,'Quick Links').subscribe((res)=>{
 console.log(res);
 
     })

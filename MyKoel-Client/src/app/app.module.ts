@@ -1,3 +1,5 @@
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -38,7 +40,7 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -54,7 +56,7 @@ const ADMIN_APP_CONTAINERS = [
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS,...ADMIN_APP_CONTAINERS],
   imports: [
-    
+
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -89,7 +91,11 @@ const ADMIN_APP_CONTAINERS = [
       useClass: PathLocationStrategy
     },
     IconSetService,
-    Title
+    Title,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // {provide: HTTP_INTERCEPTORS,  useClass: HttpRequestParamsInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyKoel_Domain.Interfaces;
 using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Data;
+using MyKoel_Domain.Extensions;
 namespace MyKoel_Web.Controllers
 {
     [ApiController]
@@ -22,8 +23,10 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("ShowMenuList")]
-        public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(int UserId,string? Flag)
+        public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(string? Flag)
         {
+            
+            var UserId=User.GetUserId();
             var menu=await _menuHierarchy.GetMenuData(UserId,Flag);
             return menu;
         }

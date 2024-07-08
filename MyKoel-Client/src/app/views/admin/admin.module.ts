@@ -19,7 +19,7 @@ import { ViewAnnouncementInfoComponent } from './components/view-announcement-in
     VisionMissionValuesComponent,
     ProfileSettingComponent,
     ViewMoreAnnouncementComponent,
-    ViewAnnouncementInfoComponent
+    ViewAnnouncementInfoComponent, 
   ],
   imports: [
     CommonModule,

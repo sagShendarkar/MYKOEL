@@ -40,15 +40,15 @@ export class LoginComponent {
 
     this.authService.isLoadingSubject.next(true);
     this.authService.login(this.loginForm.value).subscribe((res: any) => {
-      if (res[0].status == 200) {
+      if (res.status == 200) {
         this.isInvalidUser = false;
-        localStorage.setItem('token', res[0].Token);
-        localStorage.setItem('userId', res[0].UserId);
-        localStorage.setItem('username', res[0].Username);
+        localStorage.setItem('token', res.Token);
+        localStorage.setItem('userId', res.UserId);
+        localStorage.setItem('username', res.Username);
 
 
         let menuList: any[] = [];
-        let accessMenu = res[0].userAccessList;
+        // let accessMenu = res[0].userAccessList;
 
 //         accessMenu.forEach((element: any) => {
 //           // console.log(element);
