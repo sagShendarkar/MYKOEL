@@ -23,8 +23,8 @@ ngOnInit(): void {
 getFooterMenus(){
   this.unsubscribe.add(
     this.landingPageService.getLandingPageMenus(1,'Footer Menus').subscribe((res)=>{
-console.log(res);
-
+console.log(res);  
+this.landingPageService.footerLinksMenus$.next(res);
     })
   );
 }

@@ -226,7 +226,10 @@ namespace MyKoel_Web.Controllers
                 else
                 {
 
-                    return Unauthorized("Invalid TicketNo Details");
+                    return new {
+                        status = 400,
+                        Message="Invalid TicketNo Details"
+                    };
                 }
             }
             catch (Exception ex)

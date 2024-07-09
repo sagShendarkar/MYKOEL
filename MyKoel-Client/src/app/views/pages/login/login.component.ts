@@ -48,7 +48,7 @@ export class LoginComponent {
 
 
         let menuList: any[] = [];
-        // let accessMenu = res[0].userAccessList;
+        // let accessMenu = res.userAccessList;
 
 //         accessMenu.forEach((element: any) => {
 //           // console.log(element);
@@ -88,7 +88,7 @@ export class LoginComponent {
 
 this.authService.isLoadingSubject.next(false);
         this.router.navigateByUrl("/home");
-      } else if (res[0].status == 400) {
+      } else if (res.status == 400) {
 
 this.authService.isLoadingSubject.next(false);
         this.isInvalidUser = true;

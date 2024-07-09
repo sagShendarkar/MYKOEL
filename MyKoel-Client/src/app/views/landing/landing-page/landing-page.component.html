@@ -15,19 +15,21 @@
           />
         </div>
       </div>
-      <div class="row justify-content-center mt-2">
+      <div class="row justify-content-center mt-3">
         <div class="col-md-8  col-sm-8 col-lg-8  col-xl-8  col-xxl-8 col-8">
-          <div class="row">
-            <div class="col-md-6  col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-2">
+          <div class="row justify-content-center">
+            <div class="col-md-6  col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-4"
+            *ngFor="let wallpaperMenus of(landingPageService.wallpaperMenus$|async) ; let i=index">
               <div class="banner-menus">
                 <img
-                  src="../../../../assets/SVG/CompanyAward.svg"
-                  alt="My Happy SVG"
+
+                [src]="wallpaperMenus.imageIcon"
+                  [alt]="wallpaperMenus.menuGroupName"
                 />
-                <span class="ms-2">Company Award</span>
+                <span class="ms-2"> {{wallpaperMenus.menuGroupName}} </span>
               </div>
             </div>
-            <div class="col-md-6 col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-2">
+            <!-- <div class="col-md-6 col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-2">
               <div class="banner-menus">
                 <img
                   src="../../../../assets/SVG/CanteenMenu.svg"
@@ -53,12 +55,12 @@
                 />
                 <span class="ms-2">Policy & Process</span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
 
-      <div class="row justify-content-center mt-2 mb-4">
+      <!-- <div class="row justify-content-center mt-2 mb-4">
         <div class="col-md-8  col-sm-8 col-lg-8  col-xl-8  col-xxl-8 col-8">
           <div class="row justify-content-center mt-2 mb-4">
             <div class="col-md-4   col-sm-4 col-lg-4  col-xl-3  col-xxl-3 col-12 mb-2">
@@ -90,7 +92,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -104,7 +106,7 @@
             <span>
               <img
                 [src]="quickLinks.imageIcon"
-                alt="My Happy SVG"
+                [alt]="quickLinks.menuGroupName"
               />
             </span>
           </div>

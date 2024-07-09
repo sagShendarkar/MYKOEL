@@ -112,7 +112,6 @@ getQuickLinksMenus(){
     this.landingPageService.getLandingPageMenus(1,'Quick Links').subscribe((res)=>{
 console.log(res);
 this.landingPageService.quickLinksMenus$.next(res);
-
     })
   );
 }

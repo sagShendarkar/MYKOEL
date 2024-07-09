@@ -12,6 +12,7 @@ export class LandingPageService {
 
   wallpaperMenus$=  new BehaviorSubject<any[]>([]);
   quickLinksMenus$=  new BehaviorSubject<any[]>([]);
+  footerLinksMenus$=  new BehaviorSubject<any[]>([]);
   baseUrl = environment.apiUrl1;
   constructor(private http:HttpClient,private router: Router) { }
 
