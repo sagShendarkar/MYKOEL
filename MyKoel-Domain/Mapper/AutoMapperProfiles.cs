@@ -11,12 +11,20 @@ namespace API.Mapper
         public AutoMapperProfiles()
         {
 
-         CreateMap<WallpaperDto,Wallpaper>();
-         CreateMap<Wallpaper,WallpaperDto>();
-        CreateMap<UserAccessMappingDto, UserAccessMapping>();
-        CreateMap<UserAccessMapping, UserAccessMappingDto>();
-         CreateMap<UserProfileDto,AppUser>();
-         CreateMap<AppUser,UserProfileDto>();
+            CreateMap<WallpaperDto, Wallpaper>();
+            CreateMap<Wallpaper, WallpaperDto>();
+            CreateMap<UserAccessMappingDto, UserAccessMapping>();
+            CreateMap<UserAccessMapping, UserAccessMappingDto>();
+            CreateMap<UserProfileDto, AppUser>();
+            CreateMap<AppUser, UserProfileDto>();
+            CreateMap<SectionTrnDto, SectionTrnDto>();
+            CreateMap<AddSectionTrnDto, SectionTransaction>();
+            CreateMap<SectionTransaction, AddSectionTrnDto>();
+            CreateMap<AddSectionTrnDto, Attachments>();
+            CreateMap<Attachments, AddSectionTrnDto>();
+            CreateMap<AttachmentDto, Attachments>();
+            CreateMap<Attachments, AttachmentDto>();
+
         }
     }
 }

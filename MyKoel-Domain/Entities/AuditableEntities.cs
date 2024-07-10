@@ -7,9 +7,9 @@ namespace MyKoel_Domain.Entities
 {
     public class AuditableEntities
     {
-        public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int UpdatedBy { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public int CREATEDBY { get; set; }
+        public DateTime CREATEDDATE { get; set; }
+        public int UPDATEDBY { get; set; }
+        public DateTime UPDATEDDATE { get; set; }
     }
 }

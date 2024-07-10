@@ -25,6 +25,7 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<IWallpaperRepository,WallPaperRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IImageService,ImageService>();
+            services.AddScoped<ISectionTrnRepository,SectionTransactionRepository>();
 
             return services;
         }
