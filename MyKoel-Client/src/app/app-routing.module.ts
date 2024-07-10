@@ -164,7 +164,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'mood-check',
+    path: 'mood-check/:id',
     component: MoodCheckComponent,
     data: {
       title: 'Login Page'

@@ -22,11 +22,11 @@
             *ngFor="let wallpaperMenus of(landingPageService.wallpaperMenus$|async) ; let i=index">
               <div class="banner-menus">
                 <img
-
+class="mb-1"
                 [src]="wallpaperMenus.imageIcon"
                   [alt]="wallpaperMenus.menuGroupName"
                 />
-                <span class="ms-2"> {{wallpaperMenus.menuGroupName}} </span>
+                <span class="ms-2 mb-1"> {{wallpaperMenus.menuGroupName}} </span>
               </div>
             </div>
             <!-- <div class="col-md-6 col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-2">

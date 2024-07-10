@@ -87,7 +87,7 @@ export class LoginComponent {
 // localStorage.setItem('navItems',JSON.stringify(this.navItems));
 
 this.authService.isLoadingSubject.next(false);
-        this.router.navigateByUrl("/mood-check");
+        this.router.navigateByUrl("/mood-check/"+res.UserId);
       } else if (res.status == 400) {
 
 this.authService.isLoadingSubject.next(false);

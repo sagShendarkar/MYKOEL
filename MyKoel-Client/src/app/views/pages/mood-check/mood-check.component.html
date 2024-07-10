@@ -20,7 +20,7 @@
   <img
       [src]="mood.moodImg"
        [ngClass]="{'selected-img': selectedMoodIndex===i}"
-      [alt]="mood.moodName" class="mb-3 me-3 mood-img" (click)="onImgClick(i)"
+      [alt]="mood.moodName" class="mb-3 me-3 mood-img" (click)="onImgClick(i,mood)"
     />
 </div>
 <!-- <div class="col-2">
@@ -51,10 +51,10 @@
 </div>
 <div class="col-12   mt-3">
 <p class="sub-heading">Why?</p>
-<input class="mood-input" placeholder="Type here..."  />
+<input class="mood-input" placeholder="Type here..." (keyup)="reasonText($event)"  />
 </div>
 <div class="col-12 text-center mt-4">
-   <button   class=" sub-btn  text-center">Submit</button>
+   <button (click)="moodToday()"     [disabled]="moodTodayForm.invalid" class=" sub-btn  text-center">Submit</button>
 </div>
 
       </div>
