@@ -356,6 +356,33 @@ namespace MyKoel_Domain.Migrations
                     b.ToTable("MenuGroups");
                 });
 
+            modelBuilder.Entity("MyKoel_Domain.Models.Master.MoodToday", b =>
+                {
+                    b.Property<int>("MoodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MoodId"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReportedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MoodId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MoodToday");
+                });
+
             modelBuilder.Entity("MyKoel_Domain.Models.Master.UserAccessMapping", b =>
                 {
                     b.Property<int>("AccessMappingId")
@@ -546,6 +573,17 @@ namespace MyKoel_Domain.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("MainMenuGroup");
+                });
+
+            modelBuilder.Entity("MyKoel_Domain.Models.Master.MoodToday", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MyKoel_Domain.Models.Master.UserAccessMapping", b =>

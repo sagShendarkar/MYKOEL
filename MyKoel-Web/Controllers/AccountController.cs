@@ -48,110 +48,18 @@ namespace MyKoel_Web.Controllers
 
         }
 
-        //   [HttpPost("login")]
-        //   public async Task<ActionResult<string>> Login(LoginDto loginDto)
-        //   {
-        //       var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username);
-        //       if (user == null)
-        //       {
-        //           var Data = new[]
-        //           {
-        //               new { status = 400, ErrorMessage = "Invalid Username!" }
-        //              };
-        //           return JsonConvert.SerializeObject(Data);
-        //       }
-
-        //       var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-        //       if (!result.Succeeded) {
-        //           var Data = new[]
-        //           {
-        //               new { status = 400, ErrorMessage = "Invalid Login Details!" }
-        //              };
-        //           return JsonConvert.SerializeObject(Data);
-        //       }  
-
-        //       var generatedToken = await _tokenService.CreateToken(user, 7 * 24 * 60);
-
-
-        //       var usersData = new[]
-        //       {
-        //           new
-        //           {
-        //               status = 200,
-        //               Username = user.UserName,
-        //               UserId = user.Id,
-        //               Token = generatedToken
-        //           }
-        //       };
-
-        //       return JsonConvert.SerializeObject(usersData);
-
-        //   }
-
-
-        [HttpPost("login")]
-        public async Task<object> AdAuthLogin(LoginDto loginDto)
-        {
-            try
-            {
-                bool AdAuthValid = await _assetDetails.CheckADCredentials(loginDto.Username, loginDto.Password);
-
-                if (AdAuthValid)
-                {
-                    var userdata = await _userManager.Users.FirstOrDefaultAsync(x => x.TicketNo == loginDto.Username);
-                    if (userdata == null)
-                    {
-                        EmployeeDetails employeeDetails = await _assetDetails.GetEmployeeDetailsAsync(loginDto.Username);
-                        var usermodel = new AppUser
-                        {
-                            UserName = employeeDetails.Table[0].EmpName.Replace(" ", "."),
-                            Email = employeeDetails.Table[0].EmailID,
-                            TicketNo = loginDto.Username,
-                            SBUNo = employeeDetails.Table[0].SBUNo,
-                            CostCode = employeeDetails.Table[0].CostCode,
-                            Department = employeeDetails.Table[0].Department,
-                            Grade = employeeDetails.Table[0].Grade,
-                            EMPID = employeeDetails.Table[0].EMPID,
-                            Location = employeeDetails.Table[0].Location,
-                            MANAGERID = employeeDetails.Table[0].MANAGERID,
-                            AppName = employeeDetails.Table[0].AppName,
-                            ManagerEmailID = employeeDetails.Table[0].ManagerEmailID,
-                            ManagerTicketNo = employeeDetails.Table[0].ManagerTicketNo,
-                            DOB = employeeDetails.Table[0].DOB
-
-                        };
-                        var resultdata = await _userManager.CreateAsync(usermodel, loginDto.Password);
-                        var result = await _signInManager.CheckPasswordSignInAsync(usermodel, loginDto.Password, false);
-                        if (!result.Succeeded)
-                        {
-                            var Data = new[]
-                            {
-                     new
-                     {
-                       status = 400,
-                       ErrorMessage = "Invalid Login Details!"
-                     }
-                };
-                            return JsonConvert.SerializeObject(Data);
-                        }
-                        // added default access for profile,links and footer menus
-                        var menulist = await _context.MainMenuGroups.Where(s => s.Flag.ToLower().Contains(("profile Menus").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
-                        || s.Flag.ToLower().Contains(("Footer Menus").ToLower())).ToListAsync();
-                        var userAccess = new List<UserAccessMappingDto>();
-                        foreach (var item in menulist)
-                        {
-                            if (item.MainMenuGroupId > 0)
-                            {
-                                var mainMenuGroup = new UserAccessMappingDto
-                                {
-                                    AccessMappingId = 0,
-                                    MainMenuGroupId = item.MainMenuGroupId,
-                                    UserId = usermodel.Id,
-                                    MenuGroupId = null,
-                                    MenuId = null
-                                };
-                                userAccess.Add(mainMenuGroup);
-                            }
+  [HttpPost("login")]
+  public async Task<ActionResult<string>> Login(LoginDto loginDto)
+  {
+      var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username);
+      if (user == null)
+      {
+          var Data = new[]
+          {
+              new { status = 400, ErrorMessage = "Invalid Username!" }
+             };
+          return JsonConvert.SerializeObject(Data);
+      }
 
                         }
                         var userAccessMappings = _mapper.Map<List<UserAccessMapping>>(userAccess);
@@ -222,26 +130,16 @@ namespace MyKoel_Web.Controllers
 
                     }
 
-                }
-                else
-                {
-
-                    return new {
-                        status = 400,
-                        Message="Invalid TicketNo Details"
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-
-
-   
-
+      var usersData = new[]
+      {
+          new
+          {
+              status = 200,
+              Username = user.UserName,
+              UserId = user.Id,
+              Token = generatedToken
+          }
+      };
 
 
 
