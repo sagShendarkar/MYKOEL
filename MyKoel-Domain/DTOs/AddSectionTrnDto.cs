@@ -19,7 +19,7 @@ namespace MyKoel_Domain.DTOs
         public bool ISACTIVE {  get; set;  }
         public string? CATEGORY {get;set;}
         
-        public AttachmentDto Attachment { get; set; }
+        public List<AttachmentDto> Attachment { get; set; }
     }
 
     public class AttachmentDto{

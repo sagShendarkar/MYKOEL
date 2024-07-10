@@ -128,10 +128,6 @@ namespace MyKoel_Domain.Repositories
         public async Task<AddSectionTrnDto> GetSectionDetailsById(int Id)
         {
             var section=await (from cn in _context.SectionTransactions
-                            join an in _context.Attachments
-                            on cn.SECTIONID equals an.SECTIONID
-                            into g
-                            from a in g.DefaultIfEmpty()
                             where cn.ISACTIVE==true && cn.SECTIONID==Id  
                             select new AddSectionTrnDto
                             {
@@ -144,7 +140,10 @@ namespace MyKoel_Domain.Repositories
                                 ISIMAGE=cn.ISIMAGE,
                                 FLAG=cn.FLAG,
                                 SEQUENCE=cn.SEQUENCE,
-                                Attachment = a != null ? new AttachmentDto
+                                CATEGORY=cn.CATEGORY,
+                                Attachment = (from a in _context.Attachments
+                                            where a.SECTIONID==Id
+                                 select new AttachmentDto
                                 {
                                     ATTACHMENTID=a.ATTACHMENTID,
                                     SECTIONID=a.SECTIONID,
@@ -155,8 +154,9 @@ namespace MyKoel_Domain.Repositories
                                     TITLE=a.TITLE,
                                     ISACTIVE=a.ISACTIVE,
                                     IMAGE= !string.IsNullOrEmpty(a.PATH) ? _imageService.ConvertLocalImageToBase64(a.PATH) : null,
-                                    PATH = a.PATH
-                                } : null
+                                    PATH = a.PATH,
+                                    IMAGEFLAG=a.IMAGEFLAG
+                                }).ToList() 
 
                             }).OrderByDescending(c=>c.SECTIONID).FirstOrDefaultAsync();
            return section;

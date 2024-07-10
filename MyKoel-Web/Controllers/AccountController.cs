@@ -173,7 +173,8 @@ namespace MyKoel_Web.Controllers
                                                 WallpaperName=w.WallpaperName,
                                                 WallpaperPath= !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
                                              UserId=w.UserId
-                                               }).FirstOrDefaultAsync()
+                                               }).FirstOrDefaultAsync(),
+                            
                         };
 
 
