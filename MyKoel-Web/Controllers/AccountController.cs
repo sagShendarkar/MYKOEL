@@ -66,7 +66,7 @@ namespace MyKoel_Web.Controllers
           {
               status = 200,
               Username = user.UserName,
-              UserId = user.Id,
+              UserId = user.Id, 
               Token = generatedToken
           }
       };

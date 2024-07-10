@@ -27,24 +27,25 @@ namespace MyKoel_Domain.Data
         private readonly IDateTime _dateTime;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DataContext(DbContextOptions options,IHttpContextAccessor httpContextAccessor,ICurrentUserService currentUserService,IDateTime dateTime)
+        public DataContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor, ICurrentUserService currentUserService, IDateTime dateTime)
   : base(options)
         {
             _currentUserService = currentUserService;
             _dateTime = dateTime;
             _httpContextAccessor = httpContextAccessor;
-            
+
 
         }
-             public DbSet<MenuGroup> MenuGroups { get; set; }
-             public DbSet<MainMenuGroup> MainMenuGroups { get; set; }
-             public DbSet<Menus>Menus { get; set; }
-             public DbSet<UserAccessMapping> UserMenuMap { get; set; }
-             public DbSet<QuickLinks> QuickLinks { get; set; }
+        public DbSet<MenuGroup> MenuGroups { get; set; }
+        public DbSet<MainMenuGroup> MainMenuGroups { get; set; }
+        public DbSet<Menus> Menus { get; set; }
+        public DbSet<UserAccessMapping> UserMenuMap { get; set; }
+        public DbSet<QuickLinks> QuickLinks { get; set; }
+        public DbSet<MoodToday> MoodToday { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-       
+
             base.OnModelCreating(builder);
 
             builder.Entity<AppUser>()
@@ -59,8 +60,8 @@ namespace MyKoel_Domain.Data
             .HasForeignKey(ur => ur.RoleId)
             .IsRequired();
 
-           builder.Entity<MenuGroup>()
-            .HasKey(m => m.MenuGroupId);
+            builder.Entity<MenuGroup>()
+             .HasKey(m => m.MenuGroupId);
 
             builder.Entity<MenuGroup>()
                 .HasOne<MainMenuGroup>(mg => mg.MainMenuGroup)
@@ -71,14 +72,14 @@ namespace MyKoel_Domain.Data
             builder.Entity<MainMenuGroup>()
                 .HasKey(m => m.MainMenuGroupId);
 
-                builder.Entity<Menus>()
-            .HasKey(m => m.MenuId);
+            builder.Entity<Menus>()
+        .HasKey(m => m.MenuId);
 
-              builder.Entity<Menus>()
-                .HasOne<MenuGroup>(mg => mg.MenuGroup)
-                .WithMany(m => m.Menus)
-                .HasForeignKey(st => st.MenuGroupId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Menus>()
+              .HasOne<MenuGroup>(mg => mg.MenuGroup)
+              .WithMany(m => m.Menus)
+              .HasForeignKey(st => st.MenuGroupId)
+              .OnDelete(DeleteBehavior.Restrict);
             builder.Entity<UserAccessMapping>()
                  .HasKey(m => m.AccessMappingId);
 
@@ -93,16 +94,19 @@ namespace MyKoel_Domain.Data
                  .WithMany(m => m.userMenuMaps)
                  .HasForeignKey(st => st.UserId)
                  .OnDelete(DeleteBehavior.Restrict);
-                 
-           builder.Entity<QuickLinks>()
-            .HasKey(m => m.QuickLinkId);
+
+            builder.Entity<QuickLinks>()
+             .HasKey(m => m.QuickLinkId);
+
+            builder.Entity<MoodToday>()
+                 .HasKey(m => m.MoodId);
 
         }
 
-         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             int userId = _currentUserService.getUserId();
-           // int companyId = _currentUserService.getCompanyId();
+            // int companyId = _currentUserService.getCompanyId();
             foreach (var entry in ChangeTracker.Entries<AuditableEntities>())
             {
                 switch (entry.State)
@@ -119,13 +123,14 @@ namespace MyKoel_Domain.Data
                 }
             }
             OnBeforeSaveChanges(userId);
-            int result=0;
+            int result = 0;
             try
             {
-               result = await base.SaveChangesAsync(cancellationToken);
+                result = await base.SaveChangesAsync(cancellationToken);
             }
-            catch(Exception ex){
-              
+            catch (Exception ex)
+            {
+
             };
             return result;
         }
@@ -135,6 +140,6 @@ namespace MyKoel_Domain.Data
             ChangeTracker.DetectChanges();
         }
 
-   }
-            
     }
+
+}
