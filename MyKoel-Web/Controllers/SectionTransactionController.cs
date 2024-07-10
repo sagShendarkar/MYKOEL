@@ -28,7 +28,7 @@ namespace MyKoel_Web.Controllers
             _sectionTrnRepository = sectionTrnRepository;
         }
 
-       [HttpGet("ShowSectionList")]
+        [HttpGet("ShowSectionList")]
         public async Task<List<SectionTrnDto>> ShowSectionList([FromQuery] ParameterParams parameterParams)
         {
             var company = await _sectionTrnRepository.GetSectionList(parameterParams);
@@ -41,8 +41,8 @@ namespace MyKoel_Web.Controllers
         [HttpGet("GetSectionTrnById/{Id}")]
         public async Task<ActionResult<AddSectionTrnDto>> GetSectionDetailsById(int Id)
         {
-            
-            var data= await _sectionTrnRepository.GetSectionDetailsById(Id);
+
+            var data = await _sectionTrnRepository.GetSectionDetailsById(Id);
             return data;
         }
         [HttpPost("AddSection")]
@@ -145,6 +145,7 @@ namespace MyKoel_Web.Controllers
 
                 var updatedsection = _mapper.Map(sectionDto, existingSection);
                 _sectionTrnRepository.UpdateSection(updatedsection);
+                 var attachment = await _sectionTrnRepository.GetAttachmentById(sectionDto.Attachment.ATTACHMENTID);
 
                 if (sectionDto.Attachment != null && await _sectionTrnRepository.SaveAllAsync())
                 {
@@ -201,7 +202,6 @@ namespace MyKoel_Web.Controllers
                         }
                         else
                         {
-                            var attachment = await _sectionTrnRepository.GetAttachmentById(sectionDto.Attachment.ATTACHMENTID);
                             if (attachment == null)
                             {
                                 return NotFound("attachment not found");
@@ -212,9 +212,32 @@ namespace MyKoel_Web.Controllers
                             _sectionTrnRepository.UpdateAttachment(attachment);
 
                         }
+                        
+                        if (await _sectionTrnRepository.SaveAllAsync())
+                        {
+                            return Ok(new
+                            {
+                                Status = 200,
+                                Message = "Section updated successfully",
+                                SectionId = sectionDto.SECTIONID,
+                                Title = sectionDto.TITLE
+                            });
+                        }
+                        else
+                        {
+                            return BadRequest(new
+                            {
+                                Status = 400,
+                                Message = "Failed to save changes"
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var attachmentdata = _mapper.Map(sectionDto.Attachment, attachment);
+                        _sectionTrnRepository.UpdateAttachment(attachmentdata);
                     }
                 }
-
                 if (await _sectionTrnRepository.SaveAllAsync())
                 {
                     return Ok(new
@@ -244,7 +267,38 @@ namespace MyKoel_Web.Controllers
             }
         }
 
+       [HttpPost("DeleteSection/{Id}")]
+        public async Task<ActionResult> DeleteCompanyDetails(int Id)
+        {
 
+            var data = await _sectionTrnRepository.GetSectionById(Id);
+             try
+                {
+                    _sectionTrnRepository.DeleteSection(data);
+                    if (await _sectionTrnRepository.SaveAllAsync())
+                    {
+                        var result = new
+                        {
+                            Status = 200,
+                            Message = "Data Deleted Successfully"
+                        };
+                        return Ok(result);
+                    }
+                    return BadRequest("Failed To Delete Data");
+
+                }
+                catch (Exception ex)
+                {
+                    var result = new
+                    {
+                        Status = 400,
+                        Message = ex.Message
+                    };
+                    return BadRequest(result);
+
+                }
+        
+        }
 
     }
 }

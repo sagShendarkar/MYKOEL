@@ -17,6 +17,8 @@ namespace MyKoel_Domain.DTOs
         public string FLAG {  get; set; }
         public string SEQUENCE {  get; set; }
         public bool ISACTIVE {  get; set;  }
+        public string? CATEGORY {get;set;}
+        
         public AttachmentDto Attachment { get; set; }
     }
 
@@ -31,5 +33,10 @@ namespace MyKoel_Domain.DTOs
         public bool ISREDIRECTED {  get; set; }
         public string IMAGESRC{get;set;}
         public bool ISACTIVE {  get; set;  }
+        public string IMAGE{get;set;}
+        public int? IMAGEFLAG {get;set;}
+
+
+
     }
 }

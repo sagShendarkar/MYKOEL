@@ -6,6 +6,7 @@ using MyKoel_Domain.Entities;
 
 namespace MyKoel_Domain.Models.Masters
 {
+    #nullable disable
     public class Attachments:AuditableEntities
     {
         public int ATTACHMENTID {  get; set;  }
@@ -17,6 +18,7 @@ namespace MyKoel_Domain.Models.Masters
         public bool ISPOPUP { get; set;  }
         public bool ISREDIRECTED {  get; set; }
         public bool ISACTIVE {  get; set;  }
+        public int? IMAGEFLAG {get;set;}
        public virtual SectionTransaction SectionTransaction { get; set; }
 
     }

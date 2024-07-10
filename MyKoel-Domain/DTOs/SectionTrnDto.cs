@@ -20,5 +20,7 @@ namespace MyKoel_Domain.DTOs
         public string PATH { get; set;}
         public string FILENAME { get; set;  }
         public string FILETYPE { get; set;  }
+        public string? CATEGORY {get;set;}
+
     }
 }

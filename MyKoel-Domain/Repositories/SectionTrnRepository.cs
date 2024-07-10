@@ -94,6 +94,7 @@ namespace MyKoel_Domain.Repositories
                                 SEQUENCE=cn.SEQUENCE,
                                 FILENAME=a.FILENAME,
                                 FILETYPE=a.FILETYPE,
+                                CATEGORY=cn.CATEGORY,
                                 PATH= !string.IsNullOrEmpty(a.PATH)? _imageService.ConvertLocalImageToBase64(a.PATH): null,
 
                             }).OrderByDescending(c=>c.SECTIONID).AsQueryable();
@@ -153,7 +154,7 @@ namespace MyKoel_Domain.Repositories
                                     FILETYPE = a.FILETYPE,
                                     TITLE=a.TITLE,
                                     ISACTIVE=a.ISACTIVE,
-                                    IMAGESRC= !string.IsNullOrEmpty(a.PATH) ? _imageService.ConvertLocalImageToBase64(a.PATH) : null,
+                                    IMAGE= !string.IsNullOrEmpty(a.PATH) ? _imageService.ConvertLocalImageToBase64(a.PATH) : null,
                                     PATH = a.PATH
                                 } : null
 
