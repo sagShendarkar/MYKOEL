@@ -42,7 +42,7 @@ namespace MyKoel_Domain.Data
              public DbSet<UserAccessMapping> UserMenuMap { get; set; }
              public DbSet<QuickLinks> QuickLinks { get; set; }
              public DbSet<Wallpaper> wallpaper { get; set; }
-
+        public DbSet<MoodToday> MoodToday { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
        
@@ -100,6 +100,8 @@ namespace MyKoel_Domain.Data
             
            builder.Entity<Wallpaper>()
             .HasKey(m => m.WallpaperId);
+            builder.Entity<MoodToday>()
+         .HasKey(m => m.MoodId);
 
         }
 
