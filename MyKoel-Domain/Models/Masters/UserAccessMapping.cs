@@ -11,7 +11,9 @@ namespace MyKoel_Domain.Models.Master
     public class UserAccessMapping
     {  
        public int AccessMappingId{get;set;}
-        public int MenuId { get; set; }
+        public int? MainMenuGroupId { get; set; }
+        public int? MenuGroupId { get; set; } 
+        public int? MenuId { get; set; }
         public int UserId { get; set; }
         public AppUser User { get; set; }
         public virtual Menus Menu { get; set; }

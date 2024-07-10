@@ -14,12 +14,14 @@ export class AdminHeaderComponent {
 
   public liveDemoVisible = false;
 title=""
+userName:any="";
 btnDetails:any;
   private unsubscribe: Subscription = new Subscription();
   constructor(public headerService:HeaderService,private router: Router,    private route: ActivatedRoute,
     private authService: AuthService ) {
 
 
+      this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
   }
 ngOnInit(): void {
   this.getMenuHierarchy();
@@ -39,7 +41,8 @@ ngOnInit(): void {
   }
   getMenuHierarchy(){
     this.unsubscribe.add(
-      this.headerService.getMenuHierarchy(1).subscribe((res:any)=>{
+      this.headerService.getMenuHierarchy(1).subscribe((res:any[])=>{
+        this.headerService.menuList$.next(res);
         let menuList:any[]=[]
         let tempMenuList:any[]=res;
         console.log(res);

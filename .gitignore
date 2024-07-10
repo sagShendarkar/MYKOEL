@@ -290,3 +290,4 @@ paket-files/
 
 # Visual Studio Code
 .vscode/
+*.cs

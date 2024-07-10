@@ -72,3 +72,14 @@ margin-top: 20px;
   background-color: #38CF47 !important;
   color: #fff !important;
 }
+
+@media (max-width: 450px) {
+
+  .footer {
+    background: #fff !important;
+    margin-top: 20px;
+    font-size: 14px !important;
+    --cui-footer-border-color: #fff !important;
+    --cui-footer-padding-x: 2rem !important;
+  }
+}

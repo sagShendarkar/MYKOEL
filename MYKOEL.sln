@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyKoel-Domain", "MyKoel-Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyKoel-Web", "MyKoel-Web\MyKoel-Web.csproj", "{42E2F70D-8BBE-4D9B-B6B4-1D30D2B41F33}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Industry4.TPAIntegrations", "Industry4.TPAIntegrations\Industry4.TPAIntegrations.csproj", "{71EA3A0B-7582-4FDD-A07A-7E0BC4D72FEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{42E2F70D-8BBE-4D9B-B6B4-1D30D2B41F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E2F70D-8BBE-4D9B-B6B4-1D30D2B41F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E2F70D-8BBE-4D9B-B6B4-1D30D2B41F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71EA3A0B-7582-4FDD-A07A-7E0BC4D72FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71EA3A0B-7582-4FDD-A07A-7E0BC4D72FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71EA3A0B-7582-4FDD-A07A-7E0BC4D72FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71EA3A0B-7582-4FDD-A07A-7E0BC4D72FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2256F70-6A52-4A1C-AA7F-A2F18BA4E761}
 	EndGlobalSection
 EndGlobal

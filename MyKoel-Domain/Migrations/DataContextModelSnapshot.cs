@@ -63,12 +63,27 @@ namespace MyKoel_Domain.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AppName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CostCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Department")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EMPID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -77,14 +92,32 @@ namespace MyKoel_Domain.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("EmpName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Grade")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("MANAGERID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ManagerEmailID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerTicketNo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -103,7 +136,16 @@ namespace MyKoel_Domain.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SBUNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TicketNo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -237,13 +279,31 @@ namespace MyKoel_Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MainMenuGroupId"));
 
+                    b.Property<string>("Flag")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageIcon")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsChild")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsIcon")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsImage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsPopup")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsRoute")
                         .HasColumnType("bit");
 
                     b.Property<string>("MenuGroupName")
@@ -296,6 +356,33 @@ namespace MyKoel_Domain.Migrations
                     b.ToTable("MenuGroups");
                 });
 
+            modelBuilder.Entity("MyKoel_Domain.Models.Master.MoodToday", b =>
+                {
+                    b.Property<int>("MoodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MoodId"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReportedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MoodId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MoodToday");
+                });
+
             modelBuilder.Entity("MyKoel_Domain.Models.Master.UserAccessMapping", b =>
                 {
                     b.Property<int>("AccessMappingId")
@@ -304,7 +391,13 @@ namespace MyKoel_Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccessMappingId"));
 
-                    b.Property<int>("MenuId")
+                    b.Property<int?>("MainMenuGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MenuGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MenuId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -392,6 +485,31 @@ namespace MyKoel_Domain.Migrations
                     b.ToTable("QuickLinks");
                 });
 
+            modelBuilder.Entity("MyKoel_Domain.Models.Masters.Wallpaper", b =>
+                {
+                    b.Property<int>("WallpaperId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WallpaperId"));
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WallpaperName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WallpaperPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WallpaperId");
+
+                    b.ToTable("wallpaper");
+                });
+
             modelBuilder.Entity("API.Entities.AppUserRole", b =>
                 {
                     b.HasOne("API.Entities.AppRole", "Role")
@@ -457,13 +575,23 @@ namespace MyKoel_Domain.Migrations
                     b.Navigation("MainMenuGroup");
                 });
 
+            modelBuilder.Entity("MyKoel_Domain.Models.Master.MoodToday", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MyKoel_Domain.Models.Master.UserAccessMapping", b =>
                 {
                     b.HasOne("MyKoel_Domain.Models.Masters.Menus", "Menu")
                         .WithMany("userMenuMaps")
                         .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("API.Entities.AppUser", "User")
                         .WithMany("userMenuMaps")

@@ -1,0 +1,67 @@
+
+<ng-container *ngTemplateOutlet="staticBackdrop"></ng-container>
+
+<ng-template #staticBackdrop>
+  <button hidden id="search"  #search [cModalToggle]="staticBackdropModal.id" cButton>Launch static backdrop modal</button>
+  <c-modal alignment="center"  #staticBackdropModal backdrop="static" id="staticBackdropModal">
+    <!-- <c-modal-header>
+      <h5 cModalTitle>Modal title</h5>
+      <button [cModalToggle]="staticBackdropModal.id" cButtonClose></button>
+    </c-modal-header> -->
+    <c-modal-body>
+
+      <div class="row text-center mt-4 mb-4  ">
+<div class="col-12 mb-4">
+<p class="heading">How are you feeling at work today??</p>
+</div>
+<div class="col-12">
+  <div class="row justify-content-center">
+<div class="col-2" *ngFor="let mood of moodList;let i=index;">
+  <img
+      [src]="mood.moodImg"
+       [ngClass]="{'selected-img': selectedMoodIndex===i}"
+      [alt]="mood.moodName" class="mb-3 me-3 mood-img" (click)="onImgClick(i)"
+    />
+</div>
+<!-- <div class="col-2">
+  <img
+      src="../../../../assets/images/sad.png"
+      alt="vision-title" class="mb-3 me-3 mood-img"
+    />
+</div>
+<div class="col-2">
+  <img
+      src="../../../../assets/images/good.png"
+      alt="vision-title" class="mb-3 me-3 mood-img"
+    />
+</div>
+<div class="col-2">
+  <img
+      src="../../../../assets/images/happy.png"
+      alt="vision-title" class="mb-3 me-3 mood-img"
+    />
+</div>
+<div class="col-2">
+  <img
+      src="../../../../assets/images/very-happy.png"
+      alt="vision-title" class="mb-3 me-3 mood-img"
+    />
+</div> -->
+  </div>
+</div>
+<div class="col-12   mt-3">
+<p class="sub-heading">Why?</p>
+<input class="mood-input" placeholder="Type here..."  />
+</div>
+<div class="col-12 text-center mt-4">
+   <button   class=" sub-btn  text-center">Submit</button>
+</div>
+
+      </div>
+  </c-modal-body>
+    <!-- <c-modal-footer>
+
+      <button cButton color="primary">Understood</button>
+    </c-modal-footer> -->
+  </c-modal>
+</ng-template>

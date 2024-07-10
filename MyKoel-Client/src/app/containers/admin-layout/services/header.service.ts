@@ -17,6 +17,7 @@ addBtnDetails={
   backBtnUrl$=  new BehaviorSubject<string>('');
   isDisplayBreadcrumb$=  new BehaviorSubject<boolean>(true);
   addBtn$=  new BehaviorSubject<any>(this.addBtnDetails);
+  menuList$=  new BehaviorSubject<any[]>([]);
   isDisplayAddBtn$=  new BehaviorSubject<boolean>(false);
   constructor(private http:HttpClient,private router: Router) { }
 
@@ -25,7 +26,8 @@ addBtnDetails={
   getMenuHierarchy(id:number=1)
   {
     let params=new HttpParams();
-    params=params.append('UserId',id);
+    // params=params.append('UserId',id);
+    params=params.append('Flag',"Top MenuBar");
     return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
   }
 }

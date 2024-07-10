@@ -1,5 +1,7 @@
+import { LandingPageService } from './../services/landing-page.service';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { HeaderService } from 'src/app/containers/admin-layout/services/header.service';
 
 @Component({
@@ -9,6 +11,8 @@ import { HeaderService } from 'src/app/containers/admin-layout/services/header.s
 })
 export class LandingPageComponent {
 
+  userName:any="";
+  private unsubscribe: Subscription = new Subscription();
   public liveDemoVisible = false;
   public liveDemoVisible1 = false;
   public liveDemoVisible2 = false;
@@ -23,9 +27,10 @@ export class LandingPageComponent {
   ];
   slides: any[] = [];
   constructor(
-    private domSanitizer: DomSanitizer,public headerService:HeaderService
+    private domSanitizer: DomSanitizer,public headerService:HeaderService,public landingPageService:LandingPageService
   ) {
 
+    this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
     headerService.isDisplayBreadcrumb$.next(false);
     this.slides[0] = [
       {
@@ -92,6 +97,27 @@ export class LandingPageComponent {
 
   }
 
+ngOnInit(): void {
+  this.getWallpaperMenus();
+  this.getQuickLinksMenus();
+
+}
+getWallpaperMenus(){
+  this.unsubscribe.add(
+    this.landingPageService.getLandingPageMenus(1,'Wallpaper Menus').subscribe((res)=>{
+console.log(res);
+this.landingPageService.wallpaperMenus$.next(res);
+    })
+  );
+}
+getQuickLinksMenus(){
+  this.unsubscribe.add(
+    this.landingPageService.getLandingPageMenus(1,'Quick Links').subscribe((res)=>{
+console.log(res);
+this.landingPageService.quickLinksMenus$.next(res);
+    })
+  );
+}
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
   }
