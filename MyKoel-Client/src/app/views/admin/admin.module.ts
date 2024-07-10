@@ -10,6 +10,9 @@ import { VisionMissionValuesComponent } from './components/vision-mission-values
 import { ProfileSettingComponent } from './components/profile-setting/profile-setting.component';
 import { ViewMoreAnnouncementComponent } from './components/view-more-announcement/view-more-announcement.component';
 import { ViewAnnouncementInfoComponent } from './components/view-announcement-info/view-announcement-info.component';
+import { NewsViewMoreComponent } from './components/news-view-more/news-view-more.component';
+import { ViewDetailedNewsComponent } from './components/view-detailed-news/view-detailed-news.component';
+import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-posting.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { ViewAnnouncementInfoComponent } from './components/view-announcement-in
     VisionMissionValuesComponent,
     ProfileSettingComponent,
     ViewMoreAnnouncementComponent,
-    ViewAnnouncementInfoComponent, 
+    ViewAnnouncementInfoComponent,
+    NewsViewMoreComponent,
+    ViewDetailedNewsComponent,
+    VacancyPostingComponent, 
   ],
   imports: [
     CommonModule,

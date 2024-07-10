@@ -6,6 +6,7 @@ import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
+import { MoodCheckComponent } from './views/pages/mood-check/mood-check.component';
 
 const routes: Routes = [
   {
@@ -158,6 +159,13 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    data: {
+      title: 'Login Page'
+    }
+  },
+  {
+    path: 'mood-check',
+    component: MoodCheckComponent,
     data: {
       title: 'Login Page'
     }

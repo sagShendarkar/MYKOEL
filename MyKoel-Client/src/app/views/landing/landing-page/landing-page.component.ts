@@ -11,6 +11,7 @@ import { HeaderService } from 'src/app/containers/admin-layout/services/header.s
 })
 export class LandingPageComponent {
 
+  userName:any="";
   private unsubscribe: Subscription = new Subscription();
   public liveDemoVisible = false;
   public liveDemoVisible1 = false;
@@ -29,6 +30,7 @@ export class LandingPageComponent {
     private domSanitizer: DomSanitizer,public headerService:HeaderService,public landingPageService:LandingPageService
   ) {
 
+    this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
     headerService.isDisplayBreadcrumb$.next(false);
     this.slides[0] = [
       {
@@ -94,6 +96,7 @@ export class LandingPageComponent {
     ];
 
   }
+
 ngOnInit(): void {
   this.getWallpaperMenus();
   this.getQuickLinksMenus();

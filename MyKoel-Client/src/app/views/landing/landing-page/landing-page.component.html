@@ -2,7 +2,7 @@
   <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
     <div class="banner-div pt-5  pb-4 ">
       <div class="Welcome-text">
-        <p>Welcome Deepa!</p>
+        <p>Welcome {{userName}} !</p>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-9 py-1  col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9 ">
@@ -341,7 +341,7 @@
                 loading="lazy"
               />
               <c-carousel-caption class="  d-md-block">
-                <p class="title">
+                <p class="title cursor" routerLink="/admin/view-detailed-news">
                   Kirloskar Vasundhara International Film Festival at Kolhapur
                 </p>
                 <div>
@@ -353,8 +353,8 @@
                     states.</span
                   >
                 </div>
-                <div>
-                  <span class="read-more-text">Read More..</span>
+                <div class="read-more-text" routerLink="/admin/news-view-more">
+                  <span   >View More..</span>
                 </div>
               </c-carousel-caption>
             </c-carousel-item>

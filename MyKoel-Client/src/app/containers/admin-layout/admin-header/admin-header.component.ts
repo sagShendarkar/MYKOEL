@@ -14,12 +14,14 @@ export class AdminHeaderComponent {
 
   public liveDemoVisible = false;
 title=""
+userName:any="";
 btnDetails:any;
   private unsubscribe: Subscription = new Subscription();
   constructor(public headerService:HeaderService,private router: Router,    private route: ActivatedRoute,
     private authService: AuthService ) {
 
 
+      this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
   }
 ngOnInit(): void {
   this.getMenuHierarchy();
