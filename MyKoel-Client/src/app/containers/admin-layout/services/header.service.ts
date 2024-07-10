@@ -15,6 +15,7 @@ addBtnDetails={
   baseUrl = environment.apiUrl1;
   headerTitle$=  new BehaviorSubject<string>('');
   backBtnUrl$=  new BehaviorSubject<string>('');
+  isProfilechanged$=  new BehaviorSubject<boolean>(false);
   isDisplayBreadcrumb$=  new BehaviorSubject<boolean>(true);
   addBtn$=  new BehaviorSubject<any>(this.addBtnDetails);
   menuList$=  new BehaviorSubject<any[]>([]);

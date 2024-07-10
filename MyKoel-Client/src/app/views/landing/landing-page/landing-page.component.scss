@@ -1,8 +1,9 @@
 .banner-div{
-  background: url(../../../../assets/images/banner.png) no-repeat;
+  // background: url(../../../../assets/images/banner.png) no-repeat;
 
-  background-size: cover;
+  background-size: 100% 100% !important;
   border-radius: 10px;
+  background-repeat:no-repeat !important;
 }
 .Welcome-text{
   color: #fff;
