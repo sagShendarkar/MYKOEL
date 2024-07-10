@@ -28,7 +28,7 @@ namespace MyKoel_Web.Controllers
             _sectionTrnRepository = sectionTrnRepository;
         }
 
-       [HttpGet("ShowCompanyList")]
+       [HttpGet("ShowSectionList")]
         public async Task<List<SectionTrnDto>> ShowSectionList([FromQuery] ParameterParams parameterParams)
         {
             var company = await _sectionTrnRepository.GetSectionList(parameterParams);
@@ -38,7 +38,13 @@ namespace MyKoel_Web.Controllers
             return company;
         }
 
-
+        [HttpGet("GetSectionTrnById/{Id}")]
+        public async Task<ActionResult<AddSectionTrnDto>> GetSectionDetailsById(int Id)
+        {
+            
+            var data= await _sectionTrnRepository.GetSectionDetailsById(Id);
+            return data;
+        }
         [HttpPost("AddSection")]
         public async Task<object> AddSection(AddSectionTrnDto sectionTrnDto)
         {

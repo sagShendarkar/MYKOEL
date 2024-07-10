@@ -20,6 +20,7 @@ namespace MyKoel_Domain.Interfaces
           void UpdateAttachment(Attachments attachments);
           void AddAttachment(Attachments attachments);
           Task<Attachments> GetAttachmentById(int Id);
+          Task<AddSectionTrnDto> GetSectionDetailsById(int Id);
 
     }
 }

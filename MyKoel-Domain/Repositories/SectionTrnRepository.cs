@@ -118,17 +118,47 @@ namespace MyKoel_Domain.Repositories
             _context.Entry(attachment).State=EntityState.Modified;
 
         }
-      public void AddAttachment(Attachments attachments)
+         public void AddAttachment(Attachments attachments)
         {
-            try{
+        
             _context.Entry(attachments).State=EntityState.Added;
-             SaveAllAsync();
-            }
-            catch(Exception ex){
-
-            }
         }
 
-        
+        public async Task<AddSectionTrnDto> GetSectionDetailsById(int Id)
+        {
+            var section=await (from cn in _context.SectionTransactions
+                            join an in _context.Attachments
+                            on cn.SECTIONID equals an.SECTIONID
+                            into g
+                            from a in g.DefaultIfEmpty()
+                            where cn.ISACTIVE==true && cn.SECTIONID==Id  
+                            select new AddSectionTrnDto
+                            {
+                                SECTIONID=cn.SECTIONID,
+                                TITLE=cn.TITLE,
+                                DESCRIPTION=cn.DESCRIPTION,
+                                STARTDATE=cn.STARTDATE,
+                                ENDDATE=cn.ENDDATE,
+                                ISACTIVE=cn.ISACTIVE,
+                                ISIMAGE=cn.ISIMAGE,
+                                FLAG=cn.FLAG,
+                                SEQUENCE=cn.SEQUENCE,
+                                Attachment = a != null ? new AttachmentDto
+                                {
+                                    ATTACHMENTID=a.ATTACHMENTID,
+                                    SECTIONID=a.SECTIONID,
+                                    ISPOPUP=a.ISPOPUP,
+                                    ISREDIRECTED=a.ISREDIRECTED,
+                                    FILENAME = a.FILENAME,
+                                    FILETYPE = a.FILETYPE,
+                                    TITLE=a.TITLE,
+                                    ISACTIVE=a.ISACTIVE,
+                                    IMAGESRC= !string.IsNullOrEmpty(a.PATH) ? _imageService.ConvertLocalImageToBase64(a.PATH) : null,
+                                    PATH = a.PATH
+                                } : null
+
+                            }).OrderByDescending(c=>c.SECTIONID).FirstOrDefaultAsync();
+           return section;
+        }
     }
 }
