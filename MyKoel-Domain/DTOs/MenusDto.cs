@@ -15,7 +15,6 @@ namespace MyKoel_Domain.DTOs
       public string Icon{get;set;}
       public bool IsActive{get;set;}
       public string Route{get;set;}
-       public List<MenuGroupDto> MenuGroupData{get;set;}
 
     }
 }

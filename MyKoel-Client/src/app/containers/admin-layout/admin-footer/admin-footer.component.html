@@ -7,22 +7,28 @@
   </div>
   <div class="ms-auto">
 
-    <div class="row justify-content-end">
-<div class="col-md-2">
-  <img src = "../../../../assets/SVG/y.svg" alt="My Happy SVG"/>
+    <div class="row  ">
+<div class="col-12">
+  <div class="row justify-content-end">
+<div class="col-md-2 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-2"
+*ngFor="let footerLinks of(landingPageService.footerLinksMenus$|async) ; let i=index" >
+  <img  [src]="footerLinks.imageIcon" [alt]="footerLinks.menuGroupName"/>
 </div>
-<div class="col-md-2">
+<!-- <div class="col-md-2 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-2">
   <img src = "../../../../assets/SVG/youtube.svg" alt="My Happy SVG"/>
 </div>
-<div class="col-md-2">
+<div class="col-md-2 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-2">
   <img src = "../../../../assets/SVG/in.svg" alt="My Happy SVG"/>
 </div>
-<div class="col-md-2">
+<div class="col-md-2 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-2">
   <img src = "../../../../assets/SVG/face.svg" alt="My Happy SVG"/>
 </div>
-<div class="col-md-2">
+<div class="col-md-2 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-2">
   <img src = "../../../../assets/SVG/insta.svg" alt="My Happy SVG"/>
+</div> -->
+    </div>
 </div>
+
     </div>
   </div>
 <!--</c-footer>-->

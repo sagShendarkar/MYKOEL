@@ -36,12 +36,11 @@ namespace MyKoel_Domain.Data
 
 
         }
-        public DbSet<MenuGroup> MenuGroups { get; set; }
-        public DbSet<MainMenuGroup> MainMenuGroups { get; set; }
-        public DbSet<Menus> Menus { get; set; }
-        public DbSet<UserAccessMapping> UserMenuMap { get; set; }
-        public DbSet<QuickLinks> QuickLinks { get; set; }
-        public DbSet<MoodToday> MoodToday { get; set; }
+             public DbSet<MenuGroup> MenuGroups { get; set; }
+             public DbSet<MainMenuGroup> MainMenuGroups { get; set; }
+             public DbSet<Menus>Menus { get; set; }
+             public DbSet<UserAccessMapping> UserMenuMap { get; set; }
+             public DbSet<QuickLinks> QuickLinks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -94,12 +93,9 @@ namespace MyKoel_Domain.Data
                  .WithMany(m => m.userMenuMaps)
                  .HasForeignKey(st => st.UserId)
                  .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<QuickLinks>()
-             .HasKey(m => m.QuickLinkId);
-
-            builder.Entity<MoodToday>()
-                 .HasKey(m => m.MoodId);
+                 
+           builder.Entity<QuickLinks>()
+            .HasKey(m => m.QuickLinkId);
 
         }
 

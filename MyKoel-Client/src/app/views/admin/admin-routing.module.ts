@@ -8,6 +8,9 @@ import { VisionMissionValuesComponent } from './components/vision-mission-values
 import { ProfileSettingComponent } from './components/profile-setting/profile-setting.component';
 import { ViewMoreAnnouncementComponent } from './components/view-more-announcement/view-more-announcement.component';
 import { ViewAnnouncementInfoComponent } from './components/view-announcement-info/view-announcement-info.component';
+import { NewsViewMoreComponent } from './components/news-view-more/news-view-more.component';
+import { ViewDetailedNewsComponent } from './components/view-detailed-news/view-detailed-news.component';
+import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-posting.component';
 
 const routes: Routes = [
   {
@@ -75,6 +78,37 @@ const routes: Routes = [
     }
   },
 
+  {
+    path: 'news-view-more',
+    component: NewsViewMoreComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Company News',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/home"
+    }
+  },
+
+  {
+    path: 'view-detailed-news',
+    component: ViewDetailedNewsComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Company News',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/news-view-more"
+    }
+  },
+  {
+    path: 'vacancy-posting',
+    component: VacancyPostingComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Vacancy Posting',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/home"
+    }
+  },
 ];
 
 @NgModule({

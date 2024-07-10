@@ -1,6 +1,6 @@
 .banner-div{
   background: url(../../../../assets/images/banner.png) no-repeat;
-  height: 400px;
+
   background-size: cover;
   border-radius: 10px;
 }
@@ -70,6 +70,9 @@ color: #000;
 }
 .sections{
 
+}
+.bottom-divs{
+  height: 400px;
 }
 .new-c-items{
   height: 241px !important;
@@ -175,9 +178,14 @@ color: #000;
   right: 11px;
   bottom: 5px;
   font-weight: 100;
+  cursor: pointer;
+  z-index: 2;
 }
 
+.cursor{
 
+  cursor: pointer;
+}
 .vision-title{
   color: #B15A1F;
   font-size: 26px;
@@ -231,12 +239,15 @@ color: #000;
   margin-left: 15px;
 }
 
+.box-shadow{
+
+  box-shadow: 0px 1px 0px 1px #D4D4D4
+}
 
 
-
-@media (max-width: 576px) {
-  .grid-item[_ngcontent-ng-c2911844721] {
-    flex: 0 0 31%;
+@media (max-width: 450px) {
+  .grid-item {
+    flex: 0 0 48%;
     text-align: center;
     background-color: #289F91;
     padding: 15px 5px;
@@ -244,9 +255,32 @@ color: #000;
     border-radius: 5px;
     color: #fff;
 }
+.banner-div  {
+  height: 550px;
+}
+.title{
+  font-size: 12px;
+  z-index: 6;
+}
+.vacancy-title{
+
+  font-size: 12px;
+}
+}
+
+@media (max-width: 576px) {
+//   .grid-item {
+//     flex: 0 0 31%;
+//     text-align: center;
+//     background-color: #289F91;
+//     padding: 15px 5px;
+//     box-sizing: border-box;
+//     border-radius: 5px;
+//     color: #fff;
+// }
 }
 @media (min-width: 576px) {
-  .grid-item[_ngcontent-ng-c2911844721] {
+  .grid-item {
     flex: 0 0 23%;
     text-align: center;
     background-color: #289F91;
@@ -255,11 +289,18 @@ color: #000;
     border-radius: 5px;
     color: #fff;
 }
+.banner-div {
+  height: 400px;
+}
+.vacancy-title{
+
+  font-size: 12px;
+}
 }
 
 @media (min-width: 768px) {
-  .grid-item[_ngcontent-ng-c2911844721] {
-    flex: 1 0 0%;
+  .grid-item{
+    flex: 0 0 13%;
     text-align: center;
     background-color: #289F91;
     padding: 15px 5px;
@@ -267,10 +308,15 @@ color: #000;
     border-radius: 5px;
     color: #fff;
 }
+
+.vacancy-title{
+
+  font-size: 12px;
+}
 }
 
 @media (min-width: 992px) {
-  .grid-item[_ngcontent-ng-c2911844721] {
+  .grid-item {
     flex: 1 0 0%;
     text-align: center;
     background-color: #289F91;
@@ -279,9 +325,14 @@ color: #000;
     border-radius: 5px;
     color: #fff;
 }
+
+.vacancy-title{
+
+  font-size: 12px;
+}
 }
 @media (min-width: 1400px) {
-  .grid-item[_ngcontent-ng-c2911844721] {
+  .grid-item {
     flex: 1 0 0%;
     text-align: center;
     background-color: #289F91;
@@ -290,4 +341,5 @@ color: #000;
     border-radius: 5px;
     color: #fff;
 }
+
 }
