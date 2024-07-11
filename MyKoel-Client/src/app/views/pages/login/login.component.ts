@@ -45,49 +45,21 @@ export class LoginComponent {
         localStorage.setItem('token', res.Token);
         localStorage.setItem('userId', res.UserId);
         localStorage.setItem('username', res.Username);
+        localStorage.setItem('ProfileImage', res.ProfileImage);
+if(res.WallPaperDetails!==null){
 
+        localStorage.setItem('WallpaperPath', res.WallPaperDetails.WallpaperPath);
+}
 
-        let menuList: any[] = [];
-        // let accessMenu = res[0].userAccessList;
-
-//         accessMenu.forEach((element: any) => {
-//           // console.log(element);
-//           if (menuList.length > 0) {
-//             let index = menuList.findIndex(
-//               (a) => a.MenuGroupId === element.MenuGroupId
-//             );
-//             if (index === -1) {
-//               menuList.push(element);
-//             } else {
-//               menuList[index].MenuList.push(element.MenuList[0]);
-//             }
-//           } else {
-//             menuList.push(element);
-//           }
-//         });
-
-//         menuList.forEach((element: any) => {
-//           let navobj: any = {
-//             name: element.MenuGroupName,
-//             url: element.MenuGroupAction,
-//             iconComponent: { name:  element.MenuGroupIcon },
-//           };
-//           if (element.IsChild) {
-//             navobj['children']=[]
-//             element.MenuList.forEach((ele: any) => {
-//               navobj['children'].push({
-//                 'name':ele.MenuName,
-//                 'url':ele.MenuAction
-//               });
-//             });
-//           }
-//           this.navItems.push(navobj);
-//         });
-
-// localStorage.setItem('navItems',JSON.stringify(this.navItems));
+       
 
 this.authService.isLoadingSubject.next(false);
-        this.router.navigateByUrl("/mood-check");
+if(res.IsMoodFilled!==null){
+
+        this.router.navigateByUrl("/home");
+}else{
+        this.router.navigateByUrl("/mood-check/"+res.UserId);
+}
       } else if (res.status == 400) {
 
 this.authService.isLoadingSubject.next(false);

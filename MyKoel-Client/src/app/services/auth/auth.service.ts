@@ -25,6 +25,12 @@ export class AuthService {
 
   }
 
+  moodToday(model:any)
+  {
+    return this.http.post(this.baseUrl + 'MoodToday/AddMoodToday', model);
+
+  }
+
   validateEmail(email:any)
   {
     return this.http.get(this.baseUrl + 'Account/ForgotPassword?Email='+email);

@@ -10,7 +10,7 @@ import { HeaderService } from 'src/app/containers/admin-layout/services/header.s
   styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent {
-
+wallpaperImage:any="";
   userName:any="";
   private unsubscribe: Subscription = new Subscription();
   public liveDemoVisible = false;
@@ -31,6 +31,7 @@ export class LandingPageComponent {
   ) {
 
     this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
+
     headerService.isDisplayBreadcrumb$.next(false);
     this.slides[0] = [
       {
@@ -101,6 +102,11 @@ ngOnInit(): void {
   this.getWallpaperMenus();
   this.getQuickLinksMenus();
 
+}
+ngAfterViewInit(): void {
+
+  this.wallpaperImage=localStorage.getItem('WallpaperPath')!==null?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
+ 
 }
 getWallpaperMenus(){
   this.unsubscribe.add(

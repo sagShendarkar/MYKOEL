@@ -34,7 +34,7 @@ namespace MyKoel_Web.Controllers
 
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, DataContext context,
-      IConfiguration configuration, ITokenService tokenService, AssetDetails assetDetails, IMapper mapper, IUserRepository userRepository,IImageService imageService)
+      IConfiguration configuration, ITokenService tokenService, AssetDetails assetDetails, IMapper mapper, IUserRepository userRepository, IImageService imageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,7 +44,7 @@ namespace MyKoel_Web.Controllers
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
             _assetDetails = assetDetails;
             _mapper = mapper;
-            _imageService=imageService;
+            _imageService = imageService;
 
         }
 
@@ -174,8 +174,7 @@ namespace MyKoel_Web.Controllers
                                                 WallpaperPath= !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
                                              UserId=w.UserId
                                                }).FirstOrDefaultAsync(),
-                            
-                        };
+                                                    };
 
 
                         return Ok(JsonConvert.SerializeObject(responseData));
@@ -207,17 +206,28 @@ namespace MyKoel_Web.Controllers
                             Username = userdata.UserName,
                             Token = generatedToken,
                             UserId = userdata.Id,
-                            ProfileImage=!string.IsNullOrEmpty(userdata.ProfileImage)? _imageService.ConvertLocalImageToBase64(userdata.ProfileImage ): null,
-                            WallPaperDetails=await( from w in _context.wallpaper
-                                               where w.UserId == userdata.Id
-                                               select new WallpaperDto{
-                                                WallpaperId=w.WallpaperId,
-                                                WallpaperName=w.WallpaperName,
-                                                WallpaperPath= !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
-                                                UserId=w.UserId,
-                                           
-                                               }).FirstOrDefaultAsync()
-                 
+                            ProfileImage = !string.IsNullOrEmpty(userdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(userdata.ProfileImage) : null,
+                            WallPaperDetails = await (from w in _context.wallpaper
+                                                      where w.UserId == userdata.Id
+                                                      select new WallpaperDto
+                                                      {
+                                                          WallpaperId = w.WallpaperId,
+                                                          WallpaperName = w.WallpaperName,
+                                                          WallpaperPath = !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
+                                                          UserId = w.UserId,
+
+                                                      }).FirstOrDefaultAsync(),
+                            IsMoodFilled = await (from w in _context.MoodToday
+                                                  where w.UserId == userdata.Id && w.ReportedDateTime.Date == DateTime.Now.Date
+                                                  orderby w.MoodId descending
+                                                  select new MoodTodayDto
+                                                  { 
+                                                      ReportedDateTime = w.ReportedDateTime,
+                                                      Comment = w.Comment,
+                                                      MoodId = w.MoodId,
+                                                      Rating = w.Rating,
+                                                  }).FirstOrDefaultAsync()
+
                         };
                         return Ok(JsonConvert.SerializeObject(responseData));
 
@@ -227,9 +237,10 @@ namespace MyKoel_Web.Controllers
                 else
                 {
 
-                    return new {
+                    return new
+                    {
                         status = 400,
-                        Message="Invalid TicketNo Details"
+                        Message = "Invalid TicketNo Details"
                     };
                 }
             }
@@ -241,7 +252,7 @@ namespace MyKoel_Web.Controllers
 
 
 
-   
+
 
 
 

@@ -49,29 +49,61 @@
             </div>
             <div class="col-3">
               <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Change Profile Picture</label>
+
+              <div class="row">
+<div class="col-8">
+<label cLabel for="exampleFormControlInput1">Change Profile Picture</label>
                 <input cFormControl
                        id="exampleFormControlInput1"
                        placeholder="Upload Change Profile Picture..."
-                       type="file"
+                       type="file"sizing="sm"
+
+                       accept=".jpg,.jpeg,.png"
+                       (change)="onSelectFile($event)"
                 />
-                 <!-- <button class="btn save-btn ms-4"  size="lg">
+</div>
+<div class="col-4 pt-2">
+  <button class="btn upload-btn  mt-4" [disabled]="profileImagePath===null" (click)="uploadProfileImg()">
                   Upload
-                               </button> -->
+                               </button>
+</div>
+              </div>
+<div class="row">
+<div class="col-12">
+<img [src]="ProfileImage" class="Profile-img mt-3" alt="Profile Image">
+</div>
+</div>
               </div>
             </div>
             <div class="col-3">
+
+
               <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Change Wallpaper</label>
-                <input cFormControl
-                       id="exampleFormControlInput1"
-                       placeholder="Upload Change Wallpaper..."
-                       type="file"
-                />
-                <!-- <button class="btn save-btn ms-4"  size="lg">
-                  Upload
-                               </button> -->
-              </div>
+
+                <div class="row">
+  <div class="col-8">
+  <label cLabel for="exampleFormControlInput1">Change Wallpaper</label>
+                  <input cFormControl
+                         id="exampleFormControlInput1"
+                         placeholder="Upload Change Wallpaper..."
+                         type="file"sizing="sm"
+
+                         accept=".jpg,.jpeg,.png"
+                         (change)="onSelectWallerpaperFile($event)"
+                  />
+  </div>
+  <div class="col-4 pt-2">
+    <button class="btn upload-btn  mt-4" [disabled]="wallpaperImagePath===null" (click)="uploadWallpaperImg()">
+                    Upload
+                                 </button>
+  </div>
+                </div>
+  <div class="row">
+  <div class="col-12">
+  <img [src]="wallpaperImage" class="wallpaper-img mt-3" alt="wallpaper Image">
+  </div>
+  </div>
+                </div>
             </div>
 
 
