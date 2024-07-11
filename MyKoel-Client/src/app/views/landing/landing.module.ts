@@ -7,7 +7,8 @@ import { AvatarModule, ButtonGroupModule, ButtonModule, CardModule, CarouselModu
 import { IconModule } from '@coreui/icons-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartjsModule } from '@coreui/angular-chartjs';
-import { WidgetsModule } from '../widgets/widgets.module'; 
+import { WidgetsModule } from '../widgets/widgets.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { WidgetsModule } from '../widgets/widgets.module';
     AvatarModule,
     TableModule,
     WidgetsModule,
-    CarouselModule,ModalModule
+    CarouselModule,ModalModule,
+    SharedModule
   ]
 })
 export class LandingModule { }

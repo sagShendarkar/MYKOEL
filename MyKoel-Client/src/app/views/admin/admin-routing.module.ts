@@ -38,6 +38,16 @@ const routes: Routes = [
     }
   },
   {
+    path: 'edit-announcement/:id',
+    component: AddCompanyAnnouncementComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Edit Announcement',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/company-announcement"
+    }
+  },
+  {
     path: 'vision-mission-values',
     component: VisionMissionValuesComponent,
     canActivate:[AuthGuard],

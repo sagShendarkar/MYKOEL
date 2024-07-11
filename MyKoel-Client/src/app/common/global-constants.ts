@@ -50,6 +50,7 @@ public static languages = [
   public parameterString: string;
   public static paginationDefParams={
     searchPagination:'',
+    flag:'',
     searchPaginationFota:'',
     pageNumber: 1,
     pageSize:10

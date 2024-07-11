@@ -273,46 +273,33 @@ class="mb-1"
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="bg-white pb-1 pt-4 border-rad ps-3 box-shadow">
-          <div class="row mb-4">
-            <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3">
-              <div>
+        <div class="bg-white pb-1   border-rad ps-3 box-shadow">
+          <div class="row pt-4" *ngFor="let announcement of (landingPageService.announcementList$|async);">
+            <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3" *ngIf="announcement.isimage">
+              <div *ngIf="announcement.attachment.length>0">
                 <img
                   class="wid-100"
-                  src="../../../../assets/images/img1.png"
-                  alt="My Happy SVG"
+                  [src]="announcement.attachment[0].image"
+                  alt="Announcement"
                 />
               </div>
             </div>
-            <div class="col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9">
-              <div class="title">25th to 10th April 2024</div>
+            <div  [ngClass]="announcement.isimage===false ? 'col-md-12 col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12' : ' col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9'" class="">
+              <div class="title">
+                  {{ announcement.startdate | ordinalRangeDate:announcement.enddate }}
+                </div>
               <div>
-                Declaration window is now open for Flexi Basket Options.
+                {{announcement.title}}
+
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3  col-3 ">
-              <div>
-                <img
-                  class="wid-100"
-                  src="../../../../assets/images/img2.png"
-                  alt="My Happy SVG"
-                />
-              </div>
-            </div>
-            <div class="col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9  col-9">
-              <div class="title">25th to 10th April 2024</div>
-              <div>
-                Declaration window is now open for Flexi Basket Options.
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <span class="view-more-text cursor" routerLink="/admin/view-more-announcement">View More..</span>
+                <span class="view-more-text cursor me-4" routerLink="/admin/view-more-announcement">View More..</span>
               </div>
             </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -322,7 +309,7 @@ class="mb-1"
       <p class="section-headings">Company News</p>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="(isDisplayslider$|async)===true">
         <c-carousel
           (itemChange)="onItemChange($event)"
           [dark]="true"
@@ -333,7 +320,7 @@ class="mb-1"
           <c-carousel-inner>
             <c-carousel-item
               id="news-div"
-              *ngFor="let slide of slides[2]; index as i"
+              *ngFor="let slide of (landingPageService.newsList$|async); index as i"
               class="new-c-items box-shadow"
             >
               <img
@@ -342,19 +329,29 @@ class="mb-1"
                 class="d-block w-100 new-c-items-img border-rad"
                 loading="lazy"
               />
-              <c-carousel-caption class="  d-md-block">
-                <p class="title cursor" routerLink="/admin/view-detailed-news">
-                  Kirloskar Vasundhara International Film Festival at Kolhapur
+              <c-carousel-caption class="   ">
+                <div class="row">
+                  <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3" *ngIf="slide.isimage">
+                    <div *ngIf="slide.attachment.length>0">
+                      <img
+                        class="wid-100"
+                        [src]="slide.attachment[0].image"
+                        alt="News"
+                      />
+                    </div>
+                  </div>
+                  <div  [ngClass]="slide.isimage===false ? 'col-md-12 col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12' : ' col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9'" class="">
+ <p class="title cursor" routerLink="/admin/view-detailed-news">
+                  {{ slide.title }}
                 </p>
                 <div>
                   <span class="news-title-text"
-                    >The Kolhapur chapter of the 'Kirloskar Vasundhara
-                    International Film Festival' (KVIFF) was held on September
-                    18-24, 2024. The festival has been organized in the city as
-                    part of its India tour across 25 locations in six
-                    states.</span
+                    >     {{ slide.description }} </span
                   >
                 </div>
+                  </div>
+                </div>
+
                 <div class="read-more-text" routerLink="/admin/news-view-more">
                   <span   >View More..</span>
                 </div>
@@ -432,15 +429,17 @@ class="mb-1"
       <div class="row mb-0">
         <div class="col-md-12">
           <div class="row bg-white border-rad pt-3 pb-3 bottom-divs box-shadow">
-            <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center">
+            <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"
+            *ngFor="let newHier of (landingPageService.newHiresList$|async)"
+            >
               <img
                 class=" "
                 src="../../../../assets/images/hires1.png"
                 alt="My Happy SVG"
               />
-              <div class="title text-center">Rajat Patil</div>
+              <div class="title text-center">{{newHier.title}}</div>
             </div>
-            <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center">
+            <!-- <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center">
               <img
                 class=" "
                 src="../../../../assets/images/hires2.png"
@@ -479,7 +478,7 @@ class="mb-1"
                 alt="My Happy SVG"
               />
               <div class="title text-center">Neha Tiwari</div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

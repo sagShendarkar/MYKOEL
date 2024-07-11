@@ -1,7 +1,7 @@
 import { LandingPageService } from './../services/landing-page.service';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { HeaderService } from 'src/app/containers/admin-layout/services/header.service';
 
 @Component({
@@ -11,6 +11,8 @@ import { HeaderService } from 'src/app/containers/admin-layout/services/header.s
 })
 export class LandingPageComponent {
 wallpaperImage:any="";
+
+  isDisplayslider$=  new BehaviorSubject<boolean>(false);
   userName:any="";
   private unsubscribe: Subscription = new Subscription();
   public liveDemoVisible = false;
@@ -33,80 +35,41 @@ wallpaperImage:any="";
     this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
 
     headerService.isDisplayBreadcrumb$.next(false);
-    this.slides[0] = [
-      {
-        id: 0,
-        src: domSanitizer.bypassSecurityTrustUrl(this.imageSrc[0]),
-        title: 'First slide',
-        subtitle: 'Nulla vitae elit libero, a pharetra augue mollis interdum.'
-      },
-      {
-        id: 1,
-        src: domSanitizer.bypassSecurityTrustUrl(this.imageSrc[1]),
-        title: 'Second slide',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      },
-      {
-        id: 2,
-        src: domSanitizer.bypassSecurityTrustUrl(this.imageSrc[2]),
-        title: 'Third slide',
-        subtitle: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
-      }
-    ];
 
-    this.slides[1] = [
-      {
-        id: 0,
-        src: this.imageSrc[3],
-        title: 'First slide',
-        subtitle: 'Nulla vitae elit libero, a pharetra augue mollis interdum.'
-      },
-      {
-        id: 1,
-        src: this.imageSrc[4],
-        title: 'Second slide',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      },
-      {
-        id: 2,
-        src: this.imageSrc[5],
-        title: 'Third slide',
-        subtitle: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
-      }
-    ];
 
     this.slides[2] = [
       {
         id: 0,
-        src: domSanitizer.bypassSecurityTrustUrl(this.slidesLight[0]),
-        title: 'First slide',
+         title: 'First slide',
         subtitle: 'Nulla vitae elit libero, a pharetra augue mollis interdum.'
       },
       {
         id: 1,
-        src: domSanitizer.bypassSecurityTrustUrl(this.slidesLight[1]),
         title: 'Second slide',
         subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
       },
       {
         id: 2,
-        src: domSanitizer.bypassSecurityTrustUrl(this.slidesLight[2]),
-        title: 'Third slide',
+         title: 'Third slide',
         subtitle: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
       }
     ];
 
+    // this.landingPageService.newsList$.next(this.slides[2] );
   }
 
 ngOnInit(): void {
   this.getWallpaperMenus();
   this.getQuickLinksMenus();
+  this.getAnnouncementList();
+  this.getNewsList();
+  this.getNewHiresList();
 
 }
 ngAfterViewInit(): void {
 
   this.wallpaperImage=localStorage.getItem('WallpaperPath')!==null?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
- 
+
 }
 getWallpaperMenus(){
   this.unsubscribe.add(
@@ -119,13 +82,40 @@ this.landingPageService.wallpaperMenus$.next(res);
 getQuickLinksMenus(){
   this.unsubscribe.add(
     this.landingPageService.getLandingPageMenus(1,'Quick Links').subscribe((res)=>{
-console.log(res);
+
 this.landingPageService.quickLinksMenus$.next(res);
     })
   );
 }
+getAnnouncementList(){
+  this.unsubscribe.add(
+    this.landingPageService.getSectionList('Announcement',2).subscribe((res)=>{
+console.log(res);
+this.landingPageService.announcementList$.next(res);
+    })
+  );
+}
+getNewsList(){
+  this.unsubscribe.add(
+    this.landingPageService.getSectionList('News',5).subscribe((res)=>{
+console.log(res);
+this.landingPageService.newsList$.next(res);
+this.isDisplayslider$.next(true);
+
+    })
+  );
+}
+getNewHiresList(){
+  this.unsubscribe.add(
+    this.landingPageService.getSectionList('New Hires',5).subscribe((res)=>{
+console.log(res);
+this.landingPageService.newHiresList$.next(res);
+
+    })
+  );
+}
   onItemChange($event: any): void {
-    console.log('Carousel onItemChange', $event);
+    // console.log('Carousel onItemChange', $event);
   }
 
   handleLiveDemoChange(event: boolean) {

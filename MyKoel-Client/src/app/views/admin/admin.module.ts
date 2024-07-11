@@ -1,8 +1,12 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonGroupModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, ListGroupModule, SharedModule, SpinnerModule, TableModule } from '@coreui/angular';
+import { ButtonGroupModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, ListGroupModule,  SpinnerModule, TableModule } from '@coreui/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import {  BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
+import { SharedModule } from '../../shared/shared.module';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CompanyAnnouncementComponent } from './components/company-announcement/company-announcement.component';
 import { AddCompanyAnnouncementComponent } from './components/add-company-announcement/add-company-announcement.component';
@@ -25,12 +29,12 @@ import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-po
     ViewAnnouncementInfoComponent,
     NewsViewMoreComponent,
     ViewDetailedNewsComponent,
-    VacancyPostingComponent, 
+    VacancyPostingComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-
+    PaginationModule,
     CommonModule,
     CardModule,
     FormModule,
@@ -46,6 +50,7 @@ import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-po
     ListGroupModule,
     SpinnerModule,
     TableModule,
+    BsDatepickerModule
   ]
 })
 export class AdminModule { }

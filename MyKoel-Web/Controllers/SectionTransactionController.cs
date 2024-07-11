@@ -221,6 +221,7 @@ namespace MyKoel_Web.Controllers
                                 item.ISACTIVE = true;
                                 item.PATH = Path.Combine(folderPath, fileName);
 
+                            item.SECTIONID = sectionDto.SECTIONID;
                                 if (item.ATTACHMENTID == 0)
                                 {
                                     var attachments = _mapper.Map<Attachments>(item);

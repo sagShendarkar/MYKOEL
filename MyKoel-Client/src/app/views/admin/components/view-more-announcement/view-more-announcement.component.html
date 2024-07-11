@@ -4,7 +4,7 @@
     <div class="bg-white pb-1 pt-4 border-rad ps-3 pe-3">
 
 <div class="row">
-  <div class="col-md-6 border-bottom">
+  <div class="col-md-6 border-bottom" *ngFor="let announcement of (sectionService.sectionTransactionList$|async)">
       <div class="row mb-4 mt-3">
         <div class="col-md-3">
           <div>
@@ -16,113 +16,33 @@
           </div>
         </div>
         <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >25th to 10th April 2024</div>
-          <div>
-            Declaration window is now open for Flexi Basket Options.
-          </div>
-        </div>
-      </div>
-    </div>
-  <div class="col-md-6 border-bottom">
-      <div class="row mt-3">
-        <div class="col-md-3">
-          <div>
-            <img
-              class="wid-100"
-              src="../../../../assets/images/img2.png"
-              alt="My Happy SVG"
-            />
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >25th to 10th April 2024</div>
-          <div>
-            Declaration window is now open for Flexi Basket Options.
-          </div>
-        </div>
+          <div class="title cursor" routerLink="/admin/view-announcement-info"  >
+            {{ announcement.startdate | ordinalRangeDate:announcement.enddate }}
 
-      </div>
-    </div>
-  <div class="col-md-6 border-bottom">
-      <div class="row mb-4 mt-3">
-        <div class="col-md-3">
-          <div>
-            <img
-              class="wid-100"
-              src="../../../../assets/images/img1.png"
-              alt="My Happy SVG"
-            />
           </div>
-        </div>
-        <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >25th to 10th April 2024</div>
           <div>
-            Declaration window is now open for Flexi Basket Options.
+            {{announcement.title}}
           </div>
         </div>
       </div>
     </div>
-  <div class="col-md-6 border-bottom">
-      <div class="row mt-3">
-        <div class="col-md-3">
-          <div>
-            <img
-              class="wid-100"
-              src="../../../../assets/images/img2.png"
-              alt="My Happy SVG"
-            />
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >25th to 10th April 2024</div>
-          <div>
-            Declaration window is now open for Flexi Basket Options.
-          </div>
-        </div>
+   </div>
 
+    <div  class="row" *ngIf="(sectionService.isLoading$ |async)">
+      <div class="text-center col-12">
+              <c-spinner size="sm" variant="grow"></c-spinner><span>Loading...</span>
+              </div>
+                  </div>
+    <div class="row mt-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end  mb-5 "
+          *ngIf="pagination">
+          <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+              [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage"
+              (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+              firstText="&laquo;" lastText="&raquo;" [maxSize]="5" [rotate]="true">
+          </pagination>
       </div>
-    </div>
-  <div class="col-md-6 border-bottom">
-      <div class="row mb-4 mt-3">
-        <div class="col-md-3">
-          <div>
-            <img
-              class="wid-100"
-              src="../../../../assets/images/img1.png"
-              alt="My Happy SVG"
-            />
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >25th to 10th April 2024</div>
-          <div>
-            Declaration window is now open for Flexi Basket Options.
-          </div>
-        </div>
-      </div>
-    </div>
-  <div class="col-md-6 border-bottom">
-      <div class="row mt-3">
-        <div class="col-md-3">
-          <div>
-            <img
-              class="wid-100"
-              src="../../../../assets/images/img2.png"
-              alt="My Happy SVG"
-            />
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >25th to 10th April 2024</div>
-          <div>
-            Declaration window is now open for Flexi Basket Options.
-          </div>
-        </div>
-
-      </div>
-    </div>
-    </div>
-
+  </div>
     </div>
   </div>
 </div>

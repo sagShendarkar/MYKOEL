@@ -13,6 +13,9 @@ export class LandingPageService {
   wallpaperMenus$=  new BehaviorSubject<any[]>([]);
   quickLinksMenus$=  new BehaviorSubject<any[]>([]);
   footerLinksMenus$=  new BehaviorSubject<any[]>([]);
+  newsList$=  new BehaviorSubject<any[]>([]);
+  newHiresList$=  new BehaviorSubject<any[]>([]);
+  announcementList$=  new BehaviorSubject<any[]>([]);
   baseUrl = environment.apiUrl1;
   constructor(private http:HttpClient,private router: Router) { }
 
@@ -23,5 +26,15 @@ export class LandingPageService {
     // params=params.append('UserId',id);
     params=params.append('Flag',Flag);
     return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
+  }
+  getSectionList(Flag:string='',PageSize=0,PageNumber=1)
+  {
+    let params=new HttpParams();
+    //Announcement
+    // params=params.append('UserId',id);
+    params=params.append('Flag',Flag);
+    params=params.append('PageSize',PageSize);
+    params=params.append('PageNumber',PageNumber);
+    return this.http.get<any>(this.baseUrl+'SectionTransaction/ShowSectionList',{params});
   }
 }
