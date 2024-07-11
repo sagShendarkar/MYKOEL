@@ -29,7 +29,7 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("ShowSectionList")]
-        public async Task<List<SectionTrnDto>> ShowSectionList([FromQuery] ParameterParams parameterParams)
+        public async Task<List<AddSectionTrnDto>> ShowSectionList([FromQuery] ParameterParams parameterParams)
         {
             var company = await _sectionTrnRepository.GetSectionList(parameterParams);
             Response.AddPaginationHeader(company.CurrentPage, company.PageSize,

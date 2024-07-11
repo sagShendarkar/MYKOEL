@@ -73,15 +73,11 @@ namespace MyKoel_Domain.Repositories
             _context.Entry(SectionTransaction).State=EntityState.Added;
         }
 
-        public async Task<PagedList<SectionTrnDto>> GetSectionList(ParameterParams parameterParams)
+        public async Task<PagedList<AddSectionTrnDto>> GetSectionList(ParameterParams parameterParams)
         {
            var announcement=(from cn in _context.SectionTransactions
-                            join an in _context.Attachments
-                            on cn.SECTIONID equals an.SECTIONID
-                            into g
-                            from a in g.DefaultIfEmpty()
                             where cn.ISACTIVE==true
-                            select new SectionTrnDto
+                            select new AddSectionTrnDto
                             {
                                 SECTIONID=cn.SECTIONID,
                                 TITLE=cn.TITLE,
@@ -92,16 +88,29 @@ namespace MyKoel_Domain.Repositories
                                 ISIMAGE=cn.ISIMAGE,
                                 FLAG=cn.FLAG,
                                 SEQUENCE=cn.SEQUENCE,
-                                FILENAME=a.FILENAME,
-                                FILETYPE=a.FILETYPE,
                                 CATEGORY=cn.CATEGORY,
-                                PATH= !string.IsNullOrEmpty(a.PATH)? _imageService.ConvertLocalImageToBase64(a.PATH): null,
+                                Attachment = (from a in _context.Attachments
+                                            where a.SECTIONID==cn.SECTIONID
+                                 select new AttachmentDto
+                                {
+                                    ATTACHMENTID=a.ATTACHMENTID,
+                                    SECTIONID=a.SECTIONID,
+                                    ISPOPUP=a.ISPOPUP,
+                                    ISREDIRECTED=a.ISREDIRECTED,
+                                    FILENAME = a.FILENAME,
+                                    FILETYPE = a.FILETYPE,
+                                    TITLE=a.TITLE,
+                                    ISACTIVE=a.ISACTIVE,
+                                    IMAGE= !string.IsNullOrEmpty(a.PATH) ? _imageService.ConvertLocalImageToBase64(a.PATH) : null,
+                                    PATH = a.PATH,
+                                    IMAGEFLAG=a.IMAGEFLAG
+                                }).ToList() 
 
                             }).OrderByDescending(c=>c.SECTIONID).AsQueryable();
              if(!string.IsNullOrEmpty(parameterParams.Flag)){
                 announcement=announcement.Where(c=>c.FLAG==parameterParams.Flag);
              }
-          return await PagedList<SectionTrnDto>.CreateAsync(announcement.ProjectTo<SectionTrnDto>(_mapper.ConfigurationProvider)
+          return await PagedList<AddSectionTrnDto>.CreateAsync(announcement.ProjectTo<AddSectionTrnDto>(_mapper.ConfigurationProvider)
                                  .AsNoTracking(),parameterParams.PageNumber,parameterParams.PageSize);
    
         }

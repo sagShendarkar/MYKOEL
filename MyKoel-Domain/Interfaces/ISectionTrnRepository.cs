@@ -11,7 +11,7 @@ namespace MyKoel_Domain.Interfaces
 {
     public interface ISectionTrnRepository
     {
-          Task<PagedList<SectionTrnDto>> GetSectionList(ParameterParams parameterParams);
+          Task<PagedList<AddSectionTrnDto>> GetSectionList(ParameterParams parameterParams);
           void UpdateSection(SectionTransaction sectionTrn);
           Task<bool> SaveAllAsync();
           void DeleteSection(SectionTransaction sectionTransaction);
