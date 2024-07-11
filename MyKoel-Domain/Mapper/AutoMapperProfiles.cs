@@ -28,6 +28,15 @@ namespace API.Mapper
             CreateMap<AttachmentDto, Attachments>();
             CreateMap<Attachments, AttachmentDto>();
             CreateMap<AddSectionTrnDto, AddSectionTrnDto>();
+             CreateMap<BreakFastDto, BreakFastDto>();
+            CreateMap<BreakFastDto, BreakFast>();
+            CreateMap<BreakFast, BreakFastDto>();
+             CreateMap<LunchDto, LunchDto>();
+            CreateMap<LunchDto, LunchMaster>();
+            CreateMap<LunchMaster, LunchDto>();
+            CreateMap<CanteenDto, CanteenMenus>();
+            CreateMap<CanteenMenus, CanteenDto>();
+            CreateMap<CanteenMenuListDto, CanteenMenuListDto>();
 
         }
     }
