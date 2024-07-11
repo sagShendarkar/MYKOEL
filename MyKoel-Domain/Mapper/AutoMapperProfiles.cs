@@ -24,6 +24,7 @@ namespace API.Mapper
             CreateMap<Attachments, AddSectionTrnDto>();
             CreateMap<AttachmentDto, Attachments>();
             CreateMap<Attachments, AttachmentDto>();
+            CreateMap<AddSectionTrnDto, AddSectionTrnDto>();
 
         }
     }
