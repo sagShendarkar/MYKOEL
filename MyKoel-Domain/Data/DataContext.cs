@@ -42,6 +42,8 @@ namespace MyKoel_Domain.Data
              public DbSet<UserAccessMapping> UserMenuMap { get; set; }
              public DbSet<QuickLinks> QuickLinks { get; set; }
              public DbSet<Wallpaper> wallpaper { get; set; }
+             public DbSet<SectionTransaction> SectionTransactions { get; set; }
+             public DbSet<Attachments> Attachments { get; set; }
         public DbSet<MoodToday> MoodToday { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -103,6 +105,19 @@ namespace MyKoel_Domain.Data
             builder.Entity<MoodToday>()
          .HasKey(m => m.MoodId);
 
+            builder.Entity<SectionTransaction>()
+            .HasKey(m => m.SECTIONID);
+            
+                builder.Entity<Attachments>()
+            .HasKey(m => m.ATTACHMENTID);
+
+              builder.Entity<Attachments>()
+                .HasOne<SectionTransaction>(mg => mg.SectionTransaction)
+                .WithMany(m => m.Attachments)
+                .HasForeignKey(st => st.SECTIONID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
         }
 
          public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -114,13 +129,13 @@ namespace MyKoel_Domain.Data
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = userId;
-                        entry.Entity.CreatedDate = _dateTime.UtcNow;
+                        entry.Entity.CREATEDBY = userId;
+                        entry.Entity.CREATEDDATE = _dateTime.UtcNow;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.UpdatedBy = userId;
-                        entry.Entity.UpdatedDate = _dateTime.UtcNow;
+                        entry.Entity.UPDATEDBY = userId;
+                        entry.Entity.UPDATEDDATE = _dateTime.UtcNow;
                         break;
                 }
             }

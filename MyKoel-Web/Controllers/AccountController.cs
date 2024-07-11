@@ -165,17 +165,16 @@ namespace MyKoel_Web.Controllers
                             Username = usermodel.UserName,
                             Token = generatedToken,
                             UserId = usermodel.Id,
-                            ProfileImage = !string.IsNullOrEmpty(usermodel.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage) : null,
-                            WallPaperDetails = await (from w in _context.wallpaper
-                                                      where w.UserId == usermodel.Id
-                                                      select new WallpaperDto
-                                                      {
-                                                          WallpaperId = w.WallpaperId,
-                                                          WallpaperName = w.WallpaperName,
-                                                          WallpaperPath = !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
-                                                          UserId = w.UserId
-                                                      }).FirstOrDefaultAsync()
-                        };
+                            ProfileImage=!string.IsNullOrEmpty(usermodel.ProfileImage)? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage): null,
+                            WallPaperDetails=await( from w in _context.wallpaper
+                                               where w.UserId == usermodel.Id
+                                               select new WallpaperDto{
+                                                WallpaperId=w.WallpaperId,
+                                                WallpaperName=w.WallpaperName,
+                                                WallpaperPath= !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
+                                             UserId=w.UserId
+                                               }).FirstOrDefaultAsync(),
+                                                    };
 
 
                         return Ok(JsonConvert.SerializeObject(responseData));

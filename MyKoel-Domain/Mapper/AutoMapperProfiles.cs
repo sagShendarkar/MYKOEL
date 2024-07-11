@@ -10,6 +10,7 @@ namespace API.Mapper
     {
         public AutoMapperProfiles()
         {
+
             CreateMap<MoodTodayDto, MoodToday>();
             CreateMap<MoodToday, MoodTodayDto>();
             CreateMap<WallpaperDto, Wallpaper>();
@@ -18,6 +19,16 @@ namespace API.Mapper
             CreateMap<UserAccessMapping, UserAccessMappingDto>();
             CreateMap<UserProfileDto, AppUser>();
             CreateMap<AppUser, UserProfileDto>();
+
+            CreateMap<SectionTrnDto, SectionTrnDto>();
+            CreateMap<AddSectionTrnDto, SectionTransaction>();
+            CreateMap<SectionTransaction, AddSectionTrnDto>();
+            CreateMap<AddSectionTrnDto, Attachments>();
+            CreateMap<Attachments, AddSectionTrnDto>();
+            CreateMap<AttachmentDto, Attachments>();
+            CreateMap<Attachments, AttachmentDto>();
+            CreateMap<AddSectionTrnDto, AddSectionTrnDto>();
+
         }
     }
 }

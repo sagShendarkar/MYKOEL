@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyKoel_Domain.Data;
 
@@ -11,9 +12,11 @@ using MyKoel_Domain.Data;
 namespace MyKoel_Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240710093918_IntialDb10-7-24")]
+    partial class IntialDb10724
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -400,13 +403,12 @@ namespace MyKoel_Domain.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FILENAME")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FILETYPE")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("IMAGEFLAG")
-                        .HasColumnType("int");
 
                     b.Property<bool>("ISACTIVE")
                         .HasColumnType("bit");
@@ -418,12 +420,14 @@ namespace MyKoel_Domain.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PATH")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SECTIONID")
                         .HasColumnType("int");
 
                     b.Property<string>("TITLE")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UPDATEDBY")
@@ -519,9 +523,6 @@ namespace MyKoel_Domain.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SECTIONID"));
-
-                    b.Property<string>("CATEGORY")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CREATEDBY")
                         .HasColumnType("int");
