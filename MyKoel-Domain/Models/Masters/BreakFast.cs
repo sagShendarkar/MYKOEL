@@ -8,9 +8,9 @@ namespace MyKoel_Domain.Models.Masters
     #nullable disable
     public class BreakFast
     {
-         public int BreakFastId { get; set; }
-         public string BreakFastName { get; set; } 
-         public bool IsActive { get; set; }
+         public int  BREAKFASTID  { get; set; }
+         public string BREAKFASTNAME  { get; set; } 
+         public bool ISACTIVE  { get; set; }
        
     }
 }

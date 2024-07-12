@@ -34,12 +34,12 @@ namespace MyKoel_Domain.Repositories
 
         public async Task<bool> BreakfastExists(string Name)
         {
-            return await _context.BreakFasts.AnyAsync(x => x.BreakFastName.ToLower() == Name.ToLower());
+            return await _context.BreakFasts.AnyAsync(x => x.BREAKFASTNAME.ToLower() == Name.ToLower());
         }
 
         public void DeleteBreakfast(BreakFast breakfast)
         {
-            breakfast.IsActive = false;
+            breakfast.ISACTIVE = false;
             _context.Entry(breakfast).State = EntityState.Modified;
         }
         public async Task<bool> SaveAllAsync()
@@ -63,17 +63,17 @@ namespace MyKoel_Domain.Repositories
         public async Task<BreakFast> GetBreakfastById(int Id)
         {
             var breakfast = await _context.BreakFasts
-           .SingleOrDefaultAsync(x => x.BreakFastId == Id);
+           .SingleOrDefaultAsync(x => x.BREAKFASTID == Id);
             return breakfast;
         }
 
         public async Task<PagedList<BreakFastDto>> GetBreakfastList(ParameterParams parameterParams)
         {
-           var breakfast=_context.BreakFasts.Where(x=>x.IsActive==true)
-                            .OrderByDescending(c=>c.BreakFastId).AsQueryable();
+           var breakfast=_context.BreakFasts.Where(x=>x.ISACTIVE==true)
+                            .OrderByDescending(c=>c.BREAKFASTID).AsQueryable();
 
          if(parameterParams.searchPagination!=null){
-               breakfast=breakfast.Where(x=> x.BreakFastName.ToLower().Contains(parameterParams.searchPagination.ToLower()));
+               breakfast=breakfast.Where(x=> x.BREAKFASTNAME.ToLower().Contains(parameterParams.searchPagination.ToLower()));
          }  
           return await PagedList<BreakFastDto>.CreateAsync(breakfast.ProjectTo<BreakFastDto>(_mapper.ConfigurationProvider)
                                  .AsNoTracking(),parameterParams.PageNumber,parameterParams.PageSize);
@@ -83,11 +83,11 @@ namespace MyKoel_Domain.Repositories
         public  async Task<List<BreakFastDto>> GetDropdownList(int BreakFastId, string? Desc)
         {
             var breakfastdata= await (from b in _context.BreakFasts
-                            where b.IsActive==true
+                            where b.ISACTIVE==true
                             select new BreakFastDto{
-                                BreakFastId = b.BreakFastId,
-                                BreakFastName=b.BreakFastName,
-                               IsActive=b.IsActive
+                                BreakFastId = b.BREAKFASTID,
+                                BreakFastName=b.BREAKFASTNAME,
+                               IsActive=b.ISACTIVE
                             }).ToListAsync();
                       if(!string.IsNullOrEmpty(Desc))
                       {

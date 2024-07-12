@@ -8,8 +8,8 @@ namespace MyKoel_Domain.Models.Masters
     #nullable disable
     public class LunchMaster
     {
-         public int LunchId { get; set; }
-         public string LunchName { get; set; } 
-         public bool IsActive { get; set; }
+         public int LUNCHID  { get; set; }
+         public string LUNCHNAME  { get; set; } 
+         public bool ISACTIVE  { get; set; }
     }
 }

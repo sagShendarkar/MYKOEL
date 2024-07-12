@@ -6,7 +6,7 @@ namespace MyKoel_Domain.Enums
         Retirement = 2,
         Informational = 3,
         Organizational = 4,
-        announcement = 5,
+        Announcement = 5,
         Other = 6
 
     }
