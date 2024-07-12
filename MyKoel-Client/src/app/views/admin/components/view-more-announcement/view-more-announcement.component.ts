@@ -70,4 +70,7 @@ export class ViewMoreAnnouncementComponent {
     this.loadSectionList();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe.unsubscribe();
+  }
 }

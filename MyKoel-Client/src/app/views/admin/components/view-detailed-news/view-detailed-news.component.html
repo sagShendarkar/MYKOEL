@@ -7,38 +7,22 @@
   <div class="col-md-12  pb-4">
       <div class="row mt-3">
         <div class="col-md-3">
-          <div>
+          <div *ngIf="newsDetails.attachment.length>0">
             <img
-              class="wid-100"
-              src="../../../../assets/images/news-img.png"
-              alt="My Happy SVG"
+              class="  section-img"
+              [src]="newsDetails.attachment[0].image"
+              alt="news"
             />
           </div>
         </div>
         <div class="col-md-9">
-          <div class="title mb-2">Kirloskar Vasundhara International Film Festival at Kolhapur</div>
+          <div class="title mb-2"> {{newsDetails.title}}</div>
           <div>
-            The Kolhapur chapter of the 'Kirloskar Vasundhara International Film Festival' (KVIFF) was held on September 18-24, 2024. The festival has been organized in the city as part of its India tour across 25 locations in six states.
-          </div>
-          <div>
-            The Kolhapur chapter of the 'Kirloskar Vasundhara International Film Festival' (KVIFF) was held on September 18-24, 2024. The festival has been organized in the city as part of its India tour across 25 locations in six states.
-          </div>
-          <div>
-            The Kolhapur chapter of the 'Kirloskar Vasundhara International Film Festival' (KVIFF) was held on September 18-24, 2024. The festival has been organized in the city as part of its India tour across 25 locations in six states.
-          </div>
-        </div>
-        <div class="col-12 mt-4">
-<div>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+            {{newsDetails.description}}
+           </div>
 
-</div>
-<div>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-</div>
-<div>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-</div>
         </div>
+
 
       </div>
     </div>

@@ -46,4 +46,7 @@ export class ViewAnnouncementInfoComponent {
           })
       );
     }
+    ngOnDestroy(): void {
+      this.unsubscribe.unsubscribe();
+    }
 }

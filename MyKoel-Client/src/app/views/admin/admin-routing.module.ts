@@ -172,7 +172,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'view-detailed-news',
+    path: 'view-detailed-news/:id',
     component: ViewDetailedNewsComponent,
     canActivate:[AuthGuard],
     data: {
