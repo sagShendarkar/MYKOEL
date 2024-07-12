@@ -27,6 +27,10 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<IImageService,ImageService>();
             services.AddScoped<ISectionTrnRepository,SectionTransactionRepository>();
             services.AddScoped<IMoodTodayRepository, MoodTodayRepository>();
+            services.AddScoped<IBreakFastRepository, BreakfastRepository>();
+            services.AddScoped<ILunchRepository, LunchRepository>();
+            services.AddScoped<ICanteenMenuRepository, CanteenMenuRepository>();
+
             return services;
         }
     }
