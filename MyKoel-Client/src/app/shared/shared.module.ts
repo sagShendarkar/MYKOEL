@@ -4,17 +4,19 @@ import { CommonModule } from '@angular/common';
 import { SharedRoutingModule } from './shared-routing.module';
 import { OrdinalDatePipe } from './customPipe/ordinal-date.pipe';
 import { OrdinalRangeDatePipe } from './customPipe/ordinal-range-date.pipe';
+import { TruncateWordsPipe } from './customPipe/truncate-words.pipe';
 
 
 @NgModule({
   declarations: [
     OrdinalDatePipe,
-    OrdinalRangeDatePipe
+    OrdinalRangeDatePipe,
+    TruncateWordsPipe
   ],
   imports: [
     CommonModule,
     SharedRoutingModule
   ],
-  exports:[OrdinalDatePipe,OrdinalRangeDatePipe]
+  exports:[OrdinalDatePipe,OrdinalRangeDatePipe,TruncateWordsPipe]
 })
 export class SharedModule { }

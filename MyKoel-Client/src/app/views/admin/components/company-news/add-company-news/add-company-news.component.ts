@@ -1,24 +1,26 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SectionService } from '../../services/section.service';
+
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SectionService } from '../../../services/section.service';
 
 @Component({
-  selector: 'app-add-company-announcement',
-  templateUrl: './add-company-announcement.component.html',
-  styleUrl: './add-company-announcement.component.scss'
+  selector: 'app-add-company-news',
+  templateUrl: './add-company-news.component.html',
+  styleUrl: './add-company-news.component.scss'
 })
-export class AddCompanyAnnouncementComponent {
+export class AddCompanyNewsComponent {
+
 
   isAddMode: Boolean = true;
   submitted = false;
   deletedAttachmentIds: number[] = [];
   private unsubscribe: Subscription = new Subscription();
-  announcementform: FormGroup;
+  newsform: FormGroup;
   id!: number;
   /////////////
 
@@ -62,7 +64,7 @@ export class AddCompanyAnnouncementComponent {
           console.log(x);
           x.enddate = this.datepipe.transform(x.enddate,'dd MMM yyyy');
           x.startdate = this.datepipe.transform(x.startdate,'dd MMM yyyy');
-          this.announcementform.patchValue(x);
+          this.newsform.patchValue(x);
           if (x.attachment.length > 0) {
             this.loadAttachments(x.attachment);
           }
@@ -76,7 +78,7 @@ export class AddCompanyAnnouncementComponent {
     attachments.forEach((element: any) => {
 if(element.imageflag===2){
 
-      const add = this.announcementform.get('attachment') as FormArray;
+      const add = this.newsform.get('attachment') as FormArray;
       add.push(
         this.fb.group({
           attachmentid: [element.attachmentid],
@@ -100,7 +102,7 @@ if(element.imageflag===2){
 }
 if(element.imageflag===1){
 
-  this.announcementform.controls['imagePath'].setValue(element.image);
+  this.newsform.controls['imagePath'].setValue(element.image);
   this.imageSrc=element.image;
   this.attachmentId=element.attachmentid;
   this.filename=element.filename;
@@ -110,7 +112,7 @@ if(element.imageflag===1){
     });
   }
   initializeForm() {
-    this.announcementform = new FormGroup({
+    this.newsform = new FormGroup({
 
       sectionid: new FormControl(0),
       title: new FormControl('', Validators.required),
@@ -118,10 +120,9 @@ if(element.imageflag===1){
       isimage: new FormControl(true, Validators.required),
       startdate: new FormControl('', Validators.required),
       enddate: new FormControl('', Validators.required),
-      flag: new FormControl('Announcement', Validators.required),
+      flag: new FormControl('News', Validators.required),
       sequence: new FormControl('', ),
       isactive: new FormControl(true),
-      category: new FormControl('', Validators.required),
 
       imagePath: new FormControl(null, Validators.required),
       imageSrc: new FormControl(null),
@@ -131,11 +132,11 @@ if(element.imageflag===1){
 
 
   get attachment(): FormArray {
-    return this.announcementform.get('attachment') as FormArray;
+    return this.newsform.get('attachment') as FormArray;
   }
 
   addNew() {
-    const add = this.announcementform.get('attachment') as FormArray;
+    const add = this.newsform.get('attachment') as FormArray;
     add.push(
       this.fb.group({
         attachmentid: [0],
@@ -156,11 +157,11 @@ if(element.imageflag===1){
         imageflag: [2],
       })
     );
-    console.log(this.announcementform.getRawValue());
+    console.log(this.newsform.getRawValue());
   }
 
   deleteA(index: number) {
-    const add = this.announcementform.get('attachment') as FormArray;
+    const add = this.newsform.get('attachment') as FormArray;
     add.at(index);
     let values = add.at(index).getRawValue();
     console.log(values.attachmentId);
@@ -247,15 +248,15 @@ if(element.imageflag===1){
       this.filename=name;
       this.filetype=extn;
       // if(event.target.files[0].size  < 50000 || event.target.files[0].size > 200000)
-      if (event.target.files[0].size > 200000) {
+      if (event.target.files[0].size > 5000000) {
         console.log('test img');
 
         Swal.fire({
           icon: 'error',
-          text: 'Image size must be less than 200KB!',
+          text: 'Image size must be less than 5MB!',
         });
       }
-      if (event.target.files[0].size <= 200000) {
+      if (event.target.files[0].size <= 5000000) {
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (event) => {
@@ -263,8 +264,8 @@ if(element.imageflag===1){
           var img = new Image();
           this.url = event.target?.result as string;
           img.src = event.target?.result as string;
-          this.announcementform.controls['imageSrc'].setValue(img.src);
-          this.announcementform.controls['imagePath'].setValue(img.src);
+          this.newsform.controls['imageSrc'].setValue(img.src);
+          this.newsform.controls['imagePath'].setValue(img.src);
           this.isImageFail = false;
           this.isViewImage = false;
           this.viewImage = null;
@@ -277,7 +278,7 @@ if(element.imageflag===1){
       }
     } else {
       this.isImageFail = true;
-      this.announcementform.value.imagePath = '';
+      this.newsform.value.imagePath = '';
       this.url = null;
       event.target.value = null;
       event.target.result = null;
@@ -288,9 +289,9 @@ if(element.imageflag===1){
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
-console.log(this.announcementform);
+console.log(this.newsform);
 
-    if (this.announcementform.invalid) {
+    if (this.newsform.invalid) {
       return;
     }
     if (this.isAddMode) {
@@ -301,9 +302,9 @@ console.log(this.announcementform);
   }
 
   addSection() {
-    console.log(this.announcementform);
+    console.log(this.newsform);
 
-    var formDetails = this.announcementform.getRawValue();
+    var formDetails = this.newsform.getRawValue();
     formDetails.attachment.push({
       "attachmentid": 0,
       "sectionid": 0,
@@ -327,7 +328,7 @@ console.log(this.announcementform);
               this.sectionService.isLoadingSubject.next(false);
               Swal.fire(
                 'Success!',
-                '<span>Announcement added successfully !!!</span>',
+                '<span>news added successfully !!!</span>',
                 'success'
               );
               this.routeToList();
@@ -353,7 +354,7 @@ console.log(this.announcementform);
   }
 
   updateSection() {
-    var formDetails = this.announcementform.getRawValue();
+    var formDetails = this.newsform.getRawValue();
     formDetails.startdate = this.datepipe.transform(
       formDetails.startdate,
       'yyyy-MM-dd'
@@ -389,7 +390,7 @@ console.log(this.announcementform);
                 }
               Swal.fire(
                 'Success!',
-                '<span>Announcement updated successfully !!!</span>',
+                '<span>news updated successfully !!!</span>',
                 'success'
               );
             } else if (res.status === 400) {
@@ -414,7 +415,7 @@ console.log(this.announcementform);
     );
   }
   routeToList(){
-    this.router.navigate(['/admin/company-announcement']);
+    this.router.navigate(['/admin/company-news']);
   }
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();

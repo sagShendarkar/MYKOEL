@@ -12,16 +12,24 @@
     <tr class="header-tr">
       <th scope="col">Image ID </th>
       <th scope="col">Title </th>
-      <th scope="col">Category</th>
+      <th scope="col">Description</th>
       <th scope="col">Created On</th>
       <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let announcement of (sectionService.sectionTransactionList$|async)">
-      <th scope="row">Img12334567</th>
+      <th scope="row">
+        <div *ngIf="announcement.attachment.length>0">
+          <img
+          class="wid-100  section-img"
+          [src]="announcement.attachment[0].image"
+          alt="Announcement"
+        />
+        </div>
+      </th>
       <td>{{announcement.title}}</td>
-      <td>{{announcement.description}} </td>
+      <td class="desc-div">{{announcement.description}} </td>
       <td> {{announcement.startdate| date:'dd-MM-yyyy'}}   </td>
       <td>
       <div>

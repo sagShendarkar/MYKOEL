@@ -16,21 +16,19 @@
           </div>
         </div>
         <div class="col-md-10">
-          <div class="title">25th to 10th April 2024</div>
+          <div class="title">
+            {{ announcementDetails.startdate | ordinalRangeDate:announcementDetails.enddate }}
+
+          </div>
           <div>
-            Declaration window is now open for Flexi Basket Options.
+            {{announcementDetails.title}}
           </div>
         </div>
         <div class="col-12 mt-4">
 <div>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
 
-</div>
-<div>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-</div>
-<div>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+            {{announcementDetails.description}}
+
 </div>
         </div>
 

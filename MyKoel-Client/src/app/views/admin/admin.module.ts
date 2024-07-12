@@ -17,6 +17,10 @@ import { ViewAnnouncementInfoComponent } from './components/view-announcement-in
 import { NewsViewMoreComponent } from './components/news-view-more/news-view-more.component';
 import { ViewDetailedNewsComponent } from './components/view-detailed-news/view-detailed-news.component';
 import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-posting.component';
+import { NewHiresComponent } from './components/new-hires/new-hires/new-hires.component';
+import { AddNewHiresComponent } from './components/new-hires/add-new-hires/add-new-hires.component';
+import { CompanyNewsComponent } from './components/company-news/company-news/company-news.component';
+import { AddCompanyNewsComponent } from './components/company-news/add-company-news/add-company-news.component';
 
 
 @NgModule({
@@ -30,6 +34,10 @@ import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-po
     NewsViewMoreComponent,
     ViewDetailedNewsComponent,
     VacancyPostingComponent,
+    NewHiresComponent,
+    AddNewHiresComponent,
+    CompanyNewsComponent,
+    AddCompanyNewsComponent,
   ],
   imports: [
     CommonModule,

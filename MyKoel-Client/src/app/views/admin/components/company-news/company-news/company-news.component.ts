@@ -1,16 +1,18 @@
-import { SectionService } from './../../services/section.service';
-import { PaginationParams } from './../../../../models/paginationParams';
+
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
+import { PaginationParams } from 'src/app/models/paginationParams';
 import Swal from 'sweetalert2';
+import { SectionService } from '../../../services/section.service';
 
 @Component({
-  selector: 'app-company-announcement',
-  templateUrl: './company-announcement.component.html',
-  styleUrl: './company-announcement.component.scss'
+  selector: 'app-company-news',
+  templateUrl: './company-news.component.html',
+  styleUrl: './company-news.component.scss'
 })
-export class CompanyAnnouncementComponent {
+export class CompanyNewsComponent {
+
   pagination: any;
   pageIndex = 0;
   private unsubscribe: Subscription = new Subscription();
@@ -27,7 +29,7 @@ export class CompanyAnnouncementComponent {
     this.paginationParams =
       this.sectionService.paginationParams;
     this.paginationParams.pageNumber = 1;
-    this.paginationParams.flag = "Announcement";
+    this.paginationParams.flag = "News";
     this.loadSectionList();
 
     this.searchUpdate.pipe(
@@ -77,7 +79,6 @@ export class CompanyAnnouncementComponent {
       event.page;
     this.loadSectionList();
   }
-
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
   }

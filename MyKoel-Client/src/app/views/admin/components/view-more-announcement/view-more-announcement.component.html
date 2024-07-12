@@ -7,16 +7,16 @@
   <div class="col-md-6 border-bottom" *ngFor="let announcement of (sectionService.sectionTransactionList$|async)">
       <div class="row mb-4 mt-3">
         <div class="col-md-3">
-          <div>
+          <div *ngIf="announcement.attachment.length>0">
             <img
-              class="wid-100"
-              src="../../../../assets/images/img1.png"
-              alt="My Happy SVG"
+              class="  section-img"
+              [src]="announcement.attachment[0].image"
+              alt="Announcement"
             />
           </div>
         </div>
         <div class="col-md-9">
-          <div class="title cursor" routerLink="/admin/view-announcement-info"  >
+          <div class="title cursor" [routerLink]="'/admin/view-announcement-info/'+announcement.sectionid"  >
             {{ announcement.startdate | ordinalRangeDate:announcement.enddate }}
 
           </div>

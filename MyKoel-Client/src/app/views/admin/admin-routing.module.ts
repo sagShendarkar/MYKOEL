@@ -11,6 +11,10 @@ import { ViewAnnouncementInfoComponent } from './components/view-announcement-in
 import { NewsViewMoreComponent } from './components/news-view-more/news-view-more.component';
 import { ViewDetailedNewsComponent } from './components/view-detailed-news/view-detailed-news.component';
 import { VacancyPostingComponent } from './components/vacancy-posting/vacancy-posting.component';
+import { NewHiresComponent } from './components/new-hires/new-hires/new-hires.component';
+import { AddNewHiresComponent } from './components/new-hires/add-new-hires/add-new-hires.component';
+import { CompanyNewsComponent } from './components/company-news/company-news/company-news.component';
+import { AddCompanyNewsComponent } from './components/company-news/add-company-news/add-company-news.component';
 
 const routes: Routes = [
   {
@@ -48,6 +52,74 @@ const routes: Routes = [
     }
   },
   {
+    path: 'new-hires',
+    component: NewHiresComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'New Hires',
+      isDisplayAddBtn:true,
+      addBtn:{
+        title:"Add New Hires ",
+        url:"/admin/add-new-hires"
+      },
+        backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'add-new-hires',
+    component: AddNewHiresComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Add New Hires',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/new-hires"
+    }
+  },
+  {
+    path: 'edit-new-hires/:id',
+    component: AddNewHiresComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Edit New Hires',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/new-hires"
+    }
+  },
+  {
+    path: 'company-news',
+    component: CompanyNewsComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Company News',
+      isDisplayAddBtn:true,
+      addBtn:{
+        title:"Add Company News ",
+        url:"/admin/add-company-news"
+      },
+        backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'add-company-news',
+    component: AddCompanyNewsComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Add CompanyNews',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/company-news"
+    }
+  },
+  {
+    path: 'edit-company-news/:id',
+    component: AddCompanyNewsComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Edit CompanyNews',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/company-news"
+    }
+  },
+  {
     path: 'vision-mission-values',
     component: VisionMissionValuesComponent,
     canActivate:[AuthGuard],
@@ -78,7 +150,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'view-announcement-info',
+    path: 'view-announcement-info/:id',
     component: ViewAnnouncementInfoComponent,
     canActivate:[AuthGuard],
     data: {
