@@ -29,7 +29,7 @@
     </c-header-nav>
 
     <c-header-nav class="d-none d-lg-flex">
-      <!-- <c-nav-item *ngFor="let mainMenu of headerService.menuList$ | async">
+      <c-nav-item *ngFor="let mainMenu of headerService.menuList$ | async">
         <div *ngIf="mainMenu.route !== null">
           <a cNavLink [routerLink]="mainMenu.route" routerLinkActive="active">
             {{ mainMenu.menuGroupName }}
@@ -81,8 +81,8 @@
             </div>
           </c-dropdown>
         </div>
-      </c-nav-item> -->
-      <c-nav-item>
+      </c-nav-item>
+      <!-- <c-nav-item>
         <c-dropdown variant="nav-item">
           <a  class="showhim cursor"  > DEPARTMENT HUB
           <div   class="  showme ">
@@ -263,7 +263,7 @@
             </div>
           </div>
         </c-dropdown>
-      </c-nav-item>
+      </c-nav-item> -->
       <!-- <c-nav-item>
           <a routerLink="./" cNavLink>
             <svg cIcon name="cilBell" size="lg"></svg>

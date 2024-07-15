@@ -86,4 +86,11 @@ export class SectionService {
 
   }
 
+  getVisionMissionValueDetails(flag='')
+  {
+    let params=new HttpParams();
+    params=params.append('Flag',flag);
+
+    return this.http.get<any>(this.baseUrl+'SectionTransaction/ShowSectionList',{params});
+  }
 }

@@ -4,39 +4,39 @@
     <c-card class="mb-4">
 
       <c-card-body>
-        <form>
           <div class=" row">
 
             <div class="col-12">
+
+        <form [formGroup]="visionform">
               <div class="mb-3">
                 <label cLabel for="exampleFormControlInput1">Vision</label>
-                <textarea cFormControl
-                       id="exampleFormControlInput1"
-                       placeholder="Enter Vision here..."
-                       type="text"
-                ></textarea>
+
+                <ckeditor formControlName="description" [editor]="Editor" [config]="config" ></ckeditor>
+
               </div>
+            </form>
             </div>
             <div class="col-12">
+              <form [formGroup]="missionform">
+
               <div class="mb-3">
                 <label cLabel for="exampleFormControlInput1">Mission </label>
-                <textarea cFormControl
-                       id="exampleFormControlInput1"
-                       placeholder="Enter Mission  here..."
-                       type="text"
-                ></textarea>
+                <ckeditor formControlName="description" [editor]="Editor" [config]="config"  ></ckeditor>
+
               </div>
+              </form>
             </div>
 
             <div class="col-12">
+              <form [formGroup]="valuesform">
+
               <div class="mb-3">
                 <label cLabel for="exampleFormControlInput1">Values</label>
-                <textarea cFormControl
-                       id="exampleFormControlInput1"
-                       placeholder="Enter Values Date..."
-                       type="text"
-                ></textarea>
+                <ckeditor formControlName="description" [editor]="Editor" [config]="config" ></ckeditor>
+
               </div>
+              </form>
             </div>
 
 
@@ -51,7 +51,7 @@ Save
              </button>
             </div>
           </div>
-        </form>
+
         </c-card-body>
         </c-card>
   </div>

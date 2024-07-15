@@ -1,8 +1,12 @@
+
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonGroupModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, ListGroupModule,  SpinnerModule, TableModule } from '@coreui/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {  BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { SharedModule } from '../../shared/shared.module';
@@ -58,7 +62,7 @@ import { AddCompanyNewsComponent } from './components/company-news/add-company-n
     ListGroupModule,
     SpinnerModule,
     TableModule,
-    BsDatepickerModule
+    BsDatepickerModule,CKEditorModule
   ]
 })
 export class AdminModule { }
