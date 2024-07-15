@@ -51,7 +51,7 @@ namespace MyKoel_Web.Controllers
             try
             {
                 var section = _mapper.Map<SectionTransaction>(sectionTrnDto);
-                if(section.DESCRIPTION.Contains("<p>"))
+                if (section.DESCRIPTION.Contains("<p>"))
                 {
                     section.IsHtml = true;
                 }
@@ -338,46 +338,86 @@ namespace MyKoel_Web.Controllers
 
 
         [HttpPost("UpdateCKEditorData")]
-        public async Task<IActionResult> UpdateCKEditorData(CKEditorValuesDto sectionDto)
+        public async Task<IActionResult> UpdateCKEditorData(List<CKEditorValuesDto> sectionDto)
         {
             try
             {
-                var existingSection = await _sectionTrnRepository.GetSectionById(sectionDto.SECTIONID);
+                var result = new List<object>();
 
-                if (existingSection == null)
+                foreach (var section in sectionDto)
                 {
-                    return NotFound("Section not found");
+                    if (section.SECTIONID > 0)
+                    {
+                        var existingSection = await _sectionTrnRepository.GetSectionById(section.SECTIONID);
+
+                        if (existingSection == null)
+                        {
+                            result.Add(new
+                            {
+                                Status = 404,
+                                Message = $"Section with ID {section.SECTIONID} not found"
+                            });
+                            continue;
+                        }
+
+                       var sectiondata= _mapper.Map(section, existingSection);
+                        _sectionTrnRepository.UpdateSection(sectiondata);
+                        if (await _sectionTrnRepository.SaveAllAsync())
+                        {
+                            result.Add(new
+                            {
+                                Status = 200,
+                                Message = "Section updated successfully",
+                                SectionId = section.SECTIONID,
+                                DESCRIPTION = section.DESCRIPTION,
+                                IsHtml = section.IsHtml
+                            });
+                        }
+                        else
+                        {
+                            result.Add(new
+                            {
+                                Status = 400,
+                                Message = "Failed to update section",
+                                SectionId = section.SECTIONID
+                            });
+                        }
+                    }
+                    else
+                    {
+                        SectionTransaction addsection = _mapper.Map<SectionTransaction>(section);
+                        _sectionTrnRepository.AddNewSection(addsection);
+                        if (await _sectionTrnRepository.SaveAllAsync())
+                        {
+                            result.Add(new
+                            {
+                                Status = 200,
+                                Message = "Section added successfully",
+                                SectionId = addsection.SECTIONID,
+                                DESCRIPTION = addsection.DESCRIPTION,
+                                IsHtml = addsection.IsHtml
+                            });
+                        }
+                        else
+                        {
+                            result.Add(new
+                            {
+                                Status = 400,
+                                Message = "Failed to add section"
+                            });
+                        }
+                    }
                 }
 
-                var updatedsection = _mapper.Map(sectionDto, existingSection);
-                _sectionTrnRepository.UpdateSection(updatedsection);
-                if (await _sectionTrnRepository.SaveAllAsync())
-                {
-                    return Ok(new
-                    {
-                        Status = 200,
-                        Message = "Section updated successfully",
-                        SectionId = sectionDto.SECTIONID,
-                        DESCRIPTION = sectionDto.DESCRIPTION,
-                        IsHtml = sectionDto.IsHtml
-                    });
-                }
-                else
-                {
-                    return BadRequest(new
-                    {
-                        Status = 400,
-                        Message = "Failed To Update Data",
-                    });
-                }
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(new
-                    {
-                        Status = 400,
-                        Message = ex.Message,
-                    });
+                {
+                    Status = 400,
+                    Message = ex.Message,
+                });
             }
         }
 
