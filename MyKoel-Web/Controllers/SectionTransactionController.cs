@@ -51,6 +51,10 @@ namespace MyKoel_Web.Controllers
             try
             {
                 var section = _mapper.Map<SectionTransaction>(sectionTrnDto);
+                if(section.DESCRIPTION.Contains("<p>"))
+                {
+                    section.IsHtml = true;
+                }
                 _sectionTrnRepository.AddNewSection(section);
                 if (await _sectionTrnRepository.SaveAllAsync())
                 {
@@ -221,7 +225,7 @@ namespace MyKoel_Web.Controllers
                                 item.ISACTIVE = true;
                                 item.PATH = Path.Combine(folderPath, fileName);
 
-                            item.SECTIONID = sectionDto.SECTIONID;
+                                item.SECTIONID = sectionDto.SECTIONID;
                                 if (item.ATTACHMENTID == 0)
                                 {
                                     var attachments = _mapper.Map<Attachments>(item);
@@ -268,22 +272,24 @@ namespace MyKoel_Web.Controllers
                         }
                     }
                 }
-                if(await _sectionTrnRepository.SaveAllAsync()){
-                return Ok(new
+                if (await _sectionTrnRepository.SaveAllAsync())
                 {
-                    Status = 200,
-                    Message = "Section updated successfully",
-                    SectionId = sectionDto.SECTIONID,
-                    Title = sectionDto.TITLE
-                });
+                    return Ok(new
+                    {
+                        Status = 200,
+                        Message = "Section updated successfully",
+                        SectionId = sectionDto.SECTIONID,
+                        Title = sectionDto.TITLE
+                    });
                 }
-                else{
-                    return BadRequest(new
+                else
                 {
-                    Status = 400,
-                    Message = "Failed To Update Data",
-                   
-                });
+                    return BadRequest(new
+                    {
+                        Status = 400,
+                        Message = "Failed To Update Data",
+
+                    });
                 }
 
             }
@@ -328,6 +334,51 @@ namespace MyKoel_Web.Controllers
 
             }
 
+        }
+
+
+        [HttpPost("UpdateCKEditorData")]
+        public async Task<IActionResult> UpdateCKEditorData(CKEditorValuesDto sectionDto)
+        {
+            try
+            {
+                var existingSection = await _sectionTrnRepository.GetSectionById(sectionDto.SECTIONID);
+
+                if (existingSection == null)
+                {
+                    return NotFound("Section not found");
+                }
+
+                var updatedsection = _mapper.Map(sectionDto, existingSection);
+                _sectionTrnRepository.UpdateSection(updatedsection);
+                if (await _sectionTrnRepository.SaveAllAsync())
+                {
+                    return Ok(new
+                    {
+                        Status = 200,
+                        Message = "Section updated successfully",
+                        SectionId = sectionDto.SECTIONID,
+                        DESCRIPTION = sectionDto.DESCRIPTION,
+                        IsHtml = sectionDto.IsHtml
+                    });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        Status = 400,
+                        Message = "Failed To Update Data",
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                    {
+                        Status = 400,
+                        Message = ex.Message,
+                    });
+            }
         }
 
     }

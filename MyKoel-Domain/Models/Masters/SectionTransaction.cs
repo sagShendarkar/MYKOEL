@@ -19,6 +19,7 @@ namespace MyKoel_Domain.Models.Masters
         public string SEQUENCE {  get; set; }
         public bool ISACTIVE {  get; set;  }
         public string? CATEGORY {get;set;}
+        public bool IsHtml {get;set;}
         public ICollection<Attachments> Attachments { get; set; }
 
     }
