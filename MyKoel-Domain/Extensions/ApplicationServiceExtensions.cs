@@ -30,7 +30,8 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<IBreakFastRepository, BreakfastRepository>();
             services.AddScoped<ILunchRepository, LunchRepository>();
             services.AddScoped<ICanteenMenuRepository, CanteenMenuRepository>();
-
+            services.AddScoped<IValuesRepository, ValuesRepository>();
+            services.AddScoped<IHolidayCalenderRepository, HolidayCalenderRepository>();
             return services;
         }
     }

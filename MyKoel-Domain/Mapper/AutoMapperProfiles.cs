@@ -37,7 +37,9 @@ namespace API.Mapper
             CreateMap<CanteenDto, CanteenMenus>();
             CreateMap<CanteenMenus, CanteenDto>();
             CreateMap<CanteenMenuListDto, CanteenMenuListDto>();
-
+            CreateMap<ValuesDto, ValuesMaster>();
+            CreateMap<ValuesMaster, ValuesDto>();
+            CreateMap<ValuesDto, ValuesDto>();
         }
     }
 }

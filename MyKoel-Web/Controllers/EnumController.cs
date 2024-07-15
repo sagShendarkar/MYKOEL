@@ -31,5 +31,17 @@ namespace MyKoel_Web.Controllers
             return enums; 
         }
 
+        [HttpGet("TypeDD")]
+        public List<TypeDto> TypeDD()
+        {
+            var enums = ((ValuesType[])Enum.GetValues(typeof(ValuesType)))
+            .Select(c => new TypeDto()
+            {
+                Id = (int)c,
+                TypeName = c.ToString()
+            }).ToList();
+            return enums; 
+        }
+
     }
 }
