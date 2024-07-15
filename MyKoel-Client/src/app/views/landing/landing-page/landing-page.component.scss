@@ -345,3 +345,162 @@ color: #000;
 }
 
 }
+///////////////////////////////////////////////////////////////////////////////////
+///
+///
+///
+///
+///
+
+
+.menu-title{
+  font-size: 16px;
+  font-weight: 600px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.menu-container {
+  display: flex;
+  gap: 0;
+  margin-left: 100px;
+}
+.menu-div {
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-left: 45px;
+  margin-top: 50px;
+}
+.menu {
+  background-color: white;
+  padding: 20px;
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+font-size: 14px;
+  width: 200px;
+
+}
+.menu:before, .menu:after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #ffeb3b;
+  top: 22px;
+}
+.menu:before {
+  left: 40px;
+}
+.menu:after {
+  right: 40px;
+}
+.menu h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.menu ul {
+  list-style: none;
+  padding: 0;
+}
+.menu ul li {
+  font-size: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #000;
+  font-weight: 500;
+}
+
+
+.menu1 {
+  background-color: white;
+  padding: 20px;
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  font-size: 14px;
+}
+.menu1:before, .menu1:after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #ffeb3b;
+  top: 22px;
+}
+.menu1:before {
+  left: 40px;
+}
+.menu1:after {
+  right: 40px;
+}
+.menu1 h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.menu1 ul {
+  list-style: none;
+  padding: 0;
+}
+.menu1 ul li {
+  font-size: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 500;
+  color: #000;
+}
+
+
+
+.canteen-menu-div
+{
+  background: url(../../../../assets/images/canteenmenuesimg.png) no-repeat;
+
+  background-size: 101% 102% !important;
+  border-radius: 10px;
+  height: 500px;
+  background-repeat:no-repeat !important;
+}
+
+.date-div{
+  background: url(../../../../assets/images/date-bg.png) no-repeat;
+
+  background-size: 101% 102% !important;
+  border-radius: 10px;
+  height: 500px;
+  background-repeat:no-repeat !important;
+
+  width: 215px;
+  height: 36px;
+  margin-top: 65px;
+  margin-left: 257px;
+  color: #fff;
+  text-align: center;
+  padding-top: 5px;
+}
+.arrow-div{
+  position: absolute;
+  margin-top: 150px;
+  cursor: pointer;
+}
+
+.left-arrow{
+margin-left: 50px;
+}
+
+.right-arrow{
+
+  margin-left: 690px;
+}
+.close-img{
+
+  position: absolute;
+  top: -13px;
+  background-color: #fff;
+  padding: 3px;
+  border-radius: 50px;
+}

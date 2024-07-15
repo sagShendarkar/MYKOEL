@@ -24,6 +24,7 @@ import {
   ButtonGroupModule,
   ButtonModule,
   CardModule,
+  CollapseModule,
   DropdownModule,
   FooterModule,
   FormModule,
@@ -82,7 +83,8 @@ const ADMIN_APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule,ModalModule,HttpClientModule
+    NgScrollbarModule,ModalModule,HttpClientModule,
+    CollapseModule
   ],
   providers: [
 

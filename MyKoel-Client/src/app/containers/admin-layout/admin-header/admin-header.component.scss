@@ -72,3 +72,44 @@
   background-color: var(--cui-btn-active-bg);
   border-color: #fff !important
 }
+
+
+
+
+
+
+
+//////////////////
+.showme {
+  display: none;
+  width: 100%;
+  // height: 50px;
+  transition: 0.5s;
+  position: absolute;
+  padding: 10px;
+  left: -15px !important;
+}
+
+.showhim:hover .showme {
+
+  width: 1450px;
+  margin-left: -517px;
+  display: block;
+
+  z-index: 4;
+}
+
+.menus-div{
+  background-color: #fff;
+}
+
+.child-showme {
+  display: none;
+  width: 100%;
+  transition: 0.5s;
+}
+
+.child-showhim:hover .child-showme {
+  display: block;
+  width: 200px; 
+}

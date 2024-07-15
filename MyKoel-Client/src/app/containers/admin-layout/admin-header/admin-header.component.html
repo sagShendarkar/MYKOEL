@@ -29,58 +29,65 @@
     </c-header-nav>
 
     <c-header-nav class="d-none d-lg-flex">
-      <c-nav-item *ngFor="let mainMenu of (headerService.menuList$|async)">
-        <div *ngIf="mainMenu.route!==null">
-
-        <a cNavLink [routerLink]="mainMenu.route" routerLinkActive="active"> {{mainMenu.menuGroupName}} </a>
+      <!-- <c-nav-item *ngFor="let mainMenu of headerService.menuList$ | async">
+        <div *ngIf="mainMenu.route !== null">
+          <a cNavLink [routerLink]="mainMenu.route" routerLinkActive="active">
+            {{ mainMenu.menuGroupName }}
+          </a>
         </div>
-         <div *ngIf="mainMenu.route===null">
+        <div *ngIf="mainMenu.route === null">
           <c-dropdown variant="nav-item">
-            <a cDropdownToggle href> {{mainMenu.menuGroupName}} </a>
-            <div cDropdownMenu class="mega-menus  ">
+            <a cDropdownToggle href> {{ mainMenu.menuGroupName }} </a>
+            <div cDropdownMenu class="mega-menus">
               <div class="row mb-2 mt-3">
-                <ng-container  *ngFor="let menuGroup of mainMenu.menuGroupData">
-                     <div class="col-md-6" *ngIf="menuGroup.menusData.length>0" >
-
-                  <div class="row">
-                    <span class="text-underline"> {{menuGroup.groupName}}</span>
-                  </div>
-
-                  <div class="row mega-menu-border mb-2 pb-1">
-                    <div class="col-md-3"  *ngFor="let menu  of menuGroup.menusData" >
-                      <li><a cDropdownItem [routerLink]="menu.route" class="cursor">{{menu.menuName}} </a></li>
+                <ng-container *ngFor="let menuGroup of mainMenu.menuGroupData">
+                  <div class="col-md-6" *ngIf="menuGroup.menusData.length > 0">
+                    <div class="row">
+                      <span class="text-underline cursor">
+                        {{ menuGroup.groupName }}</span
+                      >
                     </div>
 
-                  </div>
-                </div>
-
-                <div class="col-md-3" *ngIf="menuGroup.menusData.length===0" >
-                  <li><a cDropdownItem [routerLink]="menuGroup.route">{{menuGroup.groupName}} </a></li>
-</div>
-
-               </ng-container>
-
-
-                <!-- <div class="col-md-4  ps-3">
-                  <div class="row">
-                    <span class="text-underline"> <b>B2C</b>  (Business To Customer)</span>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <li><a cDropdownItem routerLink="./">International Business</a></li>
+                    <div class="row mega-menu-border mb-2 pb-1">
+                      <div
+                        class="col-md-3"
+                        *ngFor="let menu of menuGroup.menusData"
+                      >
+                        <li>
+                          <a
+                            cDropdownItem
+                            [routerLink]="menu.route"
+                            class="cursor"
+                            (click)="getSelectedMenu(menu.menuId)"
+                            >{{ menu.menuName }}
+                          </a>
+                        </li>
+                      </div>
                     </div>
                   </div>
-                </div> -->
+
+                  <div
+                    class="col-md-3"
+                    *ngIf="menuGroup.menusData.length === 0"
+                  >
+                    <li>
+                      <a cDropdownItem [routerLink]="menuGroup.route"
+                        >{{ menuGroup.groupName }}
+                      </a>
+                    </li>
+                  </div>
+                </ng-container>
               </div>
             </div>
           </c-dropdown>
-</div>
-      </c-nav-item>
-      <!-- <c-nav-item>
+        </div>
+      </c-nav-item> -->
+      <c-nav-item>
         <c-dropdown variant="nav-item">
-          <a cDropdownToggle href> DEPARTMENT HUB </a>
-          <div cDropdownMenu class="mega-menus  ">
-            <div class="row mb-2 mt-3">
+          <a  class="showhim cursor"  > DEPARTMENT HUB
+          <div   class="  showme ">
+
+            <div class="row mb-2 mt-3  menus-div">
               <div class="col-md-8">
                 <div class="row">
                   <span class="text-underline"><b>B2B</b>  (Business To Business)</span>
@@ -92,11 +99,42 @@
                   </div>
                   <div class="col-md-3">
                     <li>
-                      <a cDropdownItem routerLink="./">Business Excellence</a>
+                      <a cDropdownItem routerLink="./" class="child-showhim">Business Excellence
+
+                        <div class="child-showme">
+<div class="row">
+  <div class="col-md-6">
+    <li><a cDropdownItem routerLink="./">122 IT</a></li>
+  </div>
+  <div class="col-md-6">
+    <li><a cDropdownItem routerLink="./">122 Supply Chain</a></li>
+  </div>
+</div>
+
+                        </div>
+
+                      </a>
                     </li>
                   </div>
                   <div class="col-md-3">
-                    <li><a cDropdownItem routerLink="./">IT</a></li>
+                    <li><a cDropdownItem routerLink="./"  class="child-showhim">IT
+
+                      <div class="child-showme">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <li><a cDropdownItem routerLink="./">1444 IT</a></li>
+                          </div>
+                          <div class="col-md-6">
+                            <li><a cDropdownItem routerLink="./">1444 Supply Chain</a></li>
+                          </div>
+                        </div>
+
+                                                </div>
+                    </a>
+
+
+
+                                              </li>
                   </div>
                   <div class="col-md-3">
                     <li><a cDropdownItem routerLink="./">Supply Chain</a></li>
@@ -166,22 +204,23 @@
               </div>
             </div>
           </div>
+</a>
         </c-dropdown>
-      </c-nav-item> -->
-      <!-- <c-nav-item>
+      </c-nav-item>
+      <c-nav-item>
         <a cNavLink routerLink="/my-page" routerLinkActive="active">
           MY PAGE
         </a>
-      </c-nav-item> -->
-      <!-- <c-nav-item>
+      </c-nav-item>
+      <c-nav-item>
         <a cNavLink routerLink="/settings" routerLinkActive="active">
           AI HUB
         </a>
-      </c-nav-item> -->
-      <!-- <c-nav-item>
+      </c-nav-item>
+      <c-nav-item>
         <a cNavLink routerLink="/settings" routerLinkActive="active"> BLOGS </a>
-      </c-nav-item> -->
-      <!-- <c-nav-item>
+      </c-nav-item>
+      <c-nav-item>
         <c-dropdown variant="nav-item">
           <a cDropdownToggle href> Admin </a>
           <div cDropdownMenu class="mega-menus  ">
@@ -224,7 +263,7 @@
             </div>
           </div>
         </c-dropdown>
-      </c-nav-item> -->
+      </c-nav-item>
       <!-- <c-nav-item>
           <a routerLink="./" cNavLink>
             <svg cIcon name="cilBell" size="lg"></svg>
@@ -244,54 +283,55 @@
     <c-header-nav class="ms-3">
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
       <c-nav-item class="pt-1">
-        <div class="user-name">{{userName}}</div>
+        <div class="user-name">{{ userName }}</div>
         <div class="user-name">Manager</div>
       </c-nav-item>
     </c-header-nav>
   </c-container>
-  <c-header-divider  *ngIf="(headerService.isDisplayBreadcrumb$|async)"></c-header-divider>
-    <c-container [fluid]="true" *ngIf="(headerService.isDisplayBreadcrumb$|async)">
-      <div class="body flex-grow-1  ">
-        <c-container breakpoint="lg" class="h-auto">
-          <div class="mt-2 ms-2 row">
-            <div class="col-6">
-
+  <c-header-divider
+    *ngIf="headerService.isDisplayBreadcrumb$ | async"
+  ></c-header-divider>
+  <c-container
+    [fluid]="true"
+    *ngIf="headerService.isDisplayBreadcrumb$ | async"
+  >
+    <div class="body flex-grow-1">
+      <c-container breakpoint="lg" class="h-auto">
+        <div class="mt-2 ms-2 row">
+          <div class="col-6">
             <img
-            [routerLink]="(headerService.backBtnUrl$|async)"
+              [routerLink]="headerService.backBtnUrl$ | async"
               class="wid-100 cursor"
               src="../../../../assets/images/back.png"
               alt="My Happy SVG"
-
             />
 
-            <span class="page-title  ms-3"> {{headerService.headerTitle$|async}} </span>
-            </div>
-            <div class="col-6 text-right">
-
-          <div *ngIf="(headerService.isDisplayAddBtn$|async)">
-            <button [routerLink]="btnDetails.url" class="btn add-btn ms-4"  size="lg">
-              {{btnDetails.title}}
-                           </button>
+            <span class="page-title ms-3">
+              {{ headerService.headerTitle$ | async }}
+            </span>
           </div>
+          <div class="col-6 text-right">
+            <div *ngIf="headerService.isDisplayAddBtn$ | async">
+              <button
+                [routerLink]="btnDetails.url"
+                class="btn add-btn ms-4"
+                size="lg"
+              >
+                {{ btnDetails.title }}
+              </button>
             </div>
           </div>
-        </c-container>
-      </div>
-    </c-container>
+        </div>
+      </c-container>
+    </div>
+  </c-container>
 </ng-container>
 <!--</c-header>-->
 
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
     <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
-      <c-avatar
-        cTextColor="primary"
-
-        size="md"
-        [src]="ProfileImage"
-
-      >
-      </c-avatar>
+      <c-avatar cTextColor="primary" size="md" [src]="ProfileImage"> </c-avatar>
     </button>
     <ul cDropdownMenu class="pt-0 mt-3 pr-5 w-auto p-2 user-menu-dd">
       <!-- <li>
@@ -299,20 +339,24 @@
       </li> -->
       <li>
         <a routerLink="/admin/profile-setting" cDropdownItem class="menu-name">
-         <img src="./../../../../assets/SVG/profile-settings.svg" alt="" class="me-2">
-         Profile setting
-
+          <img
+            src="./../../../../assets/SVG/profile-settings.svg"
+            alt=""
+            class="me-2"
+          />
+          Profile setting
         </a>
       </li>
       <li (click)="logout()">
         <a routerLink="./" cDropdownItem class="menu-name">
-          <img src="./../../../../assets/SVG/sign-out.svg" alt="" class="me-2">
+          <img
+            src="./../../../../assets/SVG/sign-out.svg"
+            alt=""
+            class="me-2"
+          />
           Sign Out
-
         </a>
       </li>
-
-
     </ul>
   </c-dropdown>
 </ng-template>

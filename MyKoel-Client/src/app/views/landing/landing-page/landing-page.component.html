@@ -22,7 +22,8 @@
           <div class="row justify-content-center">
             <div class="col-md-6  col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-4"
             *ngFor="let wallpaperMenus of(landingPageService.wallpaperMenus$|async) ; let i=index">
-              <div class="banner-menus">
+
+              <div class="banner-menus cursor" (click)="openModalPopup(true,wallpaperMenus.menuGroupName)" >
                 <img
 class="mb-1"
                 [src]="wallpaperMenus.imageIcon"
@@ -98,7 +99,6 @@ class="mb-1"
     </div>
   </div>
 </div>
-
 <c-row class="mt-4">
   <div   class="feature-div col-md-12  col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
     <div class="grid-container">
@@ -548,7 +548,7 @@ class="mb-1"
 </div>
 
 <c-modal #staticBackdropModal backdrop="static" [size]="'lg'"
-alignment="center" id="staticBackdropModal"   [visible]="liveDemoVisible" (visibleChange)="handleLiveDemoChange($event)">
+alignment="center" id="staticBackdropModal"   [visible]="visionModal" (visibleChange)="handleLiveDemoChange($event)">
 
   <c-modal-body>
 <div class="row ">
@@ -594,7 +594,7 @@ alignment="center" id="staticBackdropModal"   [visible]="liveDemoVisible" (visib
 
 
 <c-modal #staticBackdropModal1 backdrop="static" [size]="'lg'"
-alignment="center" id="staticBackdropModal1"   [visible]="liveDemoVisible1" (visibleChange)="handleLiveDemoChange1($event)">
+alignment="center" id="staticBackdropModal1"   [visible]="misionModal" (visibleChange)="handleLiveDemoChange1($event)">
 
   <c-modal-body>
 <div class="row ">
@@ -642,7 +642,7 @@ alignment="center" id="staticBackdropModal1"   [visible]="liveDemoVisible1" (vis
 
 
 <c-modal #staticBackdropModal2 backdrop="static" [size]="'lg'"
-alignment="center" id="staticBackdropModal2"   [visible]="liveDemoVisible2" (visibleChange)="handleLiveDemoChange2($event)">
+alignment="center" id="staticBackdropModal2"   [visible]="valueModal" (visibleChange)="handleLiveDemoChange2($event)">
 
   <c-modal-body>
 <div class="row ">
@@ -712,3 +712,80 @@ alignment="center" id="staticBackdropModal2"   [visible]="liveDemoVisible2" (vis
 
 </c-modal>
 
+
+
+<c-modal #staticBackdropModal3 backdrop="static" [size]="'lg'"
+alignment="center" id="staticBackdropModal3"   [visible]="canteenMenuModal" (visibleChange)="handleLiveDemoChange3($event)">
+
+  <c-modal-body class="canteen-menu-div">
+    <div [cModalToggle]="staticBackdropModal3.id"  class="cursor   text-right">
+      <img class="close-img"
+    src="../../../../assets/SVG/close.svg"
+    alt="My Happy SVG"
+  />
+    </div>
+
+<div>
+  <div class="arrow-div left-arrow">
+    <img
+    src="../../../../assets/images/left-arrow.png"
+    alt="My Happy SVG"
+  />
+  </div>
+  <div class="arrow-div right-arrow">
+    <img
+    src="../../../../assets/images/right-arrow.png"
+    alt="My Happy SVG"
+  />
+  </div>
+  <div class="date-div">
+<span>19-03-2024</span>
+  </div>
+  <div class="menu-container">
+    <div class="menu-div">
+
+        <h2 class="  menu-title">BREAKFAST</h2>
+    <div class="menu">
+        <ul>
+            <li>Idli</li>
+            <li>Sambar</li>
+            <li>Shev</li>
+        </ul>
+    </div>
+    </div>
+    <div class="menu-div">
+
+        <h2 class="  menu-title">LUNCH</h2>
+    <div class="menu1">
+        <div class="row">
+
+          <div class="col-6">
+            <ul>
+              <li>Chole Masala</li>
+              <li>Dal Fry</li>
+              <li>Plain Rice</li>
+              <li>Chapati</li>
+              <li>Pickle</li>
+
+          </ul>
+          </div>
+          <div class="col-6">
+            <ul>
+
+              <li>Bobby</li>
+              <li>Potato Bhaji</li>
+              <li>Sabudana Khichdi</li>
+              <li>Taak</li>
+              <li>Watermelon</li>
+          </ul>
+          </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+</div>
+
+  </c-modal-body>
+
+</c-modal>
