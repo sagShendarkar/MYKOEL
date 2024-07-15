@@ -7,9 +7,9 @@ namespace MyKoel_Domain.Models.Masters
 {
     public class CanteenMenus
     {
-        public int CanteenMenusId{ get; set; }
-        public DateTime Date {get;set;}
-        public int? LunchId {get;set;}
-        public int? BreakFastId {get;set;}
+        public int CANTEENMENUSID { get; set; }
+        public DateTime DATE  {get;set;}
+        public int? LUNCHID  {get;set;}
+        public int? BREAKFASTID  {get;set;}
     }
 }

@@ -33,26 +33,26 @@ namespace MyKoel_Domain.Repositories
         public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date)
         {
             var canteenMenuList = await (from c in _context.CanteenMenus
-                                         where c.Date.Date == Date.Date
-                                         group c by c.Date into g
+                                         where c.DATE.Date == Date.Date
+                                         group c by c.DATE into g
                                          select new CanteenMenuListDto
                                          {
                                              Date = g.Key.Date,
                                              BreakfastList = (from b in _context.BreakFasts
-                                                              where g.Any(c => c.BreakFastId == b.BreakFastId)
+                                                              where g.Any(c => c.BREAKFASTID == b.BREAKFASTID)
                                                               select new BreakFastDto
                                                               {
-                                                                  BreakFastId = b.BreakFastId,
-                                                                  BreakFastName = b.BreakFastName,
-                                                                  IsActive = b.IsActive
+                                                                  BreakFastId = b.BREAKFASTID,
+                                                                  BreakFastName = b.BREAKFASTNAME,
+                                                                  IsActive = b.ISACTIVE
                                                               }).ToList(),
                                              LunchList = (from l in _context.LunchMaster
-                                                          where g.Any(c => c.LunchId == l.LunchId)
+                                                          where g.Any(c => c.LUNCHID == l.LUNCHID)
                                                           select new LunchDto
                                                           {
-                                                              LunchId = l.LunchId,
-                                                              LunchName = l.LunchName,
-                                                              IsActive = l.IsActive
+                                                              LunchId = l.LUNCHID,
+                                                              LunchName = l.LUNCHNAME,
+                                                              IsActive = l.ISACTIVE
                                                           }).ToList()
                                          })
                                          .FirstOrDefaultAsync();

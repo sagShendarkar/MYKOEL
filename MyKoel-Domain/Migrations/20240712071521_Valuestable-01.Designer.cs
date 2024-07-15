@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyKoel_Domain.Data;
 
@@ -11,9 +12,11 @@ using MyKoel_Domain.Data;
 namespace MyKoel_Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240712071521_Valuestable-01")]
+    partial class Valuestable01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -505,43 +508,6 @@ namespace MyKoel_Domain.Migrations
                     b.HasKey("CANTEENMENUSID");
 
                     b.ToTable("CanteenMenus");
-                });
-
-            modelBuilder.Entity("MyKoel_Domain.Models.Masters.HolidayCalendar", b =>
-                {
-                    b.Property<int>("HOLIDAYCALENDERID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HOLIDAYCALENDERID"));
-
-                    b.Property<string>("BATCHID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DATE")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DAY")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HOLIDAY")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ISACTIVE")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LOCATION")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("REMARKS")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("YEAR")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("HOLIDAYCALENDERID");
-
-                    b.ToTable("HolidayCalendar");
                 });
 
             modelBuilder.Entity("MyKoel_Domain.Models.Masters.LunchMaster", b =>

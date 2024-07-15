@@ -34,12 +34,12 @@ namespace MyKoel_Domain.Repositories
 
         public async Task<bool> LunchExists(string Name)
         {
-            return await _context.LunchMaster.AnyAsync(x => x.LunchName.ToLower() == Name.ToLower());
+            return await _context.LunchMaster.AnyAsync(x => x.LUNCHNAME.ToLower() == Name.ToLower());
         }
 
         public void DeleteLunch(LunchMaster lunch)
         {
-            lunch.IsActive = false;
+            lunch.ISACTIVE = false;
             _context.Entry(lunch).State = EntityState.Modified;
         }
         public async Task<bool> SaveAllAsync()
@@ -63,17 +63,17 @@ namespace MyKoel_Domain.Repositories
         public async Task<LunchMaster> GetLunchById(int Id)
         {
             var Lunch = await _context.LunchMaster
-           .SingleOrDefaultAsync(x => x.LunchId == Id);
+           .SingleOrDefaultAsync(x => x.LUNCHID == Id);
             return Lunch;
         }
 
         public async Task<PagedList<LunchDto>> GetLunchList(ParameterParams parameterParams)
         {
-           var Lunch=_context.LunchMaster.Where(x=>x.IsActive==true)
-                            .OrderByDescending(c=>c.LunchId).AsQueryable();
+           var Lunch=_context.LunchMaster.Where(x=>x.ISACTIVE==true)
+                            .OrderByDescending(c=>c.LUNCHID).AsQueryable();
 
          if(parameterParams.searchPagination!=null){
-               Lunch=Lunch.Where(x=> x.LunchName.ToLower().Contains(parameterParams.searchPagination.ToLower()));
+               Lunch=Lunch.Where(x=> x.LUNCHNAME.ToLower().Contains(parameterParams.searchPagination.ToLower()));
          }  
           return await PagedList<LunchDto>.CreateAsync(Lunch.ProjectTo<LunchDto>(_mapper.ConfigurationProvider)
                                  .AsNoTracking(),parameterParams.PageNumber,parameterParams.PageSize);
@@ -83,11 +83,11 @@ namespace MyKoel_Domain.Repositories
         public  async Task<List<LunchDto>> GetDropdownList(int LunchId, string? Desc)
         {
             var Lunchdata= await (from b in _context.LunchMaster
-                            where b.IsActive==true
+                            where b.ISACTIVE==true
                             select new LunchDto{
-                                LunchId = b.LunchId,
-                                LunchName=b.LunchName,
-                               IsActive=b.IsActive
+                                LunchId = b.LUNCHID,
+                                LunchName=b.LUNCHNAME,
+                               IsActive=b.ISACTIVE
                             }).ToListAsync();
                       if(!string.IsNullOrEmpty(Desc))
                       {

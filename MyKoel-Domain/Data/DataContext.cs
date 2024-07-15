@@ -48,6 +48,8 @@ namespace MyKoel_Domain.Data
         public DbSet<BreakFast> BreakFasts { get; set; }
         public DbSet<LunchMaster> LunchMaster { get; set; }
         public DbSet<CanteenMenus> CanteenMenus { get; set; }
+        public DbSet<ValuesMaster> ValuesMaster { get; set; }
+        public DbSet<HolidayCalendar> HolidayCalendar { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -122,13 +124,19 @@ namespace MyKoel_Domain.Data
               .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<BreakFast>()
-            .HasKey(m => m.BreakFastId);
+            .HasKey(m => m.BREAKFASTID);
 
             builder.Entity<LunchMaster>()
-        .HasKey(m => m.LunchId);
+        .HasKey(m => m.LUNCHID);
 
             builder.Entity<CanteenMenus>()
-          .HasKey(m => m.CanteenMenusId);
+          .HasKey(m => m.CANTEENMENUSID);
+
+             builder.Entity<ValuesMaster>()
+          .HasKey(m => m.VALUEID);
+
+          builder.Entity<HolidayCalendar>()
+          .HasKey(m => m.HOLIDAYCALENDERID);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
