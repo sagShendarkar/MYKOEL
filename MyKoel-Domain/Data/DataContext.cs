@@ -49,7 +49,7 @@ namespace MyKoel_Domain.Data
         public DbSet<LunchMaster> LunchMaster { get; set; }
         public DbSet<CanteenMenus> CanteenMenus { get; set; }
         public DbSet<ValuesMaster> ValuesMaster { get; set; }
-        public DbSet<HolidayCalendar> HolidayCalendar { get; set; }
+        public DbSet<HolidayCalendar> HolidayCalendars { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

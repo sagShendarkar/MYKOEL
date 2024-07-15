@@ -42,19 +42,19 @@ namespace MyKoel_Domain.Repositories
 
         public async Task<List<HolidayCalendar>> HolidayCalendarList(string Location)
         {
-            var holidaylist= await (from h in _context.HolidayCalendar
-                                      where h.LOCATION.ToLower() == Location.ToLower()
-                                      select new HolidayCalendar
-                                      {
-                                        HOLIDAYCALENDERID=h.HOLIDAYCALENDERID,
-                                        HOLIDAY=h.HOLIDAY,
-                                        DATE=h.DATE,
-                                        DAY=h.DAY,
-                                        REMARKS=h.REMARKS,
-                                        LOCATION=h.LOCATION,
-                                        YEAR=h.YEAR,
-                                        ISACTIVE=h.ISACTIVE
-                                      }).ToListAsync();
+            var holidaylist = await (from h in _context.HolidayCalendars
+                                     where h.LOCATION.ToLower() == Location.ToLower()
+                                     select new HolidayCalendar
+                                     {
+                                         HOLIDAYCALENDERID = h.HOLIDAYCALENDERID,
+                                         HOLIDAY = h.HOLIDAY,
+                                         DATE = h.DATE,
+                                         DAY = h.DAY,
+                                         REMARKS = h.REMARKS,
+                                         LOCATION = h.LOCATION,
+                                         YEAR = h.YEAR,
+                                         ISACTIVE = h.ISACTIVE
+                                     }).ToListAsync();
             return holidaylist;
         }
 
@@ -106,7 +106,7 @@ namespace MyKoel_Domain.Repositories
                     {
                         List<HolidayCalendar> objList = new List<HolidayCalendar>();
 
-                        if (finalRecords.Columns.Count != 8)
+                        if (finalRecords.Columns.Count != 7)
                         {
                             messages.Add("Invalid column length or column name");
                             return new
@@ -118,6 +118,20 @@ namespace MyKoel_Domain.Repositories
 
                         for (int i = 0; i < finalRecords.Rows.Count; i++)
                         {
+                            var existingholidays = await _context.HolidayCalendars
+                               .Where(x => x.LOCATION.ToLower() == Convert.ToString(finalRecords.Rows[i]["Locations"]).ToLower())
+                               .ToListAsync();
+                            if (existingholidays != null)
+                            {
+                                foreach (var holiday in existingholidays)
+                                {
+                                    holiday.ISACTIVE = false;
+                                    _context.Update(holiday);
+                                    await _context.SaveChangesAsync();
+                                }
+                            }
+
+
                             if (Convert.ToString(finalRecords.Rows[i]["Holiday"]).Equals(""))
                             {
                                 return Convert.ToString(finalRecords.Columns["Holiday"]) + " is required";
@@ -134,42 +148,33 @@ namespace MyKoel_Domain.Repositories
                             {
                                 return Convert.ToString(finalRecords.Columns["Remarks"]) + " is required";
                             }
-                            if (Convert.ToString(finalRecords.Rows[i]["Location"]).Equals(""))
+                            if (Convert.ToString(finalRecords.Rows[i]["Locations"]).Equals(""))
                             {
-                                return Convert.ToString(finalRecords.Columns["Location"]) + " is required";
+                                return Convert.ToString(finalRecords.Columns["Locations"]) + " is required";
                             }
                             if (Convert.ToString(finalRecords.Rows[i]["Year"]).Equals(""))
                             {
                                 return Convert.ToString(finalRecords.Columns["Year"]) + " is required";
                             }
-                            if (Convert.ToString(finalRecords.Rows[i]["IsActive"]).Equals(""))
+                            if (Convert.ToString(finalRecords.Rows[i]["Active"]).Equals(""))
                             {
-                                return Convert.ToString(finalRecords.Columns["IsActive"]) + " is required";
+                                return Convert.ToString(finalRecords.Columns["Active"]) + " is required";
                             }
-                            // var bcnExist = await _context.HolidayCalendar.FirstOrDefaultAsync(x => x.Description.ToLower() == Convert.ToString(finalRecords.Rows[i]["Description"]).ToLower());
-                            // bool IsbcnExist = bcnExist != null;
-                            // if (IsbcnExist)
-                            // {
-                            //     messages.Add(Convert.ToString(finalRecords.Rows[i]["Description"]) + " " + "Already Exist");
-                            //     //return string.Join("\n", messages);
+                            HolidayCalendar holidaydata = new HolidayCalendar();
 
+                            holidaydata = new HolidayCalendar
+                            {
+                                HOLIDAY = Convert.ToString(finalRecords.Rows[i]["Holiday"]),
+                                DATE = Convert.ToDateTime(finalRecords.Rows[i]["Date"]),
+                                DAY = Convert.ToString(finalRecords.Rows[i]["Day"]),
+                                REMARKS = Convert.ToString(finalRecords.Rows[i]["Remarks"]),
+                                LOCATION = Convert.ToString(finalRecords.Rows[i]["Locations"]),
+                                YEAR = Convert.ToString(finalRecords.Rows[i]["Year"]),
+                                ISACTIVE = Convert.ToBoolean(finalRecords.Rows[i]["Active"]),
+                                BATCHID = Guid.NewGuid().ToString()
+                            };
+                            await _context.HolidayCalendars.AddAsync(holidaydata);
                             // }
-                            // else
-                            // {
-
-                                var holidaydata = new HolidayCalendar
-                                {
-                                    HOLIDAY=Convert.ToString(finalRecords.Rows[i]["Holiday"]),
-                                    DATE=Convert.ToDateTime(finalRecords.Rows[i]["Date"]),
-                                    DAY =Convert.ToString(finalRecords.Rows[i]["Day"]),
-                                    REMARKS=Convert.ToString(finalRecords.Rows[i]["Remarks"]),
-                                    LOCATION =Convert.ToString(finalRecords.Rows[i]["Locations"]),
-                                    YEAR=Convert.ToString(finalRecords.Rows[i]["Year"]),
-                                    ISACTIVE=Convert.ToBoolean(finalRecords.Rows[i]["IsActive"]),
-                                    BATCHID= Guid.NewGuid().ToString()               
-                                };
-                                await _context.HolidayCalendar.AddAsync(holidaydata);
-                           // }
                         }
 
                         await _context.SaveChangesAsync();
@@ -207,13 +212,13 @@ namespace MyKoel_Domain.Repositories
 
         public async Task<List<LocationDto>> LocationList(string Location)
         {
-            var holidaylist= await (from h in _context.HolidayCalendar
-                                      where h.LOCATION.ToLower() == Location.ToLower()
-                                      select new LocationDto
-                                      {
-                                        HolidayCalendarId=h.HOLIDAYCALENDERID,
-                                        Locations=h.LOCATION
-                                      }).ToListAsync();
+            var holidaylist = await (from h in _context.HolidayCalendars
+                                     where h.LOCATION.ToLower() == Location.ToLower()
+                                     select new LocationDto
+                                     {
+                                         HolidayCalendarId = h.HOLIDAYCALENDERID,
+                                         Locations = h.LOCATION
+                                     }).ToListAsync();
             return holidaylist;
         }
     }
