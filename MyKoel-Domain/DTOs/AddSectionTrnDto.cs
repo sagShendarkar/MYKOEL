@@ -18,6 +18,7 @@ namespace MyKoel_Domain.DTOs
         public string SEQUENCE {  get; set; }
         public bool ISACTIVE {  get; set;  }
         public string? CATEGORY {get;set;}
+        public bool IsHtml { get; set; }
         
         public List<AttachmentDto> Attachment { get; set; }
     }

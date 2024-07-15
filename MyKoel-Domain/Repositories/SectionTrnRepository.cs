@@ -89,6 +89,7 @@ namespace MyKoel_Domain.Repositories
                                 FLAG=cn.FLAG,
                                 SEQUENCE=cn.SEQUENCE,
                                 CATEGORY=cn.CATEGORY,
+                                IsHtml=cn.IsHtml,
                                 Attachment = (from a in _context.Attachments
                                             where a.SECTIONID==cn.SECTIONID
                                  select new AttachmentDto
@@ -150,6 +151,7 @@ namespace MyKoel_Domain.Repositories
                                 FLAG=cn.FLAG,
                                 SEQUENCE=cn.SEQUENCE,
                                 CATEGORY=cn.CATEGORY,
+                                IsHtml=cn.ISACTIVE,
                                 Attachment = (from a in _context.Attachments
                                             where a.SECTIONID==Id
                                  select new AttachmentDto
