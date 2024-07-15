@@ -15,9 +15,10 @@ wallpaperImage:any="";
   isDisplayslider$=  new BehaviorSubject<boolean>(false);
   userName:any="";
   private unsubscribe: Subscription = new Subscription();
-  public liveDemoVisible = false;
-  public liveDemoVisible1 = false;
-  public liveDemoVisible2 = false;
+  public visionModal = false;
+  public misionModal = false;
+  public valueModal = false;
+  public canteenMenuModal = false;
   imageSrc = [
     '../../../../assets/images/images.jpg'
   ];
@@ -119,16 +120,36 @@ this.landingPageService.newHiresList$.next(res);
   }
 
   handleLiveDemoChange(event: boolean) {
-    this.liveDemoVisible = event;
+    this.visionModal = event;
   }
   handleLiveDemoChange1(event: boolean) {
-    this.liveDemoVisible1 = event;
+    this.misionModal = event;
   }
   handleLiveDemoChange2(event: boolean) {
-    this.liveDemoVisible2 = event;
+    this.valueModal = event;
+  }
+  handleLiveDemoChange3(event: boolean) {
+    this.canteenMenuModal = event;
   }
 
+openModalPopup(event: boolean,popupName=''){
+if(popupName==='Vision'){
 
+    this.visionModal = event;
+}
+if(popupName==='Mision'){
+
+  this.misionModal = event;
+}
+if(popupName==='Value'){
+
+  this.valueModal = event;
+}
+if(popupName==='Canteen Menu'){
+
+  this.canteenMenuModal = event;
+}
+}
   ngOnDestroy(): void {
      this.headerService.isDisplayBreadcrumb$.next(true);
   }

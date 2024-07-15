@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrl: './admin-header.component.scss'
 })
 export class AdminHeaderComponent {
-
+selectedMenu=0
   public liveDemoVisible = false;
 title=""
 userName:any="";
@@ -60,34 +60,15 @@ ngAfterViewInit(): void {
     this.unsubscribe.add(
       this.headerService.getMenuHierarchy(1).subscribe((res:any[])=>{
         this.headerService.menuList$.next(res);
-        let menuList:any[]=[]
-        let tempMenuList:any[]=res;
-        console.log(res);
-        tempMenuList.forEach((element:any) => {
-if(menuList.length>0){
-
-  if(element.menuGroupData.length>0){
-
-  }else{
-
-    menuList.push(element)
-  }
-}else{
-
-if(element.menuGroupData.length>0){
-
-}else{
-
-  menuList.push(element)
-}
-}
-});
-console.log(menuList);
 
       })
     );
   }
   logout(){
-    this.authService.logout()
+    this.authService.logout();
+  }
+
+  getSelectedMenu(id=0){
+    this.selectedMenu=id;
   }
 }
