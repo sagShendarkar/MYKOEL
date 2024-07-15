@@ -151,7 +151,7 @@ namespace MyKoel_Domain.Repositories
                                 FLAG=cn.FLAG,
                                 SEQUENCE=cn.SEQUENCE,
                                 CATEGORY=cn.CATEGORY,
-                                IsHtml=cn.ISACTIVE,
+                                IsHtml=cn.IsHtml,
                                 Attachment = (from a in _context.Attachments
                                             where a.SECTIONID==Id
                                  select new AttachmentDto
