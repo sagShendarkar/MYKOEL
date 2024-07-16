@@ -5,14 +5,20 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
+  Router,
 } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, public headerService:HeaderService) {}
+  constructor(private authService: AuthService, public headerService:HeaderService,private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let parentRoute = '';
+
+let isMoodFilled=localStorage.getItem('IsMoodFilled');
+let userId=localStorage.getItem('userId');
+if(isMoodFilled==='YES'){
+
     console.log(route?.data);
 this.headerService.headerTitle$.next(route?.data?.['title']);
 this.headerService.isDisplayAddBtn$.next(route?.data?.['isDisplayAddBtn']);
@@ -30,5 +36,11 @@ this.headerService.addBtn$.next(route?.data?.['addBtn']);
     // not logged in so redirect to login page with the return url
      this.authService.logout();
     return false;
+}else{
+
+     this.router.navigateByUrl("/mood-check/"+userId);
+
+}
+return false;
   }
 }

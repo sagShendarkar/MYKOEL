@@ -40,30 +40,32 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             case 401:
               var that = this;
-              // var authValues = this.auth.getAuthFromLocalStorage();
-              // if(new Date(authValues.refreshExpiryInMins).getTime() - Date.now() <= 0){
-              //   //only show one alert
-              //   if(this.unauthAlert){
-              //     return;
-              //   }
-              //   this.unauthAlert = true;
-              //   Swal.fire({
-              //     html:"<div class=\"container fs-3\">Session Expired! <br>Please login again.</div>",
-              //     allowOutsideClick: false
-              //   }).then(()=>{
-              //     this.unauthAlert = false;
-              //     that.auth.logout();
-              //     document.location.reload();
-              //     });
-              // }
-              // else{
-              //   let defaultRouterLink = localStorage.getItem('defaultRouterlink');
-              //   this.router.navigateByUrl('/');
-              // }
+                var authValues = this.auth.getAuthFromLocalStorage();
+                if(new Date(authValues!==undefined?authValues.expiresIn:0).getTime() - Date.now() <= 0){
+                  //only show one alert
+                  if(this.unauthAlert){
+                    break;
+                  }
+                  this.unauthAlert = true;
+                  Swal.fire({
+                    html:"<div class=\"container fs-3\">Session Expired! <br>Please login again.</div>",
+                    allowOutsideClick: false
+                  }).then(()=>{
+                    this.unauthAlert = false;
+                    that.auth.logout();
+                    document.location.reload();
+                    });
+                }
+                else{
+                  let defaultRouterLink = localStorage.getItem('defaultRouterlink');
+                  this.router.navigateByUrl('/');
+
+                }
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
               break;
+          
             case 500:
               // const navigationExtras: NavigationExtras = { state: { error: error.error } }
               // this.router.navigateByUrl('/server-error', navigationExtras);

@@ -51,13 +51,16 @@ if(res.WallPaperDetails!==null){
         localStorage.setItem('WallpaperPath', res.WallPaperDetails.WallpaperPath);
 }
 
-       
+
 
 this.authService.isLoadingSubject.next(false);
 if(res.IsMoodFilled!==null){
 
+  localStorage.setItem('IsMoodFilled', 'YES');
         this.router.navigateByUrl("/home");
 }else{
+
+        localStorage.setItem('IsMoodFilled', 'NO');
         this.router.navigateByUrl("/mood-check/"+res.UserId);
 }
       } else if (res.status == 400) {

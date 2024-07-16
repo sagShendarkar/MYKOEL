@@ -55,6 +55,16 @@ return true
    return   false
     }
   }
+  isMoodFilled(){
+    let IsMoodFilled= localStorage.getItem('IsMoodFilled');
+    if(IsMoodFilled==='YES'){
+return true
+    }else   if(IsMoodFilled==='NO'){
+   return   false
+    }else{ 
+   return   false
+    }
+  }
   logout(){
 
     localStorage.clear();

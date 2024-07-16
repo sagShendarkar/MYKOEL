@@ -41,6 +41,9 @@ selectedMoodIndex:any=null;
   id!: number;
   constructor(
     private route: ActivatedRoute,public authService: AuthService,public datePipe: DatePipe, private router: Router) {
+      if (this.authService.isMoodFilled()) {
+        this.router.navigate(['/']);
+      }
   }
 ngOnInit(): void {
 
@@ -97,6 +100,7 @@ this.moodTodayForm.controls['comment'].setValue(e.target.value!==''?e.target.val
 
     this.authService.moodToday(this.moodTodayForm.value).subscribe((res: any) => {
 
+      localStorage.setItem('IsMoodFilled', 'YES');
       this.router.navigateByUrl("/home");
     })
   }
