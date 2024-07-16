@@ -122,6 +122,8 @@ namespace MyKoel_Web.Controllers
                         Username = usersdata.Email.ToString().Split(".")[0],
                         Token = generatedToken,
                         UserId = usersdata.Id,
+                        Email = usersdata.Email,
+                        Department = usersdata.Department,
                         ProfileImage = !string.IsNullOrEmpty(usersdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usersdata.ProfileImage) : null,
                         WallPaperDetails = await (from w in _context.wallpaper
                                                   where w.UserId == usersdata.Id
@@ -201,34 +203,34 @@ namespace MyKoel_Web.Controllers
                             if (item.MainMenuGroupId > 0)
                             {
 
-                                   var mainMenuGroup = new UserAccessMappingDto
-                                        {
-                                            AccessMappingId = 0,
-                                            MainMenuGroupId = item.MainMenuGroupId,
-                                            UserId = usermodel.Id,
-                                            MenuGroupId = null,
-                                            MenuId = null
-                                        };
-                                        userAccess.Add(mainMenuGroup);
-                                var menugroup = _context.MenuGroups.Where(s => s.MainMenuGroupId == item.MainMenuGroupId).ToList();
-                                if(menugroup.Count== 0)
+                                var mainMenuGroup = new UserAccessMappingDto
                                 {
-                                     var MenuGroup = new UserAccessMappingDto
-                                        {
-                                            AccessMappingId = 0,
-                                            MainMenuGroupId = item.MainMenuGroupId,
-                                            UserId = usermodel.Id,
-                                            MenuGroupId = null,
-                                            MenuId = null
-                                        };
-                                        userAccess.Add(MenuGroup);
+                                    AccessMappingId = 0,
+                                    MainMenuGroupId = item.MainMenuGroupId,
+                                    UserId = usermodel.Id,
+                                    MenuGroupId = null,
+                                    MenuId = null
+                                };
+                                userAccess.Add(mainMenuGroup);
+                                var menugroup = _context.MenuGroups.Where(s => s.MainMenuGroupId == item.MainMenuGroupId).ToList();
+                                if (menugroup.Count == 0)
+                                {
+                                    var MenuGroup = new UserAccessMappingDto
+                                    {
+                                        AccessMappingId = 0,
+                                        MainMenuGroupId = item.MainMenuGroupId,
+                                        UserId = usermodel.Id,
+                                        MenuGroupId = null,
+                                        MenuId = null
+                                    };
+                                    userAccess.Add(MenuGroup);
                                 }
-                                
+
                                 foreach (var item2 in menugroup)
                                 {
 
                                     var menus = _context.Menus.Where(s => s.MenuGroupId == item2.MenuGroupId).ToList();
-                                    
+
                                     foreach (var item3 in menus)
                                     {
                                         var MenusGroup = new UserAccessMappingDto
@@ -257,6 +259,9 @@ namespace MyKoel_Web.Controllers
                             Username = usermodel.Email.ToString().Split(".")[0],
                             Token = generatedToken,
                             UserId = usermodel.Id,
+                            Email = usermodel.Email,
+                            Department = usermodel.Department,
+                            Grade= usermodel.Grade,
                             ProfileImage = !string.IsNullOrEmpty(usermodel.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage) : null,
                             WallPaperDetails = await (from w in _context.wallpaper
                                                       where w.UserId == usermodel.Id
@@ -299,6 +304,9 @@ namespace MyKoel_Web.Controllers
                             Username = userdata.Email.ToString().Split(".")[0],
                             Token = generatedToken,
                             UserId = userdata.Id,
+                            Email = userdata.Email,
+                            Department = userdata.Department,
+                            Grade= userdata.Grade,
                             ProfileImage = !string.IsNullOrEmpty(userdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(userdata.ProfileImage) : null,
                             WallPaperDetails = await (from w in _context.wallpaper
                                                       where w.UserId == userdata.Id
