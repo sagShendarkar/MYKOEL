@@ -1,3 +1,4 @@
+import { EnumDDService } from './../../../../services/common/enumDD.service';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SectionService } from '../../services/section.service';
@@ -33,7 +34,7 @@ export class AddCompanyAnnouncementComponent {
   filename: any;
   filetype: any;
   constructor(public sectionService: SectionService,
-
+    public enumDDService: EnumDDService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -46,13 +47,20 @@ export class AddCompanyAnnouncementComponent {
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     this.initializeForm();
-
+this.getCategoryDD();
     if (!this.isAddMode) {
       // this.formName = 'Edit';
       this.getDetailsById(+this.id);
     }
   }
 
+  getCategoryDD() {
+    this.unsubscribe.add(
+      this.enumDDService.getCategoryDD().subscribe((res) => {
+        this.enumDDService.categoryDD$.next(res);
+      })
+    );
+  }
 
   getDetailsById(id = 0) {
     this.unsubscribe.add(
@@ -121,7 +129,7 @@ if(element.imageflag===1){
       flag: new FormControl('Announcement', Validators.required),
       sequence: new FormControl('', ),
       isactive: new FormControl(true),
-      category: new FormControl('', Validators.required),
+      category: new FormControl(null, Validators.required),
 
       imagePath: new FormControl(null, Validators.required),
       imageSrc: new FormControl(null),

@@ -86,6 +86,11 @@ export class SectionService {
 
   }
 
+  addUpdateSection(SectionValue:any=null)
+  {
+    return this.http.post(this.baseUrl + 'SectionTransaction/UpdateCKEditorData',SectionValue);
+
+  }
   getVisionMissionValueDetails(flag='')
   {
     let params=new HttpParams();

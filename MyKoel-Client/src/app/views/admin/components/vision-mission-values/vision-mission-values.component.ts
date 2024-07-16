@@ -20,6 +20,7 @@ import {
 import 'ckeditor5/ckeditor5.css';
 import { Subscription } from 'rxjs';
 import { SectionService } from '../../services/section.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vision-mission-values',
@@ -74,10 +75,12 @@ export class VisionMissionValuesComponent {
   initializeForm() {
     this.visionform = new FormGroup({
       sectionid: new FormControl(0),
-      description: new FormControl('', Validators.required),
-       startdate: new FormControl('', Validators.required),
-      enddate: new FormControl('', Validators.required),
+      sequence: new FormControl('0'),
+      description: new FormControl(null, Validators.required),
+       startdate: new FormControl(new Date(), Validators.required),
+      enddate: new FormControl(new Date(), Validators.required),
       flag: new FormControl('Our Vision', Validators.required),
+      title: new FormControl('Our Vision', Validators.required),
       attachment: new FormControl(null),
       isactive: new FormControl(true),
       isHtml: new FormControl(true),
@@ -86,10 +89,12 @@ export class VisionMissionValuesComponent {
     });
     this.missionform = new FormGroup({
       sectionid: new FormControl(0),
-      description: new FormControl('', Validators.required),
-       startdate: new FormControl('', Validators.required),
-      enddate: new FormControl('', Validators.required),
+      sequence: new FormControl('0'),
+      description: new FormControl(null, Validators.required),
+       startdate: new FormControl(new Date(), Validators.required),
+      enddate: new FormControl(new Date(), Validators.required),
       flag: new FormControl('Our Mission', Validators.required),
+      title: new FormControl('Our Mission', Validators.required),
       attachment: new FormControl(null),
       isactive: new FormControl(true),
       isHtml: new FormControl(true),
@@ -97,10 +102,12 @@ export class VisionMissionValuesComponent {
     });
     this.valuesform = new FormGroup({
       sectionid: new FormControl(0),
-      description: new FormControl('', Validators.required),
-       startdate: new FormControl('', Validators.required),
-      enddate: new FormControl('', Validators.required),
+      sequence: new FormControl('0'),
+      description: new FormControl(null, Validators.required),
+       startdate: new FormControl(new Date(), Validators.required),
+      enddate: new FormControl(new Date(), Validators.required),
       flag: new FormControl('Our Value', Validators.required),
+      title: new FormControl('Our Value', Validators.required),
       attachment: new FormControl(null),
       isHtml: new FormControl(true),
       isactive: new FormControl(true),
@@ -153,6 +160,70 @@ getValueDetails(){
   )
 }
 onSubmit(){
-  
+  let array=[]
+if(this.visionform.invalid===false){
+  var formDetails = this.visionform.getRawValue();
+  if(formDetails.description!==null){
+    array.push(formDetails)
+  }
 }
+if(this.missionform.invalid===false){
+  var formDetails1 = this.missionform.getRawValue();
+  if(formDetails1.description!==null){
+    array.push(formDetails1)
+  }
+}
+if(this.valuesform.invalid===false){
+  var formDetails2 = this.valuesform.getRawValue();
+  if(formDetails2.description!==null){
+    array.push(formDetails2)
+  }
+}
+if(array.length>0){
+
+this.addUpdateSection(array);
+}
+}
+
+
+addUpdateSection(formDetails:any) {
+  console.log(this.visionform);
+
+
+  this.sectionService.isLoadingSubject.next(true);
+  this.unsubscribe.add(
+    this.sectionService
+      .addUpdateSection(formDetails)
+      .subscribe(
+        (res: any) => {
+          if (res[0].status === 200) {
+            this.sectionService.isLoadingSubject.next(false);
+              Swal.fire(
+                'Success!',
+                '<span>  added successfully !!!</span>',
+                'success'
+              );
+
+
+          } else if (res.status === 400) {
+            this.sectionService.isLoadingSubject.next(false);
+            Swal.fire(
+              'Error!',
+              '<span>Something went wrong, please try again later !!!</span>',
+              'error'
+            );
+          }
+        },
+        (err) => {
+          this.sectionService.isLoadingSubject.next(false);
+          Swal.fire(
+            'Error!',
+            '<span>Something went wrong, please try again later !!!</span>',
+            'error'
+          );
+        }
+      )
+  );
+}
+
 }

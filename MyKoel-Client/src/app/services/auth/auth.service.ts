@@ -1,3 +1,4 @@
+import { AuthModel } from './../../models/auth.model';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -8,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
   baseUrl = environment.apiUrl1;
   isLoading$: Observable<boolean>;
@@ -59,4 +61,20 @@ return true
 
   this.router.navigateByUrl("/login")
   }
+
+  public  getAuthFromLocalStorage(): AuthModel | undefined {
+    try {
+      const lsValue = localStorage.getItem(this.authLocalStorageToken);
+      if (!lsValue) {
+        return undefined;
+      }
+
+      const authData = JSON.parse(lsValue);
+      return authData;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
+
 }

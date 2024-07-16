@@ -25,6 +25,7 @@ import { NewHiresComponent } from './components/new-hires/new-hires/new-hires.co
 import { AddNewHiresComponent } from './components/new-hires/add-new-hires/add-new-hires.component';
 import { CompanyNewsComponent } from './components/company-news/company-news/company-news.component';
 import { AddCompanyNewsComponent } from './components/company-news/add-company-news/add-company-news.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -62,7 +63,7 @@ import { AddCompanyNewsComponent } from './components/company-news/add-company-n
     ListGroupModule,
     SpinnerModule,
     TableModule,
-    BsDatepickerModule,CKEditorModule
+    BsDatepickerModule,CKEditorModule,NgSelectModule
   ]
 })
 export class AdminModule { }

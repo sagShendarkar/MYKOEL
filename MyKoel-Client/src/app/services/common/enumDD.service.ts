@@ -15,14 +15,7 @@ export class EnumDDService {
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
 
-  equipmentTypeDD$=  new BehaviorSubject<any>([]);
-  statusDD$=  new BehaviorSubject<any>([]);
-  investmentTypeDD$=  new BehaviorSubject<any>([]);
-  projectImpactDD$=  new BehaviorSubject<any>([]);
-  assetConditionDD$=  new BehaviorSubject<any>([]);
-  machineCategoryDD$=  new BehaviorSubject<any>([]);
-  assetDisposleDD$=  new BehaviorSubject<any>([]);
- ppfTypeDD$=  new BehaviorSubject<any>([]);
+  categoryDD$=  new BehaviorSubject<any>([]);
   constructor(private http:HttpClient,private router: Router) {
 
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
@@ -30,41 +23,8 @@ export class EnumDDService {
   }
 
 
-  getInvestmentTypeDD()
+  getCategoryDD()
   {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/InvestmentTypeDD');
-  }
-
-  getProjectImpactDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/ProjectImpactDD');
-  }
-  getEquipmentTypeDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/EquipmentTypeDD');
-  }
-  getStatusDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/StatusDD');
-  }
-
-  getMachineCategoryDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/MachineCategoryDD');
-  }
-
-  getAssetConditionDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/AssetConditionDD');
-  }
-
-  getAssetDisposleDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/AssetDisposleDD');
-  }
-
-  getPPFTypeDD()
-  {
-    return this.http.get<any>(this.baseUrl+'EnumDropDown/PPFTypeDD');
+    return this.http.get<any>(this.baseUrl+'Enum/CategoryDD');
   }
 }
