@@ -8,7 +8,7 @@ namespace MyKoel_Domain.Interfaces
 {
     public interface IMenuHierarchyRepository
     {
-        Task<List<MainMenuGroupDto>> GetMenuData(int UserId,string Flag);
+        Task<List<MainMenuGroupDto>> GetMenuData(int UserId,string Flag,string Grade);
         Task<List<MainMenuGroupDto>> GetMenuList(string Name);
 
     }

@@ -58,23 +58,23 @@ namespace MyKoel_Domain.Repositories
             return holidaylist;
         }
 
-        public async Task<object> HolidayExcelUpload(IFormFile file)
+        public async Task<object> HolidayExcelUpload(UploadExcelDto uploadExcel)
         {
             try
             {
                 List<string> messages = new List<string>();
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-                if (file.Length > 0)
+                if (uploadExcel.Excelfile.Length > 0)
                 {
                     Stream stream = new MemoryStream();
-                    file.CopyTo(stream);
+                    uploadExcel.Excelfile.CopyTo(stream);
                     IExcelDataReader reader = null;
 
-                    if (file.FileName.EndsWith(".xls"))
+                    if (uploadExcel.Excelfile.FileName.EndsWith(".xls"))
                     {
                         reader = ExcelReaderFactory.CreateBinaryReader(stream);
                     }
-                    else if (file.FileName.EndsWith(".xlsx"))
+                    else if (uploadExcel.Excelfile.FileName.EndsWith(".xlsx"))
                     {
                         reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     }
@@ -115,11 +115,8 @@ namespace MyKoel_Domain.Repositories
                                 Message = string.Join("\n", messages)
                             };
                         }
-
-                        for (int i = 0; i < finalRecords.Rows.Count; i++)
-                        {
-                            var existingholidays = await _context.HolidayCalendars
-                               .Where(x => x.LOCATION.ToLower() == Convert.ToString(finalRecords.Rows[i]["Locations"]).ToLower())
+                           var existingholidays = await _context.HolidayCalendars
+                               .Where(x => x.LOCATION.ToLower() == uploadExcel.Location.ToLower())
                                .ToListAsync();
                             if (existingholidays != null)
                             {
@@ -131,6 +128,10 @@ namespace MyKoel_Domain.Repositories
                                 }
                             }
 
+
+                        for (int i = 0; i < finalRecords.Rows.Count; i++)
+                        {
+                         
 
                             if (Convert.ToString(finalRecords.Rows[i]["Holiday"]).Equals(""))
                             {

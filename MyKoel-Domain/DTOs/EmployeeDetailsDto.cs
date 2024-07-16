@@ -41,4 +41,11 @@ namespace MyKoel_Domain.DTOs
 
     }
 
+    public class BirthdayDto{
+        public int UserId { get;set;}
+        public string UserImage {get;set;}
+        public string EmployeeName {get;set;}
+        public string Department{get;set;}
+    }
+
 }

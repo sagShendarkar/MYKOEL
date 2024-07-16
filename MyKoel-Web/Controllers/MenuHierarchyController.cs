@@ -23,11 +23,11 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("ShowMenuList")]
-        public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(string? Flag)
+        public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(string? Flag, string? Grade)
         {
             
             var UserId=User.GetUserId();
-            var menu=await _menuHierarchy.GetMenuData(UserId,Flag);
+            var menu=await _menuHierarchy.GetMenuData(UserId,Flag,Grade);
             return menu;
         }
         
@@ -37,5 +37,6 @@ namespace MyKoel_Web.Controllers
             var menu=await _menuHierarchy.GetMenuList(Name);
             return menu;
         }
+
     }
 }

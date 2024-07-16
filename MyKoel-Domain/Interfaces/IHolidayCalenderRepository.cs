@@ -11,7 +11,7 @@ namespace MyKoel_Domain.Interfaces
     public interface IHolidayCalenderRepository
     {
         Task<List<HolidayCalendar>> HolidayCalendarList(string Location);
-        Task<object> HolidayExcelUpload(IFormFile file);
+        Task<object> HolidayExcelUpload(UploadExcelDto uploadExcel);
         Task<List<LocationDto>> LocationList(string Location);
 
     }

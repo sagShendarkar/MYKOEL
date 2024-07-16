@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Models.Masters;
 
 namespace MyKoel_Domain.Interfaces
@@ -13,6 +14,8 @@ namespace MyKoel_Domain.Interfaces
           void DeleteWallpaper(Wallpaper wallpaper);
           Task<Wallpaper> GetWallpaperById(int Id);
           void AddNewWallpaper(Wallpaper wallpaper);
+           Task<List<BirthdayDto>> GetBirthdayList(DateTime Date);
+
 
     }
 }

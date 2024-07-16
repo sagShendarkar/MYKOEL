@@ -13,6 +13,7 @@ using MyKoel_Domain.Interfaces;
 using MyKoel_Domain.Models.Masters;
 using System.IO;
 using MyKoel_Domain.Migrations;
+using Microsoft.AspNetCore.Authorization;
 namespace MyKoel_Web.Controllers
 {
     [ApiController]
@@ -30,7 +31,6 @@ namespace MyKoel_Web.Controllers
             _wallpaperRepository = wallpaperRepository;
         }
 
-
         [HttpPost("AddWallPaper")]
         public async Task<object> AddOrUpdateWallpaper(WallpaperDto wallpaperDto)
         {
@@ -40,8 +40,8 @@ namespace MyKoel_Web.Controllers
                         .Where(u => u.Id == User.GetUserId())
                         .Select(s => s.TicketNo)
                         .FirstOrDefaultAsync();
-                    if(wallpaperDto.WallpaperSrc != null)
-                    {
+                if (wallpaperDto.WallpaperSrc != null)
+                {
                     string rootFolderPath = @"C:\MyKoelImages";
 
                     if (!Directory.Exists(rootFolderPath))
@@ -88,59 +88,77 @@ namespace MyKoel_Web.Controllers
                     wallpaperDto.WallpaperName = fileName;
                     wallpaperDto.IsActive = true;
                     wallpaperDto.WallpaperPath = Path.Combine(wallpaperFolderPath, fileName);
-                    wallpaperDto.UserId=wallpaperDto.UserId;
-                Wallpaper wallpaper;
-                if (wallpaperDto.WallpaperId == 0)
-                {
-                    wallpaper = _mapper.Map<Wallpaper>(wallpaperDto);
-                    _wallpaperRepository.AddNewWallpaper(wallpaper);
-                }
-                else
-                {
-                    wallpaper = await _wallpaperRepository.GetWallpaperById(wallpaperDto.WallpaperId);
-                    if (wallpaper == null)
+                    wallpaperDto.UserId = wallpaperDto.UserId;
+                    Wallpaper wallpaper;
+                    if (wallpaperDto.WallpaperId == 0)
                     {
-                        return NotFound("Wallpaper not found");
+                        wallpaper = _mapper.Map<Wallpaper>(wallpaperDto);
+                        _wallpaperRepository.AddNewWallpaper(wallpaper);
                     }
-                    wallpaperDto.WallpaperName = fileName;
-                    wallpaperDto.WallpaperPath = Path.Combine(wallpaperFolderPath, fileName);
-                    wallpaper =_mapper.Map(wallpaperDto, wallpaper);
-                    _wallpaperRepository.UpdateWallpaper(wallpaper);
-                }
-
-                if (await _wallpaperRepository.SaveAllAsync())
-                {
-                    return new 
+                    else
                     {
-                        Status=200,
-                        Message="Data Saved Successfully",
-                        WallpaperId = wallpaper.WallpaperId,
-                        WallpaperName = wallpaper.WallpaperName
-                    };
+                        wallpaper = await _wallpaperRepository.GetWallpaperById(wallpaperDto.WallpaperId);
+                        if (wallpaper == null)
+                        {
+                            return NotFound("Wallpaper not found");
+                        }
+                        wallpaperDto.WallpaperName = fileName;
+                        wallpaperDto.WallpaperPath = Path.Combine(wallpaperFolderPath, fileName);
+                        wallpaper = _mapper.Map(wallpaperDto, wallpaper);
+                        _wallpaperRepository.UpdateWallpaper(wallpaper);
+                    }
+
+                    if (await _wallpaperRepository.SaveAllAsync())
+                    {
+                        return new
+                        {
+                            Status = 200,
+                            Message = "Data Saved Successfully",
+                            WallpaperId = wallpaper.WallpaperId,
+                            WallpaperName = wallpaper.WallpaperName
+                        };
+                    }
+                    else
+                    {
+                        return new
+                        {
+                            Status = 400,
+                            Message = "Failed to save changes"
+                        };
+                    }
                 }
                 else
                 {
-                    return new {
-                        Status=400,
-                        Message="Failed to save changes"
-                    };
-                }
-             }
-               else
-                {
-                  return new {
-                        Status=400,
-                        Message="Please select Image"
+                    return new
+                    {
+                        Status = 400,
+                        Message = "Please select Image"
                     };
                 }
 
-               
+
             }
             catch (Exception ex)
             {
                 return BadRequest("Failed to add/update data: " + ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpGet("GetBirthdayList")]
+        public async Task<object> GetBirthdayList(DateTime Date)
+        {
+            try
+            {
+                var userData = await _wallpaperRepository.GetBirthdayList(Date);
+                return userData;
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+        }
+
 
 
     }
