@@ -63,28 +63,27 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+            opt.TokenLifespan = TimeSpan.FromMinutes(2));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-// Adding Jwt Bearer
-.AddJwtBearer(options =>
+
+}).AddJwtBearer(options =>
 {
     options.SaveToken = true;
     options.RequireHttpsMetadata = false;
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateIssuer = false,
-
         ValidateAudience = false,
-
         ValidateLifetime = true,
-
         ValidateIssuerSigningKey = true,
-
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"])),
+        ClockSkew = TimeSpan.Zero
     };
+
 });
 
 
@@ -100,7 +99,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.UseAuthorization();
+app.UseAuthentication()
+    .UseAuthorization();
 app.UseCorsPolicy()
     .UseResponseCaching()
     .UseDefaultFiles()

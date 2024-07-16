@@ -10,6 +10,7 @@ using MyKoel_Domain.Extensions;
 using Microsoft.AspNetCore.Authorization;
 namespace MyKoel_Web.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MenuHierarchyController : ControllerBase

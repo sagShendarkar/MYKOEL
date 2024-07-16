@@ -14,6 +14,7 @@ using MyKoel_Domain.Extensions;
 using MyKoel_Domain.Models.Master;
 using AutoMapper;
 using MyKoel_Domain.Migrations;
+using MyKoel_Domain.Constants;
 
 namespace MyKoel_Web.Controllers
 {
@@ -124,6 +125,7 @@ namespace MyKoel_Web.Controllers
                         UserId = usersdata.Id,
                         Email = usersdata.Email,
                         Department = usersdata.Department,
+                        authExpiryInMins = TokenConstants.accessTokenTimeInMins,
                         ProfileImage = !string.IsNullOrEmpty(usersdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usersdata.ProfileImage) : null,
                         WallPaperDetails = await (from w in _context.wallpaper
                                                   where w.UserId == usersdata.Id
@@ -262,6 +264,7 @@ namespace MyKoel_Web.Controllers
                             Email = usermodel.Email,
                             Department = usermodel.Department,
                             Grade= usermodel.Grade,
+                            authExpiryInMins = TokenConstants.accessTokenTimeInMins,
                             ProfileImage = !string.IsNullOrEmpty(usermodel.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage) : null,
                             WallPaperDetails = await (from w in _context.wallpaper
                                                       where w.UserId == usermodel.Id
@@ -307,6 +310,7 @@ namespace MyKoel_Web.Controllers
                             Email = userdata.Email,
                             Department = userdata.Department,
                             Grade= userdata.Grade,
+                            authExpiryInMins = TokenConstants.accessTokenTimeInMins,
                             ProfileImage = !string.IsNullOrEmpty(userdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(userdata.ProfileImage) : null,
                             WallPaperDetails = await (from w in _context.wallpaper
                                                       where w.UserId == userdata.Id

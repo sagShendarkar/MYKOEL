@@ -39,8 +39,9 @@ namespace industry4_Domain.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(expiryMin == 0 ? TokenConstants.accessTokenTimeInMins : expiryMin),
+               // Expires = DateTime.Now.AddMinutes(expiryMin == 0 ? TokenConstants.accessTokenTimeInMins : expiryMin),
                 SigningCredentials = creds,
+                 Expires = DateTime.Now.AddMinutes(expiryMin == 0 ? 2 : expiryMin), // Expires in 2 minutes by default, or as specified
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
