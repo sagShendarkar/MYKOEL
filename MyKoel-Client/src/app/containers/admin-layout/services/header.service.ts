@@ -28,7 +28,13 @@ addBtnDetails={
   {
     let params=new HttpParams();
     // params=params.append('UserId',id);
+    let Grade=localStorage.getItem('Grade');
+    if(Grade==="SysAdmin"){
+    params=params.append('Grade',"SysAdmin");
+    }
+
     params=params.append('Flag',"Top MenuBar");
+
     return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
   }
 }

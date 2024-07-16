@@ -1,9 +1,10 @@
 
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './../../../services/auth/auth.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthModel } from 'src/app/models/auth.model';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,20 @@ export class LoginComponent {
   isInvalidUser: boolean = false;
   loginForm!: FormGroup;
   submitted = false;
-  constructor(public authService: AuthService, private router: Router) {
+
+  isAdAuth: string;
+  constructor(public authService: AuthService,
+    private route: ActivatedRoute,private router: Router) {
     if (this.authService.isTokenAvailable()) {
       this.router.navigate(['/']);
     }
   }
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.isAdAuth = params['isAdAuth'];
+      console.log('isAdAuth:', this.isAdAuth);
+      // Now you can use the isAdAuth value in your component
+    });
     this.initializeForm();
   }
   initializeForm() {
@@ -39,13 +48,21 @@ export class LoginComponent {
 
 
     this.authService.isLoadingSubject.next(true);
-    this.authService.login(this.loginForm.value).subscribe((res: any) => {
+    this.authService.login(this.loginForm.value,this.isAdAuth).subscribe((res: any) => {
       if (res.status == 200) {
         this.isInvalidUser = false;
         localStorage.setItem('token', res.Token);
         localStorage.setItem('userId', res.UserId);
         localStorage.setItem('username', res.Username);
         localStorage.setItem('ProfileImage', res.ProfileImage);
+        localStorage.setItem('Department', res.Department);
+        localStorage.setItem('Email', res.Email);
+        localStorage.setItem('Grade', res.Grade);
+
+        const auth = new AuthModel();
+        let milisec=res.authExpiryInMins* 60 * 1000;
+        auth.expiresIn = new Date(Date.now()+milisec)
+        // this.startRefreshTokenTimer(auth.expiresIn);
 if(res.WallPaperDetails!==null){
 
         localStorage.setItem('WallpaperPath', res.WallPaperDetails.WallpaperPath);

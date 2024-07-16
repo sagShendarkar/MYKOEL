@@ -21,9 +21,15 @@ export class AuthService {
    }
 
 
-  login(model:any)
+  login(model:any,isAdAuth:any)
   {
-    return this.http.post(this.baseUrl + 'Account/login', model);
+
+    let params=new HttpParams();
+    if(isAdAuth!==undefined){
+    params=params.append('IsADAuth',isAdAuth);
+
+    }
+    return this.http.post(this.baseUrl + 'Account/login', model,{params});
 
   }
 
@@ -61,7 +67,7 @@ return true
 return true
     }else   if(IsMoodFilled==='NO'){
    return   false
-    }else{ 
+    }else{
    return   false
     }
   }

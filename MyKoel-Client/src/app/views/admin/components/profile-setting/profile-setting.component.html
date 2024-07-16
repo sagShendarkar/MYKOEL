@@ -12,8 +12,10 @@
                 <label cLabel for="exampleFormControlInput1">Name </label>
                 <input cFormControl
                        id="exampleFormControlInput1"
+                       disabled="true"
                        placeholder="Enter Name  here..."
                        type="text"
+                       [(ngModel)]="name"  [ngModelOptions]="{standalone: true}"
                 />
               </div>
             </div>
@@ -24,6 +26,22 @@
                        id="exampleFormControlInput1"
                        placeholder="Enter Job Title here..."
                        type="text"
+                       disabled="true"
+                       [ngModelOptions]="{standalone: true}"
+                     [(ngModel)]="GradeName"
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Email</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter Email here..."
+                       disabled="true"
+                       type="text"
+                       [ngModelOptions]="{standalone: true}"
+                     [(ngModel)]="email"
                 />
               </div>
             </div>
@@ -34,6 +52,8 @@
                        id="exampleFormControlInput1"
                        placeholder="Department & Loaction ID"
                        type="text"
+                       disabled="true"
+                     [(ngModel)]="Department"  [ngModelOptions]="{standalone: true}"
                 />
               </div>
             </div>

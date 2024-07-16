@@ -25,6 +25,11 @@ export class ProfileSettingComponent {
 
   ProfileImage:any="";
   /////////////////////////////////////////////////////////////////////
+name:string | null=""
+email:string | null=""
+GradeName:string | null=""
+Department:string | null=""
+
 
   wallpaperIsImageFail: boolean;
   wallpaperIsImageSuccess: boolean;
@@ -44,7 +49,14 @@ export class ProfileSettingComponent {
       this.wallpaperImage=localStorage.getItem('WallpaperPath')!==null?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
 
   }
-
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.GradeName=localStorage.getItem('Grade');
+  this.email=localStorage.getItem('Email');
+  this.name=localStorage.getItem('username');
+  this.Department=localStorage.getItem('Department');
+}
     // Logo Upload Functionality
     profileUrl: any = null;
 
