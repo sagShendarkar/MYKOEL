@@ -90,10 +90,66 @@ namespace MyKoel_Web.Controllers
 
 
         [HttpPost("login")]
-        public async Task<object> AdAuthLogin(LoginDto loginDto)
+        public async Task<object> AdAuthLogin(LoginDto loginDto, string? IsADAuth)
         {
             try
             {
+                if (IsADAuth == "0")
+                {
+                    var usersdata = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username);
+
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(usersdata);
+                    var changePasswordresult = await _userManager.ResetPasswordAsync(usersdata, token, loginDto.Password);
+
+                    var result = await _signInManager.CheckPasswordSignInAsync(usersdata, loginDto.Password, false);
+                    if (!result.Succeeded)
+                    {
+                        var Data = new[]
+                        {
+                new
+                {
+                    status = 400,
+                    ErrorMessage = "Invalid Login Details!"
+                }
+            };
+                        return JsonConvert.SerializeObject(Data);
+                    }
+                    var generatedToken = await _tokenService.CreateToken(usersdata, 7 * 24 * 60);
+
+                    var responseData = new
+                    {
+                        status = 200,
+                        Username = usersdata.Email.ToString().Split(".")[0],
+                        Token = generatedToken,
+                        UserId = usersdata.Id,
+                        ProfileImage = !string.IsNullOrEmpty(usersdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usersdata.ProfileImage) : null,
+                        WallPaperDetails = await (from w in _context.wallpaper
+                                                  where w.UserId == usersdata.Id
+                                                  select new WallpaperDto
+                                                  {
+                                                      WallpaperId = w.WallpaperId,
+                                                      WallpaperName = w.WallpaperName,
+                                                      WallpaperPath = !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
+                                                      UserId = w.UserId,
+
+                                                  }).FirstOrDefaultAsync(),
+                        IsMoodFilled = await (from w in _context.MoodToday
+                                              where w.UserId == usersdata.Id && w.ReportedDateTime.Date == DateTime.Now.Date
+                                              orderby w.MoodId descending
+                                              select new MoodTodayDto
+                                              {
+                                                  ReportedDateTime = w.ReportedDateTime,
+                                                  Comment = w.Comment,
+                                                  MoodId = w.MoodId,
+                                                  Rating = w.Rating,
+                                              }).FirstOrDefaultAsync(),
+                        Grade = usersdata.Grade
+
+                    };
+                    return Ok(JsonConvert.SerializeObject(responseData));
+
+                }
+
                 bool AdAuthValid = await _assetDetails.CheckADCredentials(loginDto.Username, loginDto.Password);
 
                 if (AdAuthValid)
@@ -135,22 +191,58 @@ namespace MyKoel_Web.Controllers
                             return JsonConvert.SerializeObject(Data);
                         }
                         // added default access for profile,links and footer menus
-                        var menulist = await _context.MainMenuGroups.Where(s => s.Flag.ToLower().Contains(("profile Menus").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
-                        || s.Flag.ToLower().Contains(("Footer Menus").ToLower())).ToListAsync();
+                        var menulist = await _context.MainMenuGroups.Where(s => s.Flag.ToLower().Contains(("Top MenuBar").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
+                        || s.Flag.ToLower().Contains(("Footer Menus").ToLower()) || s.Flag.ToLower().Contains(("Wallpaper Menus").ToLower())).ToListAsync();
                         var userAccess = new List<UserAccessMappingDto>();
                         foreach (var item in menulist)
                         {
+
+
                             if (item.MainMenuGroupId > 0)
                             {
-                                var mainMenuGroup = new UserAccessMappingDto
+
+                                   var mainMenuGroup = new UserAccessMappingDto
+                                        {
+                                            AccessMappingId = 0,
+                                            MainMenuGroupId = item.MainMenuGroupId,
+                                            UserId = usermodel.Id,
+                                            MenuGroupId = null,
+                                            MenuId = null
+                                        };
+                                        userAccess.Add(mainMenuGroup);
+                                var menugroup = _context.MenuGroups.Where(s => s.MainMenuGroupId == item.MainMenuGroupId).ToList();
+                                if(menugroup.Count== 0)
                                 {
-                                    AccessMappingId = 0,
-                                    MainMenuGroupId = item.MainMenuGroupId,
-                                    UserId = usermodel.Id,
-                                    MenuGroupId = null,
-                                    MenuId = null
-                                };
-                                userAccess.Add(mainMenuGroup);
+                                     var MenuGroup = new UserAccessMappingDto
+                                        {
+                                            AccessMappingId = 0,
+                                            MainMenuGroupId = item.MainMenuGroupId,
+                                            UserId = usermodel.Id,
+                                            MenuGroupId = null,
+                                            MenuId = null
+                                        };
+                                        userAccess.Add(MenuGroup);
+                                }
+                                
+                                foreach (var item2 in menugroup)
+                                {
+
+                                    var menus = _context.Menus.Where(s => s.MenuGroupId == item2.MenuGroupId).ToList();
+                                    
+                                    foreach (var item3 in menus)
+                                    {
+                                        var MenusGroup = new UserAccessMappingDto
+                                        {
+                                            AccessMappingId = 0,
+                                            MainMenuGroupId = item.MainMenuGroupId,
+                                            UserId = usermodel.Id,
+                                            MenuGroupId = item2.MenuGroupId,
+                                            MenuId = item3.MenuId
+                                        };
+                                        userAccess.Add(MenusGroup);
+                                    }
+                                }
+
                             }
 
                         }
@@ -162,19 +254,20 @@ namespace MyKoel_Web.Controllers
                         var responseData = new
                         {
                             Status = 200,
-                            Username = usermodel.UserName,
+                            Username = usermodel.Email.ToString().Split(".")[0],
                             Token = generatedToken,
                             UserId = usermodel.Id,
-                            ProfileImage=!string.IsNullOrEmpty(usermodel.ProfileImage)? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage): null,
-                            WallPaperDetails=await( from w in _context.wallpaper
-                                               where w.UserId == usermodel.Id
-                                               select new WallpaperDto{
-                                                WallpaperId=w.WallpaperId,
-                                                WallpaperName=w.WallpaperName,
-                                                WallpaperPath= !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
-                                             UserId=w.UserId
-                                               }).FirstOrDefaultAsync(),
-                                                    };
+                            ProfileImage = !string.IsNullOrEmpty(usermodel.ProfileImage) ? _imageService.ConvertLocalImageToBase64(usermodel.ProfileImage) : null,
+                            WallPaperDetails = await (from w in _context.wallpaper
+                                                      where w.UserId == usermodel.Id
+                                                      select new WallpaperDto
+                                                      {
+                                                          WallpaperId = w.WallpaperId,
+                                                          WallpaperName = w.WallpaperName,
+                                                          WallpaperPath = !string.IsNullOrEmpty(w.WallpaperPath) ? _imageService.ConvertLocalImageToBase64(w.WallpaperPath) : null,
+                                                          UserId = w.UserId
+                                                      }).FirstOrDefaultAsync(),
+                        };
 
 
                         return Ok(JsonConvert.SerializeObject(responseData));
@@ -203,7 +296,7 @@ namespace MyKoel_Web.Controllers
                         var responseData = new
                         {
                             status = 200,
-                            Username = userdata.UserName,
+                            Username = userdata.Email.ToString().Split(".")[0],
                             Token = generatedToken,
                             UserId = userdata.Id,
                             ProfileImage = !string.IsNullOrEmpty(userdata.ProfileImage) ? _imageService.ConvertLocalImageToBase64(userdata.ProfileImage) : null,
@@ -221,7 +314,7 @@ namespace MyKoel_Web.Controllers
                                                   where w.UserId == userdata.Id && w.ReportedDateTime.Date == DateTime.Now.Date
                                                   orderby w.MoodId descending
                                                   select new MoodTodayDto
-                                                  { 
+                                                  {
                                                       ReportedDateTime = w.ReportedDateTime,
                                                       Comment = w.Comment,
                                                       MoodId = w.MoodId,
@@ -243,6 +336,7 @@ namespace MyKoel_Web.Controllers
                         Message = "Invalid TicketNo Details"
                     };
                 }
+
             }
             catch (Exception ex)
             {

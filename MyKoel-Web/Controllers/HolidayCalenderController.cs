@@ -36,9 +36,9 @@ namespace MyKoel_Web.Controllers
        
 
         [HttpPost("UploadExcel")]
-        public async Task<ActionResult<object>> UploadExcel(IFormFile Excelfile)
+        public async Task<ActionResult<object>> UploadExcel([FromForm] UploadExcelDto uploadExcel)
         {
-            var filedata = await _holidayCalender.HolidayExcelUpload(Excelfile);
+            var filedata = await _holidayCalender.HolidayExcelUpload(uploadExcel);
             return filedata;
         }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyKoel_Domain.Data;
+using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Interfaces;
 using MyKoel_Domain.Models.Masters;
 
@@ -15,9 +16,12 @@ namespace MyKoel_Domain.Repositories
 
         private bool isDisposed;
         private readonly DataContext _context;
-        public WallPaperRepository(DataContext context)
+        private readonly IImageService _imageService;
+
+        public WallPaperRepository(DataContext context,IImageService imageService)
         {
             _context = context;
+            _imageService=imageService;
         }
     
           public async Task<Wallpaper> GetWallpaperById(int Id) 
@@ -64,5 +68,18 @@ namespace MyKoel_Domain.Repositories
             _context.Entry(Wallpaper).State=EntityState.Added;
         }
 
+        public async Task<List<BirthdayDto>> GetBirthdayList(DateTime Date)
+        {
+            var birthdaydata= await (from u in _context.Users
+                              where u.DOB.Date==Date.Date
+                              select new BirthdayDto
+                              {
+                                UserId=u.Id,
+                                UserImage=!string.IsNullOrEmpty(u.ProfileImage) ? _imageService.ConvertLocalImageToBase64(u.ProfileImage):null,
+                                Department=u.Department,
+                                EmployeeName=u.UserName
+                              }).ToListAsync();
+            return birthdaydata;
+        }
     }
 }

@@ -25,10 +25,60 @@ namespace MyKoel_Domain.Repositories
         }
 
 
-        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId, string Flag)
+        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId, string Flag,string Grade)
         {
             try
             {
+
+                if(Grade=="SysAdmin")
+                {
+                      var mainmenuData = await (from menu in _context.MainMenuGroups
+                                      group menu by new { menu.MainMenuGroupId} into grouped
+                                      select new MainMenuGroupDto
+                                      {
+                                          MainMenuGroupId = grouped.Key.MainMenuGroupId,
+                                          MenuGroupName = grouped.FirstOrDefault().MenuGroupName,
+                                          Icon = grouped.FirstOrDefault().Icon,
+                                          Sequence = grouped.FirstOrDefault().Sequence,
+                                          IsActive = grouped.FirstOrDefault().IsActive,
+                                          Route = grouped.FirstOrDefault().Route,
+                                          Flag = grouped.FirstOrDefault().Flag,
+                                          ImageIcon = grouped.FirstOrDefault().ImageIcon, // Assuming ImageIcon is a string containing file path
+                                          IsIcon = grouped.FirstOrDefault().IsIcon,
+                                          IsImage = grouped.FirstOrDefault().IsImage,
+                                          IsPopup = grouped.FirstOrDefault().IsPopup,
+                                          IsRoute = grouped.FirstOrDefault().IsRoute,
+                                          IsChild = grouped.FirstOrDefault().IsChild,
+                                          MenuGroupData = (from mg in _context.MenuGroups
+                                                           where mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
+                                                           group mg by new { mg.MenuGroupId, mg.MainMenuGroupId } into MenuGroupData
+                                                           select new MenuGroupDto
+                                                           {
+                                                               MenuGroupId = MenuGroupData.FirstOrDefault().MenuGroupId,
+                                                               MainMenuGroupId = MenuGroupData.FirstOrDefault().MainMenuGroupId,
+                                                               GroupName = MenuGroupData.FirstOrDefault().GroupName,
+                                                               Sequence = MenuGroupData.FirstOrDefault().Sequence,
+                                                               Icon = MenuGroupData.FirstOrDefault().Icon,
+                                                               IsActive = MenuGroupData.FirstOrDefault().IsActive,
+                                                               IsChild = MenuGroupData.FirstOrDefault().IsChild,
+                                                               Route = MenuGroupData.FirstOrDefault().Route,
+                                                               MenusData = (from mainmenu in _context.Menus
+                                                                               where mainmenu.MenuGroupId == MenuGroupData.FirstOrDefault().MenuGroupId
+                                                                            select new MenusDto
+                                                                            {
+                                                                                MenuId = mainmenu.MenuId,
+                                                                                MenuName = mainmenu.MenuName,
+                                                                                Sequence = mainmenu.Sequence,
+                                                                                Icon = mainmenu.Icon,
+                                                                                IsActive = mainmenu.IsActive,
+                                                                                Route = mainmenu.Route
+                                                                            }).OrderBy(a => a.Sequence).ToList()
+                                                           }).OrderBy(a => a.Sequence).ToList()
+                                      }).OrderBy(s => s.MainMenuGroupId).ToListAsync();
+                        return mainmenuData;
+
+                }
+
                 var menuData = await (from menu in _context.MainMenuGroups
                                       join u in _context.UserMenuMap
                                       on menu.MainMenuGroupId equals u.MainMenuGroupId
