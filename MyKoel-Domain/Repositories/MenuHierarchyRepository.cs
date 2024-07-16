@@ -75,6 +75,23 @@ namespace MyKoel_Domain.Repositories
                                                                             }).OrderBy(a => a.Sequence).ToList()
                                                            }).OrderBy(a => a.Sequence).ToList()
                                       }).OrderBy(s => s.MainMenuGroupId).ToListAsync();
+                if (!string.IsNullOrEmpty(Flag))
+                {
+                    if(Flag=="Top MenuBar"){
+                    mainmenuData = mainmenuData.Where(s => s.Flag == "Top MenuBar" || s.Flag== "Admin Menu").ToList();
+
+                    }
+                    else{
+                    mainmenuData = mainmenuData.Where(s => s.Flag == Flag).ToList();
+                    }
+                }
+                foreach (var item in mainmenuData)
+                {
+                    if (!string.IsNullOrEmpty(item.ImageIcon))
+                    {
+                        item.ImageIcon = _imageService.ConvertLocalImageToBase64(item.ImageIcon);
+                    }
+                }
                         return mainmenuData;
 
                 }
