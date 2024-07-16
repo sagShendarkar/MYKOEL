@@ -7,6 +7,7 @@ using MyKoel_Domain.Interfaces;
 using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Data;
 using MyKoel_Domain.Extensions;
+using Microsoft.AspNetCore.Authorization;
 namespace MyKoel_Web.Controllers
 {
     [ApiController]
