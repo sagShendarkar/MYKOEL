@@ -23,15 +23,16 @@ export class LandingPageService {
   getLandingPageMenus(id:number=1,Flag:string='')
   {
     let params=new HttpParams();
-    // params=params.append('UserId',id);
+    let Grade=localStorage.getItem('Grade');
+    if(Grade==="SysAdmin"){
+    params=params.append('Grade',"SysAdmin");
+    }
     params=params.append('Flag',Flag);
     return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
   }
   getSectionList(Flag:string='',PageSize=0,PageNumber=1)
   {
-    let params=new HttpParams();
-    //Announcement
-    // params=params.append('UserId',id);
+    let params=new HttpParams(); 
     params=params.append('Flag',Flag);
     params=params.append('PageSize',PageSize);
     params=params.append('PageNumber',PageNumber);

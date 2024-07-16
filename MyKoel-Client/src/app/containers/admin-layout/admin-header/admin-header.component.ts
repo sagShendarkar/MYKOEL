@@ -22,7 +22,7 @@ btnDetails:any;
     private authService: AuthService ) {
 
 
-  this.ProfileImage=localStorage.getItem('ProfileImage')!==null?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/user.png";
+  this.ProfileImage=(localStorage.getItem('ProfileImage')!==null&&localStorage.getItem('ProfileImage')!=='null')?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/profile.png";
 
       this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
   }
@@ -39,7 +39,7 @@ ngOnInit(): void {
   this.headerService.isProfilechanged$.subscribe(res=>{
 if(res===true){
 
-  this.ProfileImage=localStorage.getItem('ProfileImage')!==null?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/user.png";
+  this.ProfileImage=(localStorage.getItem('ProfileImage')!==null&&localStorage.getItem('ProfileImage')!=='null')?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/profile.png";
   this.headerService.isProfilechanged$.next(false);
 }
   })

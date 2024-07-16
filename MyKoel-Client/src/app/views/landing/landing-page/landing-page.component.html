@@ -103,7 +103,21 @@ class="mb-1"
   <div   class="feature-div col-md-12  col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
     <div class="grid-container">
       <div class="grid-item" *ngFor="let quickLinks of(landingPageService.quickLinksMenus$|async) ; let i=index">
-        <div class="row">
+        <div class="row cursor" *ngIf="quickLinks.isRoute"  (click)="openFile(quickLinks.route)" >
+          <div class="col-md-12  col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
+            <span>
+              <img
+                [src]="quickLinks.imageIcon"
+                [alt]="quickLinks.menuGroupName"
+              />
+            </span>
+          </div>
+
+          <div class="col-md-12">
+            <span> {{quickLinks.menuGroupName}} </span>
+          </div>
+        </div>
+          <div class="row" *ngIf="!quickLinks.isRoute">
           <div class="col-md-12  col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12 ">
             <span>
               <img

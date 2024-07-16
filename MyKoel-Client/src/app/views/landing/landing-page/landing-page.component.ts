@@ -69,7 +69,7 @@ ngOnInit(): void {
 }
 ngAfterViewInit(): void {
 
-  this.wallpaperImage=localStorage.getItem('WallpaperPath')!==null?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
+  this.wallpaperImage=(localStorage.getItem('WallpaperPath')!==null&&localStorage.getItem('WallpaperPath')!=='null')?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
 
 }
 getWallpaperMenus(){
@@ -105,6 +105,10 @@ this.isDisplayslider$.next(true);
 
     })
   );
+}
+
+openFile(url: string) {
+  window.open(url, '_blank');
 }
 getNewHiresList(){
   this.unsubscribe.add(

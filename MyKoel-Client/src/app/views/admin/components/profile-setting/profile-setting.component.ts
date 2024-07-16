@@ -44,9 +44,9 @@ Department:string | null=""
     private sanitizer: DomSanitizer,public profileSettingService:ProfileSettingService,
   public headerService:HeaderService){
 
-      this.ProfileImage=localStorage.getItem('ProfileImage')!==null?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/user.png";
+      this.ProfileImage=(localStorage.getItem('ProfileImage')!==null&&localStorage.getItem('ProfileImage')!=='null')?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/profile.png";
 
-      this.wallpaperImage=localStorage.getItem('WallpaperPath')!==null?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
+      this.wallpaperImage=(localStorage.getItem('WallpaperPath')!==null&&localStorage.getItem('WallpaperPath')!=='null')?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
 
   }
 ngOnInit(): void {
@@ -65,15 +65,15 @@ ngOnInit(): void {
         console.log(event.target.files[0]);
 
         // if(event.target.files[0].size  < 50000 || event.target.files[0].size > 200000)
-        if (event.target.files[0].size > 200000) {
+        if (event.target.files[0].size > 500000) {
           console.log('test img');
 
           Swal.fire({
             icon: 'error',
-            text: 'Image size must be less than 200KB!',
+            text: 'Image size must be less than 5MB!',
           });
         }
-        if (event.target.files[0].size <= 200000) {
+        if (event.target.files[0].size <= 500000) {
           var reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event) => {
@@ -84,6 +84,7 @@ ngOnInit(): void {
             this.profileImageSrc=img.src;
             this.profileImagePath=img.src;
             this.profileIsImageFail = false;
+            this.ProfileImage=img.src;
             this.profileIsViewImage = false;
             this.viewImage = null;
             this.profileIsImageSuccess = true;
@@ -150,15 +151,15 @@ if(res.status===400){
         console.log(event.target.files[0]);
 
         // if(event.target.files[0].size  < 50000 || event.target.files[0].size > 200000)
-        if (event.target.files[0].size > 200000) {
+        if (event.target.files[0].size > 500000) {
           console.log('test img');
 
           Swal.fire({
             icon: 'error',
-            text: 'Image size must be less than 200KB!',
+            text: 'Image size must be less than 5MB!',
           });
         }
-        if (event.target.files[0].size <= 200000) {
+        if (event.target.files[0].size <= 500000) {
           var reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event) => {
@@ -168,6 +169,8 @@ if(res.status===400){
             img.src = event.target?.result as string;
             this.wallpaperImageSrc=img.src;
             this.wallpaperImagePath=img.src;
+
+            this.wallpaperImage=img.src;
             this.wallpaperIsImageFail = false;
             this.wallpaperIsViewImage = false;
             this.viewImage = null;
