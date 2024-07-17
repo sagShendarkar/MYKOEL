@@ -50,6 +50,8 @@ namespace MyKoel_Domain.Data
         public DbSet<CanteenMenus> CanteenMenus { get; set; }
         public DbSet<ValuesMaster> ValuesMaster { get; set; }
         public DbSet<HolidayCalendar> HolidayCalendars { get; set; }
+        public DbSet<VacancyPosting> VacancyPosting { get; set; }
+        public DbSet<VacancyInquiry> VacancyInquiry { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -137,6 +139,13 @@ namespace MyKoel_Domain.Data
 
           builder.Entity<HolidayCalendar>()
           .HasKey(m => m.HOLIDAYCALENDERID);
+
+             builder.Entity<VacancyPosting>()
+        .HasKey(m => m.VACANCYID);
+
+
+
+
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

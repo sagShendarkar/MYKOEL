@@ -32,6 +32,8 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<ICanteenMenuRepository, CanteenMenuRepository>();
             services.AddScoped<IValuesRepository, ValuesRepository>();
             services.AddScoped<IHolidayCalenderRepository, HolidayCalenderRepository>();
+            services.AddScoped<IVacancyPosting, VacancyPostingRepository>();
+
             return services;
         }
     }

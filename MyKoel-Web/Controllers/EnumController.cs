@@ -43,5 +43,31 @@ namespace MyKoel_Web.Controllers
             return enums; 
         }
 
+
+        [HttpGet("JobStatusDD")]
+        public List<CategoryDto> JobStatusDD()
+        {
+            var enums = ((JobStatus[])Enum.GetValues(typeof(JobStatus)))
+            .Select(c => new CategoryDto()
+            {
+                Id = (int)c,
+                Name = c.ToString()
+            }).ToList();
+            return enums; 
+        }
+
+        [HttpGet("JobTypeDD")]
+        public List<CategoryDto> JobTypeDD()
+        {
+            var enums = ((JobType[])Enum.GetValues(typeof(JobType)))
+            .Select(c => new CategoryDto()
+            {
+                Id = (int)c,
+                Name = c.ToString()
+            }).ToList();
+            return enums; 
+        }
+
+
     }
 }
