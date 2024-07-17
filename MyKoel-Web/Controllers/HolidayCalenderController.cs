@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Extensions;
 using AutoMapper;
 using iot_Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -28,9 +29,11 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("HolidayCalendarList")]
-        public async Task<List<HolidayCalendar>> HolidayCalendarList(string? Location)
+        public async Task<List<HolidayCalenderDto>> HolidayCalendarList(ParameterParams parametersParam)
         {
-            var holidayList = await _holidayCalender.HolidayCalendarList(Location);
+            var holidayList = await _holidayCalender.HolidayCalendarList(parametersParam);
+            Response.AddPaginationHeader(holidayList.CurrentPage, holidayList.PageSize,
+        holidayList.TotalCount, holidayList.TotalPages);
             return holidayList;
         }
        

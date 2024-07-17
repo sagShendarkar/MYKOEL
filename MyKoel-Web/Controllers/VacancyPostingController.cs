@@ -34,7 +34,6 @@ namespace MyKoel_Web.Controllers
             var VacancyList = await _vacancyRepository.GetVacancyList(parameterParams);
             Response.AddPaginationHeader(VacancyList.CurrentPage, VacancyList.PageSize,
                     VacancyList.TotalCount, VacancyList.TotalPages);
-
             return VacancyList;
         }
 
@@ -240,7 +239,19 @@ namespace MyKoel_Web.Controllers
 
         }
 
-
-
+        [HttpGet("GetDepartmentDD")]
+        public async Task<ActionResult<List<DepartmentDropdownDto>>> GetDepartmentDD(string? Name)
+        {
+            var data = await _vacancyRepository.GetDepartmentDropdown(Name);
+            return data;
+        }       
+        
+         [HttpGet("GetGradeDD")]
+        public async Task<ActionResult<List<GradeDropdownDto>>> GetGradeDD(string? Name)
+        {
+            var data = await _vacancyRepository.GetGradeList(Name);
+            return data;
+        }       
+        
     }
 }

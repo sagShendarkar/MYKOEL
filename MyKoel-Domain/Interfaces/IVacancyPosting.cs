@@ -18,5 +18,8 @@ namespace MyKoel_Domain.Interfaces
           Task<VacancyPosting> GetVacancyById(int Id);
           void AddNewVacancy(VacancyPosting sectionTransaction);
           Task<VacancyPostingDto> GetVacancyDetailsById(int Id);
+          Task<List<DepartmentDropdownDto>> GetDepartmentDropdown(string Desc);
+          Task<List<GradeDropdownDto>> GetGradeList(string Desc);
+
     }
 }
