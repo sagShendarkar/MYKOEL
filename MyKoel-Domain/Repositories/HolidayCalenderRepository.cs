@@ -43,7 +43,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<List<HolidayCalendar>> HolidayCalendarList(string Location)
         {
             var holidaylist = await (from h in _context.HolidayCalendars
-                                     where h.LOCATION.ToLower() == Location.ToLower()
+                                     where (h.ISACTIVE == true)  && (!string.IsNullOrEmpty(Location) ? h.LOCATION.ToLower() == Location.ToLower():true)
                                      select new HolidayCalendar
                                      {
                                          HOLIDAYCALENDERID = h.HOLIDAYCALENDERID,
@@ -149,10 +149,6 @@ namespace MyKoel_Domain.Repositories
                             {
                                 return Convert.ToString(finalRecords.Columns["Remarks"]) + " is required";
                             }
-                            if (Convert.ToString(finalRecords.Rows[i]["Locations"]).Equals(""))
-                            {
-                                return Convert.ToString(finalRecords.Columns["Locations"]) + " is required";
-                            }
                             if (Convert.ToString(finalRecords.Rows[i]["Year"]).Equals(""))
                             {
                                 return Convert.ToString(finalRecords.Columns["Year"]) + " is required";
@@ -169,7 +165,7 @@ namespace MyKoel_Domain.Repositories
                                 DATE = Convert.ToDateTime(finalRecords.Rows[i]["Date"]),
                                 DAY = Convert.ToString(finalRecords.Rows[i]["Day"]),
                                 REMARKS = Convert.ToString(finalRecords.Rows[i]["Remarks"]),
-                                LOCATION = Convert.ToString(finalRecords.Rows[i]["Locations"]),
+                                LOCATION = uploadExcel.Location,
                                 YEAR = Convert.ToString(finalRecords.Rows[i]["Year"]),
                                 ISACTIVE = Convert.ToBoolean(finalRecords.Rows[i]["Active"]),
                                 BATCHID = Guid.NewGuid().ToString()
@@ -213,14 +209,13 @@ namespace MyKoel_Domain.Repositories
 
         public async Task<List<LocationDto>> LocationList(string Location)
         {
-            var holidaylist = await (from h in _context.HolidayCalendars
-                                     where h.LOCATION.ToLower() == Location.ToLower()
+            var locationlist = await (from h in _context.Users
+                                     where  h.Location != null && !string.IsNullOrEmpty(Location)? h.Location.ToLower() == Location.ToLower():true
                                      select new LocationDto
                                      {
-                                         HolidayCalendarId = h.HOLIDAYCALENDERID,
-                                         Locations = h.LOCATION
-                                     }).ToListAsync();
-            return holidaylist;
+                                         Locations = h.Location
+                                     }).Distinct().ToListAsync();
+            return locationlist;
         }
     }
 }

@@ -18,7 +18,6 @@ namespace MyKoel_Domain.DTOs
 
     public class LocationDto
     {
-       public int HolidayCalendarId { get; set; }
        public string Locations {get;set;}
 
     }
