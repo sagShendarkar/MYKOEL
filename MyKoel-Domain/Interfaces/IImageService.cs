@@ -8,6 +8,7 @@ namespace MyKoel_Domain.Interfaces
     public interface IImageService
     {
             string ConvertLocalImageToBase64(string filePath);
+            string ConvertPdfToBase64(string filePath);
 
     }
 }

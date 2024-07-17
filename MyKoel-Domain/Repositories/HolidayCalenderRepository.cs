@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Helpers;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using ExcelDataReader;
+using iot_Domain.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MyKoel_Domain.Data;
@@ -40,10 +43,10 @@ namespace MyKoel_Domain.Repositories
             isDisposed = true;
         }
 
-        public async Task<List<HolidayCalendar>> HolidayCalendarList(string Location)
+        public async Task<PagedList<HolidayCalendar>> HolidayCalendarList(ParameterParams parameterParams)
         {
-            var holidaylist = await (from h in _context.HolidayCalendars
-                                     where (h.ISACTIVE == true)  && (!string.IsNullOrEmpty(Location) ? h.LOCATION.ToLower() == Location.ToLower():true)
+            var holidaylist = (from h in _context.HolidayCalendars
+                                     where (h.ISACTIVE == true)  && (!string.IsNullOrEmpty(parameterParams.Location) ? h.LOCATION.ToLower() == parameterParams.Location.ToLower():true)
                                      select new HolidayCalendar
                                      {
                                          HOLIDAYCALENDERID = h.HOLIDAYCALENDERID,
@@ -54,9 +57,10 @@ namespace MyKoel_Domain.Repositories
                                          LOCATION = h.LOCATION,
                                          YEAR = h.YEAR,
                                          ISACTIVE = h.ISACTIVE
-                                     }).ToListAsync();
-            return holidaylist;
-        }
+                                     }).AsQueryable();
+                return await PagedList<HolidayCalendar>.CreateAsync(holidaylist.ProjectTo<HolidayCalendar>(_mapper.ConfigurationProvider)
+                                 .AsNoTracking(),parameterParams.PageNumber,parameterParams.PageSize);
+           }
 
         public async Task<object> HolidayExcelUpload(UploadExcelDto uploadExcel)
         {

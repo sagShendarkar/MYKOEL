@@ -9,5 +9,8 @@ namespace iot_Domain.Helpers
         public string? SortByName { get; set; }
         public int UserId { get; set; }
         public string? Flag { get; set; }
+        public string? Location { get; set; }
+        
+
     }
 }
