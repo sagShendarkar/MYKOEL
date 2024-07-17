@@ -45,6 +45,8 @@ namespace API.Mapper
             CreateMap<VacancyPostingDto, VacancyPosting>();
             CreateMap<VacancyPosting, VacancyPostingDto>();
             CreateMap<VacancyPostingDto, VacancyPostingDto>();
+            
+            CreateMap<HolidayCalenderDto, HolidayCalenderDto>();
         }
     }
 }

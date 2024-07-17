@@ -12,7 +12,7 @@ namespace MyKoel_Domain.Interfaces
 {
     public interface IHolidayCalenderRepository
     {
-        Task<PagedList<HolidayCalendar>> HolidayCalendarList(ParameterParams parameterParams);
+        Task<PagedList<HolidayCalenderDto>> HolidayCalendarList(ParameterParams parameterParams);
         Task<object> HolidayExcelUpload(UploadExcelDto uploadExcel);
         Task<List<LocationDto>> LocationList(string Location);
 

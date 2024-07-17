@@ -43,22 +43,22 @@ namespace MyKoel_Domain.Repositories
             isDisposed = true;
         }
 
-        public async Task<PagedList<HolidayCalendar>> HolidayCalendarList(ParameterParams parameterParams)
+        public async Task<PagedList<HolidayCalenderDto>> HolidayCalendarList(ParameterParams parameterParams)
         {
             var holidaylist = (from h in _context.HolidayCalendars
                                      where (h.ISACTIVE == true)  && (!string.IsNullOrEmpty(parameterParams.Location) ? h.LOCATION.ToLower() == parameterParams.Location.ToLower():true)
-                                     select new HolidayCalendar
+                                     select new HolidayCalenderDto
                                      {
-                                         HOLIDAYCALENDERID = h.HOLIDAYCALENDERID,
-                                         HOLIDAY = h.HOLIDAY,
-                                         DATE = h.DATE,
-                                         DAY = h.DAY,
-                                         REMARKS = h.REMARKS,
-                                         LOCATION = h.LOCATION,
-                                         YEAR = h.YEAR,
-                                         ISACTIVE = h.ISACTIVE
+                                         HolidayCalendarId = h.HOLIDAYCALENDERID,
+                                         Holiday = h.HOLIDAY,
+                                         Date = h.DATE,
+                                         Day = h.DAY,
+                                         Remarks = h.REMARKS,
+                                         Locations = h.LOCATION,
+                                         Year = h.YEAR,
+                                         IsActive = h.ISACTIVE
                                      }).AsQueryable();
-                return await PagedList<HolidayCalendar>.CreateAsync(holidaylist.ProjectTo<HolidayCalendar>(_mapper.ConfigurationProvider)
+                return await PagedList<HolidayCalenderDto>.CreateAsync(holidaylist.ProjectTo<HolidayCalenderDto>(_mapper.ConfigurationProvider)
                                  .AsNoTracking(),parameterParams.PageNumber,parameterParams.PageSize);
            }
 

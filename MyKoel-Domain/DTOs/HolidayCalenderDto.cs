@@ -14,6 +14,9 @@ namespace MyKoel_Domain.DTOs
        public string Day {get;set;}
        public string Remarks {get;set;}
        public string Locations {get;set;}
+       public string Year {get;set;}
+       public bool IsActive {get;set;}
+
     }
 
     public class LocationDto
