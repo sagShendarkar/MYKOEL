@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Helpers;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using iot_Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using MyKoel_Domain.Data;
 using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Interfaces;
+using MyKoel_Domain.Models.Master;
 
 namespace MyKoel_Domain.Repositories
 {
@@ -247,6 +251,80 @@ namespace MyKoel_Domain.Repositories
                 mainMenuData = mainMenuData.Where(s => s.MenuGroupName.ToLower().Contains(Name.ToLower())).ToList();
             }
             return mainMenuData;
+        }
+
+        public void UpdateMainMenu(MainMenuGroup mainMenu)
+        {
+            _context.Entry(mainMenu).State=EntityState.Modified;
+        }
+
+        public async Task<bool> SaveAllAsync()
+        {
+            return await _context.SaveChangesAsync()>0;
+        }
+
+        public async Task<MainMenuGroup> GetMainMenuById(int Id)
+        {
+            var Mainmenu = await _context.MainMenuGroups
+            .SingleOrDefaultAsync(x=>x.MainMenuGroupId==Id);
+            return Mainmenu;
+        }
+
+        public void AddNewMainMenu(MainMenuGroup mainMenu)
+        {
+            _context.Entry(mainMenu).State=EntityState.Added;
+        }
+
+        public async Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId)
+        {
+            var Mainmenu= await (from m in _context.MainMenuGroups
+                          where m.MainMenuGroupId == MainMenuId
+                          select new AddMainMenuGroupDto
+                          {
+                            MainMenuGroupId= m.MainMenuGroupId,
+                            MenuGroupName= m.MenuGroupName,
+                            Sequence=m.Sequence,
+                            Icon=m.Icon,
+                            IsActive=m.IsActive,
+                            IsChild=m.IsChild,
+                            Route=m.Route,
+                            IsImage=m.IsImage,
+                            IsRoute=m.IsRoute,
+                            IsIcon=m.IsIcon,
+                            ImageIcon=!string.IsNullOrEmpty(m.ImageIcon)? _imageService.ConvertLocalImageToBase64(m.ImageIcon):null,
+                            Flag=m.Flag
+                          }).SingleOrDefaultAsync();
+                return Mainmenu;
+        }
+
+        public async Task<PagedList<AddMainMenuGroupDto>> GetMainMenuList(ParameterParams parameterParams)
+        {
+             var Mainmenu=  (from m in _context.MainMenuGroups
+                            where m.IsActive==true && (m.Flag.ToLower()== ("Quick Links").ToLower())
+                          select new AddMainMenuGroupDto
+                          {
+                            MainMenuGroupId= m.MainMenuGroupId,
+                            MenuGroupName= m.MenuGroupName,
+                            Sequence=m.Sequence,
+                            Icon=m.Icon,
+                            IsActive=m.IsActive,
+                            IsChild=m.IsChild,
+                            Route=m.Route,
+                            IsImage=m.IsImage,
+                            IsRoute=m.IsRoute,
+                            IsIcon=m.IsIcon,
+                            ImageIcon=!string.IsNullOrEmpty(m.ImageIcon)? _imageService.ConvertLocalImageToBase64(m.ImageIcon):null,
+                            Flag=m.Flag
+                          }).AsQueryable();
+           return await PagedList<AddMainMenuGroupDto>.CreateAsync(Mainmenu.ProjectTo<AddMainMenuGroupDto>(_mapper.ConfigurationProvider)
+                                 .AsNoTracking(), parameterParams.PageNumber, parameterParams.PageSize);
+        }
+
+        public void DeleteMainMenu(MainMenuGroup mainMenu)
+        {
+            mainMenu.IsActive=false;
+            _context.Entry(mainMenu).State=EntityState.Modified;
+
         }
     }
 }

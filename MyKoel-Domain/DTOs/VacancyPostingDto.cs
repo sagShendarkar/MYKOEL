@@ -23,7 +23,7 @@ namespace MyKoel_Domain.DTOs
         public string CONTACTINFO   { get; set; } 
         public int STATUS  { get; set; }
         public bool ISACTIVE {get;set;}
-        public string IMAGESRC { get; set; }
+        public string PDFSTRING { get; set; }
 
     }
 }
