@@ -132,6 +132,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<List<DepartmentDropdownDto>> GetDepartmentDropdown(string Name)
         {
             var datalist = await (from h in _context.Users
+                                  where h.Department != null
                                   select new DepartmentDropdownDto
                                   {
                                       DepartmentName = h.Department,
@@ -147,6 +148,7 @@ namespace MyKoel_Domain.Repositories
         {
 
             var gradelist = await (from h in _context.Users
+                                    where h.Grade != null
                                    select new GradeDropdownDto
                                    {
                                        Grade = h.Grade,

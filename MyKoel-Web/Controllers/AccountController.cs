@@ -195,8 +195,8 @@ namespace MyKoel_Web.Controllers
                             return JsonConvert.SerializeObject(Data);
                         }
                         // added default access for profile,links and footer menus
-                        var menulist = await _context.MainMenuGroups.Where(s => s.Flag.ToLower().Contains(("Top MenuBar").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
-                        || s.Flag.ToLower().Contains(("Footer Menus").ToLower()) || s.Flag.ToLower().Contains(("Wallpaper Menus").ToLower())).ToListAsync();
+                        var menulist = await _context.MainMenuGroups.Where(s => (s.IsActive==true) && (s.Flag.ToLower().Contains(("Top MenuBar").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
+                        || s.Flag.ToLower().Contains(("Footer Menus").ToLower()) || s.Flag.ToLower().Contains(("Wallpaper Menus").ToLower()))).ToListAsync();
                         var userAccess = new List<UserAccessMappingDto>();
                         foreach (var item in menulist)
                         {

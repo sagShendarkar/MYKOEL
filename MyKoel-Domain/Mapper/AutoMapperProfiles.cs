@@ -44,9 +44,12 @@ namespace API.Mapper
             CreateMap<CKEditorValuesDto, SectionTransaction>();
             CreateMap<VacancyPostingDto, VacancyPosting>();
             CreateMap<VacancyPosting, VacancyPostingDto>();
-            CreateMap<VacancyPostingDto, VacancyPostingDto>();
-            
+            CreateMap<VacancyPostingDto, VacancyPostingDto>();      
             CreateMap<HolidayCalenderDto, HolidayCalenderDto>();
+            CreateMap<AddMainMenuGroupDto, MainMenuGroup>();
+            CreateMap<MainMenuGroup, AddMainMenuGroupDto>();
+            CreateMap<AddMainMenuGroupDto, AddMainMenuGroupDto>();
+
         }
     }
 }

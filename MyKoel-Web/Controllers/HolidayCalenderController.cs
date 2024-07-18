@@ -29,7 +29,7 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("HolidayCalendarList")]
-        public async Task<List<HolidayCalenderDto>> HolidayCalendarList(ParameterParams parametersParam)
+        public async Task<List<HolidayCalenderDto>> HolidayCalendarList([FromQuery]ParameterParams parametersParam)
         {
             var holidayList = await _holidayCalender.HolidayCalendarList(parametersParam);
             Response.AddPaginationHeader(holidayList.CurrentPage, holidayList.PageSize,

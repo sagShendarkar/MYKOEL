@@ -50,7 +50,7 @@ namespace MyKoel_Web.Controllers
             {
                 var vacancydetails = _mapper.Map<VacancyPosting>(vacancy);
 
-                if (vacancy.IMAGESRC != null)
+                if (vacancy.PDFSTRING != null)
                 {
                     string rootFolderPath = @"C:\MyKoelImages";
 
@@ -76,7 +76,7 @@ namespace MyKoel_Web.Controllers
                     string fileName = Guid.NewGuid().ToString() + ".PDF";
                     string imagePath = Path.Combine(userFolderPath, fileName);
 
-                    string base64StringData = vacancy.IMAGESRC;
+                    string base64StringData = vacancy.PDFSTRING;
                     string cleandata = base64StringData.Substring(base64StringData.IndexOf(',') + 1);
                     byte[] data = Convert.FromBase64String(cleandata);
 
@@ -133,7 +133,7 @@ namespace MyKoel_Web.Controllers
                 {
                     return NotFound("Section not found");
                 }
-                 if (vacancyDto.IMAGESRC != null)
+                 if (vacancyDto.PDFSTRING != null)
                 {
                     string rootFolderPath = @"C:\MyKoelImages";
 
@@ -159,7 +159,7 @@ namespace MyKoel_Web.Controllers
                     string fileName = Guid.NewGuid().ToString() + ".Pdf";
                     string imagePath = Path.Combine(userFolderPath, fileName);
 
-                    string base64StringData = vacancyDto.IMAGESRC;
+                    string base64StringData = vacancyDto.PDFSTRING;
                     string cleandata = base64StringData.Substring(base64StringData.IndexOf(',') + 1);
                     byte[] data = Convert.FromBase64String(cleandata);
 

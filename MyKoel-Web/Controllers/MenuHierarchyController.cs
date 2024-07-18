@@ -8,20 +8,25 @@ using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Data;
 using MyKoel_Domain.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using MyKoel_Domain.Models.Master;
+using AutoMapper;
+using iot_Domain.Helpers;
+using API.Extensions;
 namespace MyKoel_Web.Controllers
 {
-    [Authorize]
-    [ApiController]
+   [ApiController]
     [Route("api/[controller]")]
     public class MenuHierarchyController : ControllerBase
     {
         private readonly DataContext _context;
          private readonly IMenuHierarchyRepository _menuHierarchy;
+        private readonly IMapper _mapper;
 
-        public MenuHierarchyController(DataContext context,IMenuHierarchyRepository menuHierarchy)
+        public MenuHierarchyController(DataContext context,IMenuHierarchyRepository menuHierarchy,IMapper mapper)
         {
             _context = context;
             _menuHierarchy=menuHierarchy;
+            _mapper= mapper;
         }
 
         [HttpGet("ShowMenuList")]
@@ -39,6 +44,206 @@ namespace MyKoel_Web.Controllers
             var menu=await _menuHierarchy.GetMenuList(Name);
             return menu;
         }
+
+
+        [HttpPost("AddMainMenu")]
+        public async Task<object> AddMainMenu(AddMainMenuGroupDto mainMenu)
+        {
+            try
+            {
+
+                if (mainMenu.ImageSrc != null)
+                {
+                    string rootFolderPath = @"C:\MyKoelImages";
+
+                    if (!Directory.Exists(rootFolderPath))
+                    {
+                        Directory.CreateDirectory(rootFolderPath);
+                    }
+
+                    string folderPath = Path.Combine(rootFolderPath, "Quick Links");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string fileName = Guid.NewGuid().ToString() + ".Svg";
+                    string imagePath = Path.Combine(folderPath, fileName);
+
+                    string base64StringData = mainMenu.ImageSrc;
+                    string cleandata = base64StringData.Substring(base64StringData.IndexOf(',') + 1);
+                    byte[] data = Convert.FromBase64String(cleandata);
+
+                    using (MemoryStream ms = new MemoryStream(data))
+                    {
+                        using (FileStream fs = new FileStream(imagePath, FileMode.Create))
+                        {
+                            ms.CopyTo(fs);
+                            fs.Flush();
+                        }
+                    }
+
+                    mainMenu.ImageIcon = Path.Combine(folderPath, fileName);
+                }
+                var mainmenu = _mapper.Map<MainMenuGroup>(mainMenu);
+                _menuHierarchy.AddNewMainMenu(mainmenu);
+                if (await _menuHierarchy.SaveAllAsync())
+                {
+                    return new
+                    {
+                        Status = 200,
+                        Message = "Data Saved Successfully"
+                    };
+                }
+                else
+                {
+                    return new
+                    {
+                        Status = 400,
+                        Message = "Failed To Save Data"
+                    };
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Status = 500,
+                    Message = $"Failed to update section: {ex.Message}"
+                });
+            }
+        }
+
+        [HttpPost("UpdateMainMenu")]
+        public async Task<IActionResult> UpdateMainMenu(AddMainMenuGroupDto mainMenu)
+        {
+            try
+            {
+                var existing = await _menuHierarchy.GetMainMenuById(mainMenu.MainMenuGroupId);
+
+                if (existing == null)
+                {
+                    return NotFound("Section not found");
+                }
+                 if (mainMenu.ImageSrc != null)
+                {
+                    string rootFolderPath = @"C:\MyKoelImages";
+
+                    if (!Directory.Exists(rootFolderPath))
+                    {
+                        Directory.CreateDirectory(rootFolderPath);
+                    }
+
+                    string folderPath = Path.Combine(rootFolderPath, "Quick Links");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                  
+                    string fileName = Guid.NewGuid().ToString() + ".Svg";
+                    string imagePath = Path.Combine(folderPath, fileName);
+
+                    string base64StringData = mainMenu.ImageSrc;
+                    string cleandata = base64StringData.Substring(base64StringData.IndexOf(',') + 1);
+                    byte[] data = Convert.FromBase64String(cleandata);
+
+                    using (MemoryStream ms = new MemoryStream(data))
+                    {
+                        using (FileStream fs = new FileStream(imagePath, FileMode.Create))
+                        {
+                            ms.CopyTo(fs);
+                            fs.Flush();
+                        }
+                    }
+
+                    mainMenu.ImageIcon = Path.Combine(folderPath, fileName);
+                }
+               
+                var updatedmainmenu = _mapper.Map(mainMenu, existing);
+                _menuHierarchy.UpdateMainMenu(updatedmainmenu);
+                if (await _menuHierarchy.SaveAllAsync())
+                {
+                    return Ok(new
+                    {
+                        Status = 200,
+                        Message = "Main Menu Updated Successfully"
+                    });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        Status = 400,
+                        Message = "Failed To Update Data",
+
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Status = 500,
+                    Message = $"Failed To Update Main Menu: {ex.Message}"
+                });
+            }
+        }
+
+       [HttpGet("GetMainMenuDetails")]
+        public async Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId)
+        {
+            var menu=await _menuHierarchy.GetMainMenuDetails(MainMenuId);
+            return menu;
+        }
+
+        [HttpGet("ShowMainMenuList")]
+        public async Task<List<AddMainMenuGroupDto>> ShowMainMenuList([FromQuery] ParameterParams parameterParams)
+        {
+            var mainmenuList = await _menuHierarchy.GetMainMenuList(parameterParams);
+            Response.AddPaginationHeader(mainmenuList.CurrentPage, mainmenuList.PageSize,
+                    mainmenuList.TotalCount, mainmenuList.TotalPages);
+            return mainmenuList;
+        }
+
+        [HttpPost("DeleteMainMenu/{Id}")]
+        public async Task<ActionResult> DeleteCompanyDetails(int Id)
+        {
+
+            var data = await _menuHierarchy.GetMainMenuById(Id);
+            try
+            {
+                _menuHierarchy.DeleteMainMenu(data);
+                if (await _menuHierarchy.SaveAllAsync())
+                {
+                    var result = new
+                    {
+                        Status = 200,
+                        Message = "Data Deleted Successfully"
+                    };
+                    return Ok(result);
+                }
+                return BadRequest("Failed To Delete Data");
+
+            }
+            catch (Exception ex)
+            {
+                var result = new
+                {
+                    Status = 400,
+                    Message = ex.Message
+                };
+                return BadRequest(result);
+
+            }
+
+        }
+
 
     }
 }
