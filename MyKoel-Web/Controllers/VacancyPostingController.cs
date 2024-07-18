@@ -18,14 +18,16 @@ namespace MyKoel_Web.Controllers
     public class VacancyPostingController : ControllerBase
     {
         private readonly IVacancyPosting _vacancyRepository;
+        private readonly IConfiguration _config;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public VacancyPostingController(IVacancyPosting vacancyRepository, IMapper mapper, DataContext context)
+        public VacancyPostingController(IVacancyPosting vacancyRepository, IMapper mapper, DataContext context,IConfiguration config)
         {
             _context = context;
             _mapper = mapper;
             _vacancyRepository = vacancyRepository;
+            _config=config;
         }
 
         [HttpGet("ShowVacancyList")]
@@ -52,7 +54,7 @@ namespace MyKoel_Web.Controllers
 
                 if (vacancy.PDFSTRING != null)
                 {
-                    string rootFolderPath = @"C:\MyKoelImages";
+                    string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                     if (!Directory.Exists(rootFolderPath))
                     {
@@ -133,9 +135,9 @@ namespace MyKoel_Web.Controllers
                 {
                     return NotFound("Section not found");
                 }
-                 if (vacancyDto.PDFSTRING != null)
+                if (vacancyDto.PDFSTRING != null)
                 {
-                    string rootFolderPath = @"C:\MyKoelImages";
+                    string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                     if (!Directory.Exists(rootFolderPath))
                     {
@@ -174,7 +176,7 @@ namespace MyKoel_Web.Controllers
 
                     vacancyDto.JOBDESC = Path.Combine(userFolderPath, fileName);
                 }
-               
+
                 var updatedvacancy = _mapper.Map(vacancyDto, existingSection);
                 _vacancyRepository.UpdateVacancy(updatedvacancy);
                 if (await _vacancyRepository.SaveAllAsync())
@@ -244,14 +246,14 @@ namespace MyKoel_Web.Controllers
         {
             var data = await _vacancyRepository.GetDepartmentDropdown(Name);
             return data;
-        }       
-        
-         [HttpGet("GetGradeDD")]
+        }
+
+        [HttpGet("GetGradeDD")]
         public async Task<ActionResult<List<GradeDropdownDto>>> GetGradeDD(string? Name)
         {
             var data = await _vacancyRepository.GetGradeList(Name);
             return data;
-        }       
-        
+        }
+
     }
 }

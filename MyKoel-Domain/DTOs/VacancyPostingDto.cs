@@ -24,6 +24,8 @@ namespace MyKoel_Domain.DTOs
         public int STATUS  { get; set; }
         public bool ISACTIVE {get;set;}
         public string PDFSTRING { get; set; }
+        public string PDFPATH { get; set; }
+
 
     }
 }
