@@ -422,7 +422,7 @@ console.log(this.announcementform);
     );
   }
   routeToList(){
-    this.router.navigate(['/admin/company-announcement']);
+    this.router.navigate(['/admin/vacancy-list']);
   }
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();

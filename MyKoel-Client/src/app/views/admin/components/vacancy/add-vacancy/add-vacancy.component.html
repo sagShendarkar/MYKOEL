@@ -1,0 +1,362 @@
+<div class=" row">
+  <div class="col-12">
+
+    <c-card class="mb-4">
+
+      <c-card-body>
+        <form [formGroup]="vacancyform">
+          <div class=" row">
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Job Title</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter job title here..."
+                       formControlName="jobtitle"
+                       type="text"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('jobtitle')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('jobtitle')?.hasError('required')"
+                >
+                Job Title is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Location</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter Location here..."
+                       formControlName="location"
+                       type="text"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('location')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('location')?.hasError('required')"
+                >
+                Location is required.
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Description</label>
+                <textarea cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter Description here..."
+                       type="text"
+                       rows="1"
+                       formControlName="description"
+                       [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('description')?.hasError('required')
+                      }"
+                ></textarea>
+
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('description')?.hasError('required')"
+                >
+                Description is required.
+                </div>
+              </div>
+            </div> -->
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Department</label>
+
+
+
+                <ng-select
+                [items]="(vacancyService.departmentDD$|async)"
+                bindLabel="departmentName"
+                placeholder="Select department"
+                bindValue="departmentName"
+                formControlName="department"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted &&
+                    vacancyform.get('department')?.hasError('required')
+                }"
+              >
+              </ng-select>
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('department')?.hasError('required')"
+                >
+                Department is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Grade</label>
+
+
+
+                <ng-select
+                [items]="(vacancyService.gradeDD$|async)"
+                bindLabel="grade"
+                placeholder="Select Grade"
+                bindValue="grade"
+                formControlName="grade"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted &&
+                    vacancyform.get('grade')?.hasError('required')
+                }"
+              >
+              </ng-select>
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('grade')?.hasError('required')"
+                >
+                Grade is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Posted date</label>
+
+                <input type="text"
+                placeholder="Start Date"
+                class="form-control" bsDatepicker formControlName="posteddate"   [ngClass]="{
+                  'is-invalid':
+                    submitted && vacancyform.get('posteddate')?.hasError('required')
+                }"
+                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MMM-YYYY' }">
+
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('posteddate')?.hasError('required')"
+                >
+                Posted date is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Closing date</label>
+                <input type="text"
+                placeholder="Closing date"
+                class="form-control" bsDatepicker formControlName="closingdate"   [ngClass]="{
+                  'is-invalid':
+                    submitted && vacancyform.get('closingdate')?.hasError('required')
+                }"
+                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MMM-YYYY' }">
+
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('closingdate')?.hasError('required')"
+                >
+                Closing date is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Vacancy count</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter Vacancy count here..."
+                       formControlName="vacancycount"
+                       type="text"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('vacancycount')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('vacancycount')?.hasError('required')"
+                >
+                Vacancy count is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Salary Range</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter salary Range..."
+                       formControlName="salaryrange"
+                       type="text"
+                       min="0"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('salaryrange')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('salaryrange')?.hasError('required')"
+                >
+                Salary Range is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Requirments</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter Requirments..."
+                       formControlName="requirments"
+                       type="text"
+                       min="0"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('requirments')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('requirments')?.hasError('required')"
+                >
+                Requirments is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Contact Info</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter Contact Info..."
+                       formControlName="contactinfo"
+                       type="text"
+                       min="0"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && vacancyform.get('contactinfo')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('contactinfo')?.hasError('required')"
+                >
+                Contact Info is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Job Type</label>
+
+
+
+                <ng-select
+                [items]="(enumDDService.jobTypeDD$|async)"
+                bindLabel="name"
+                placeholder="Select Job Type"
+                bindValue="id"
+                formControlName="jobtype"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted &&
+                    vacancyform.get('jobtype')?.hasError('required')
+                }"
+              >
+              </ng-select>
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('jobtype')?.hasError('required')"
+                >
+                Job Type is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Status</label>
+                <ng-select
+                [items]="(enumDDService.jobStatusDD$|async)"
+                bindLabel="name"
+                placeholder="Select Status"
+                bindValue="id"
+                formControlName="status"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted &&
+                    vacancyform.get('status')?.hasError('required')
+                }"
+              >
+              </ng-select>
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('status')?.hasError('required')"
+                >
+                Status is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Job desc</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter title here..."
+                       accept=".pdf"
+                       type="file"
+                       (change)="onChange($event)"
+
+                />
+                <input cFormControl
+                id="exampleFormControlInput1"
+                placeholder="Enter title here..."
+                formControlName="pdfpath"
+                accept=".pdf"
+                type="hidden"
+                 [ngClass]="{
+                 'is-invalid':
+                   submitted && vacancyform.get('pdfpath')?.hasError('required')
+               }"
+         />
+
+         <div *ngIf="vacancyform.get('pdfpath')?.value !==null">
+          <span   (click)="openFile(vacancyform.get('pdfpath')?.value)" class="cursor"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                              </div>
+                <div
+                class="invalid-feedback"
+                *ngIf="vacancyform.get('pdfpath')?.hasError('required')"
+                >
+                job desc is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-right">
+             <button class="btn cancel-btn" size="lg"  (click)="routeToList()">
+Cancel
+             </button>
+             <button class="btn save-btn ms-4"  size="lg" (click)="onSubmit()">
+Save
+             </button>
+            </div>
+          </div>
+        </form>
+        </c-card-body>
+        </c-card>
+  </div>
+</div>

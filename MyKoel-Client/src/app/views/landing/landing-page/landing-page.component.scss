@@ -79,7 +79,7 @@ color: #000;
   height: 241px !important;
 }
 .new-c-items-img{
-  height: 241px !important;
+  height: 238px !important;
 }
 
 #news-div .carousel-caption {
@@ -503,4 +503,49 @@ margin-left: 50px;
   background-color: #fff;
   padding: 3px;
   border-radius: 50px;
+}
+.Announcement-div{
+height: 238px !important;
+}
+.birthday-card{
+  background: url(../../../../assets/images/birthday.png) no-repeat;
+height: 230px;
+  background-size: 100% 100% !important;
+  border-radius: 10px;
+  background-repeat:no-repeat !important;
+}
+.birthday-card img{
+  width: 100px;
+  margin-top: 30px;
+}
+.holiday-Calender-div{
+
+  background: url(../../../../assets/images/holiday.png) no-repeat;
+height: 530px;
+  background-size: 100% 100% !important;
+  border-radius: 10px;
+  background-repeat:no-repeat !important;
+}
+.Calender-title{
+  margin-top: 30px;
+  margin-bottom: 40px;
+  font-style: italic;
+  color: #fff;
+  font-weight: 700;
+}
+.Calender-vals
+{
+  font-size: 18px;
+color: #000;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.Calender-cols
+{
+  font-size: 18px;
+  font-weight: 700;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

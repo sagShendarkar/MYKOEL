@@ -13,21 +13,22 @@ export class LandingPageComponent {
 wallpaperImage:any="";
 
   isDisplayslider$=  new BehaviorSubject<boolean>(false);
+  isBirthdayDisplayslider$=  new BehaviorSubject<boolean>(false);
+  isBirthdayLoading$=  new BehaviorSubject<boolean>(false);
+  isAnnouncementLoading$=  new BehaviorSubject<boolean>(false);
+  isNewHiresLoading$=  new BehaviorSubject<boolean>(false);
+  isVacancyLoading$=  new BehaviorSubject<boolean>(false);
   userName:any="";
   private unsubscribe: Subscription = new Subscription();
   public visionModal = false;
   public misionModal = false;
   public valueModal = false;
   public canteenMenuModal = false;
+  public holidayCalenderModal = false;
   imageSrc = [
     '../../../../assets/images/images.jpg'
   ];
 
-  slidesLight = [
-    'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1607923e7e2%20text%20%7B%20fill%3A%23AAA%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1607923e7e2%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23F5F5F5%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285.9296875%22%20y%3D%22217.75625%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E',
-    'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15ba800aa20%20text%20%7B%20fill%3A%23BBB%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15ba800aa20%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23EEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22247.3203125%22%20y%3D%22218.3%22%3ESecond%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E',
-    'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15ba800aa21%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15ba800aa21%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23E5E5E5%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22277%22%20y%3D%22218.3%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
-  ];
   slides: any[] = [];
   constructor(
     private domSanitizer: DomSanitizer,public headerService:HeaderService,public landingPageService:LandingPageService
@@ -38,23 +39,6 @@ wallpaperImage:any="";
     headerService.isDisplayBreadcrumb$.next(false);
 
 
-    this.slides[2] = [
-      {
-        id: 0,
-         title: 'First slide',
-        subtitle: 'Nulla vitae elit libero, a pharetra augue mollis interdum.'
-      },
-      {
-        id: 1,
-        title: 'Second slide',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      },
-      {
-        id: 2,
-         title: 'Third slide',
-        subtitle: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
-      }
-    ];
 
     // this.landingPageService.newsList$.next(this.slides[2] );
   }
@@ -65,7 +49,9 @@ ngOnInit(): void {
   this.getAnnouncementList();
   this.getNewsList();
   this.getNewHiresList();
-
+  this.getBirthdayList();
+  this.getHolidayCalendarList();
+  this.getVacancyList();
 }
 ngAfterViewInit(): void {
 
@@ -88,11 +74,31 @@ this.landingPageService.quickLinksMenus$.next(res);
     })
   );
 }
-getAnnouncementList(){
+getHolidayCalendarList(){
+  this.unsubscribe.add(
+    this.landingPageService.getHolidayCalendarList().subscribe((res)=>{
+
+this.landingPageService.holidayCalendarList$.next(res);
+    })
+  );
+}
+getVacancyList(){
+  this.isVacancyLoading$.next(true);
+  this.unsubscribe.add(
+    this.landingPageService.getVacancyList().subscribe((res)=>{
+
+this.landingPageService.vacancyList$.next(res);
+this.isVacancyLoading$.next(false);
+    })
+  );
+}
+getAnnouncementList(){ 
+  this.isAnnouncementLoading$.next(true);
   this.unsubscribe.add(
     this.landingPageService.getSectionList('Announcement',2).subscribe((res)=>{
 console.log(res);
 this.landingPageService.announcementList$.next(res);
+this.isAnnouncementLoading$.next(false);
     })
   );
 }
@@ -107,15 +113,29 @@ this.isDisplayslider$.next(true);
   );
 }
 
+getBirthdayList(){
+  this.isBirthdayLoading$.next(true);
+  this.unsubscribe.add(
+    this.landingPageService.getBirthdayList().subscribe((res)=>{
+console.log(res);
+this.landingPageService.birthdayList$.next(res);
+this.isBirthdayLoading$.next(false);
+
+this.isBirthdayDisplayslider$.next(true);
+    })
+  );
+}
 openFile(url: string) {
   window.open(url, '_blank');
 }
 getNewHiresList(){
+  this.isNewHiresLoading$.next(true);
   this.unsubscribe.add(
     this.landingPageService.getSectionList('New Hires',5).subscribe((res)=>{
 console.log(res);
 this.landingPageService.newHiresList$.next(res);
 
+  this.isNewHiresLoading$.next(false);
     })
   );
 }
@@ -135,6 +155,9 @@ this.landingPageService.newHiresList$.next(res);
   handleLiveDemoChange3(event: boolean) {
     this.canteenMenuModal = event;
   }
+  handleLiveDemoChange4(event: boolean) {
+    this.holidayCalenderModal = event;
+  }
 
 openModalPopup(event: boolean,popupName=''){
 if(popupName==='Vision'){
@@ -152,6 +175,10 @@ if(popupName==='Value'){
 if(popupName==='Canteen Menu'){
 
   this.canteenMenuModal = event;
+}
+if(popupName==='Holiday Calender'){
+
+  this.holidayCalenderModal = event;
 }
 }
   ngOnDestroy(): void {

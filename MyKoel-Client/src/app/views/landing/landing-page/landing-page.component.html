@@ -287,7 +287,74 @@ class="mb-1"
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="bg-white pb-1   border-rad ps-3 box-shadow">
+        <div class="bg-white pb-1   border-rad ps-3 box-shadow Announcement-div">
+<div *ngIf="(isAnnouncementLoading$|async)===true">
+
+          <div class="row pt-4"  >
+            <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3"   >
+              <div  >
+                <svg aria-label="Placeholder"
+                   cCardImg="top"
+                   focusable="false"
+                   height="80"
+                   preserveAspectRatio="xMidYMid slice"
+                   role="img"
+                   width="100%"
+                   xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Placeholder</title>
+                <rect fill="#868e96" height="100%" width="100%"></rect>
+              </svg>
+              </div>
+            </div>
+            <div  class="col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9"  >
+              <div class="title m-2"  >
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+                <div class=" m-2">
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+            </div>
+          </div>
+          <div class="row pt-4"  >
+            <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3"   >
+              <div  >
+                <svg aria-label="Placeholder"
+                   cCardImg="top"
+                   focusable="false"
+                   height="80"
+                   preserveAspectRatio="xMidYMid slice"
+                   role="img"
+                   width="100%"
+                   xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Placeholder</title>
+                <rect fill="#868e96" height="100%" width="100%"></rect>
+              </svg>
+              </div>
+            </div>
+            <div  class="col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9"  >
+              <div class="title m-2"  >
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+                <div class=" m-2">
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+            </div>
+          </div>
+</div>
           <div class="row pt-4" *ngFor="let announcement of (landingPageService.announcementList$|async);">
             <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3" *ngIf="announcement.isimage">
               <div *ngIf="announcement.attachment.length>0">
@@ -323,11 +390,64 @@ class="mb-1"
       <p class="section-headings">Company News</p>
     </div>
     <div class="row">
+
+      <div class="col-md-12"  *ngIf="(isDisplayslider$|async)===false">
+        <div class="bg-white pb-1   border-rad ps-3 box-shadow Announcement-div">
+
+          <div class="row pt-4"  >
+            <div class="col-md-3 col-sm-3 col-lg-3  col-xl-3  col-xxl-3 col-3"   >
+              <div  >
+                <svg aria-label="Placeholder"
+                   cCardImg="top"
+                   focusable="false"
+                   height="100"
+                   preserveAspectRatio="xMidYMid slice"
+                   role="img"
+                   width="100%"
+                   xmlns="http://www.w3.org/2000/svg"
+                   class="mt-3"
+              >
+                <title>Placeholder</title>
+                <rect fill="#868e96" height="100%" width="100%"></rect>
+              </svg>
+              </div>
+            </div>
+            <div  class="col-md-9 col-sm-9 col-lg-9  col-xl-9  col-xxl-9 col-9"  >
+              <div class="title m-2"  >
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+                <div class=" m-2">
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+                <div class=" m-2">
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+                <div class=" m-2">
+
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol="12" cPlaceholder  ></span>
+                </p>
+                </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
       <div class="col-md-12" *ngIf="(isDisplayslider$|async)===true">
         <c-carousel
           (itemChange)="onItemChange($event)"
           [dark]="true"
-          [interval]="50000"
+          [interval]="5000"
           transition="slide"
         >
           <c-carousel-indicators></c-carousel-indicators>
@@ -340,7 +460,7 @@ class="mb-1"
               <img
                 src="../../../../assets/images/images.jpg"
                 alt="{{ slide.title }}"
-                class="d-block w-100 new-c-items-img border-rad "
+                class="d-block w-100 new-c-items-img border-rad box-shadow"
                 loading="lazy"
               />
               <c-carousel-caption class="   ">
@@ -360,7 +480,7 @@ class="mb-1"
                 </p>
                 <div>
                   <span class="news-title-text"
-                    >   {{ slide.description | truncateWords:50 }}   </span
+                    >   {{ slide.description | truncateWords:40 }}   </span
                   >
                 </div>
                   </div>
@@ -391,36 +511,74 @@ class="mb-1"
       <div class="row">
         <div class="col-md-12">
           <div class="bg-white border-rad bottom-divs box-shadow">
+            <div  *ngIf="(isBirthdayDisplayslider$|async)===false">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div >
+            <svg aria-label="Placeholder"
+               cCardImg="top"
+               focusable="false"
+               height="160"
+               preserveAspectRatio="xMidYMid slice"
+               role="img"
+               width="100%"
+               xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>Placeholder</title>
+            <rect fill="#868e96" height="100%" width="100%"></rect>
+          </svg>
+          </div>
+          </div>
+        <div class="col-md-12 " >
+
+          <p cCardText cPlaceholderAnimation="glow" class="text-center mt-3" >
+            <span cCol="6"cPlaceholder  ></span>
+          </p>
+
+          <p cCardText cPlaceholderAnimation="glow" class="text-center">
+            <span cCol="10"    cPlaceholder  ></span>
+          </p>
+          <p cCardText cPlaceholderAnimation="glow" class="text-center">
+            <span cCol="10"    cPlaceholder  ></span>
+          </p>
+          </div>
+          </div>
+            </div>
+            <div *ngIf="(isBirthdayDisplayslider$|async)===true">
+
             <c-carousel
               (itemChange)="onItemChange($event)"
               [dark]="true"
-              [interval]="50000"
+              [interval]="5000"
               transition="slide"
             >
               <c-carousel-indicators></c-carousel-indicators>
               <c-carousel-inner>
                 <c-carousel-item
                   id="Birthday-div"
-                  *ngFor="let slide of slides[2]; index as i"
+                       *ngFor="let slide of (landingPageService.birthdayList$|async); index as i"
+
                   class="Birthday-c-items"
                 >
                   <img
                     src="../../../../assets/images/images.jpg"
-                    alt="{{ slide.title }}"
+                    alt="{{ slide.employeeName }}"
                     class="d-block w-100 Birthday-c-items-img border-rad"
                     loading="lazy"
                   />
                   <c-carousel-caption class="  d-md-block">
-                    <div class="mt-2">
+                    <div class="mt-2 birthday-card">
                       <img
-                        src="../../../../assets/images/birthday.png"
+                        [src]="slide.userImage"
                         alt=" Birthday Photo"
+
                       />
                     </div>
-                    <p class="title">Sneha ( From IT Dep)</p>
+                    <p class="title">{{slide.employeeName|uppercase}} </p>
                     <div>
-                      <span class="news-title-text"
-                        >On behalf of the entire company, I wish you a very
+                      <span class="news-title-text">
+                        On behalf of the entire company, I wish you a very
                         Happy Birthday.
                       </span>
                     </div>
@@ -430,6 +588,7 @@ class="mb-1"
               <!-- <c-carousel-control caption="Previous" direction="prev" i18n-caption></c-carousel-control>
                 <c-carousel-control caption="Next" direction="next" i18n-caption></c-carousel-control> -->
             </c-carousel>
+            </div>
           </div>
         </div>
       </div>
@@ -443,6 +602,132 @@ class="mb-1"
       <div class="row mb-0">
         <div class="col-md-12">
           <div class="row bg-white border-rad pt-3 pb-3 bottom-divs box-shadow">
+          <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"  *ngIf="(isNewHiresLoading$|async)===true">
+            <div  >
+              <svg aria-label="Placeholder"
+                 cCardImg="top"
+                 focusable="false"
+                 height="50"
+                 preserveAspectRatio="xMidYMid slice"
+                 role="img"
+                 width="100%"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="mt-3"
+            >
+              <title>Placeholder</title>
+              <rect fill="#868e96" height="100%" width="100%"></rect>
+            </svg>
+            </div>
+              <div class="title text-center">
+                 <p cCardText cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder  ></span>
+              </p></div>
+            </div>
+          <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"  *ngIf="(isNewHiresLoading$|async)===true">
+            <div  >
+              <svg aria-label="Placeholder"
+                 cCardImg="top"
+                 focusable="false"
+                 height="50"
+                 preserveAspectRatio="xMidYMid slice"
+                 role="img"
+                 width="100%"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="mt-3"
+            >
+              <title>Placeholder</title>
+              <rect fill="#868e96" height="100%" width="100%"></rect>
+            </svg>
+            </div>
+              <div class="title text-center">
+                 <p cCardText cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder  ></span>
+              </p></div>
+            </div>
+          <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"  *ngIf="(isNewHiresLoading$|async)===true">
+            <div  >
+              <svg aria-label="Placeholder"
+                 cCardImg="top"
+                 focusable="false"
+                 height="50"
+                 preserveAspectRatio="xMidYMid slice"
+                 role="img"
+                 width="100%"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="mt-3"
+            >
+              <title>Placeholder</title>
+              <rect fill="#868e96" height="100%" width="100%"></rect>
+            </svg>
+            </div>
+              <div class="title text-center">
+                 <p cCardText cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder  ></span>
+              </p></div>
+            </div>
+          <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"  *ngIf="(isNewHiresLoading$|async)===true">
+            <div  >
+              <svg aria-label="Placeholder"
+                 cCardImg="top"
+                 focusable="false"
+                 height="50"
+                 preserveAspectRatio="xMidYMid slice"
+                 role="img"
+                 width="100%"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="mt-3"
+            >
+              <title>Placeholder</title>
+              <rect fill="#868e96" height="100%" width="100%"></rect>
+            </svg>
+            </div>
+              <div class="title text-center">
+                 <p cCardText cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder  ></span>
+              </p></div>
+            </div>
+          <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"  *ngIf="(isNewHiresLoading$|async)===true">
+            <div  >
+              <svg aria-label="Placeholder"
+                 cCardImg="top"
+                 focusable="false"
+                 height="50"
+                 preserveAspectRatio="xMidYMid slice"
+                 role="img"
+                 width="100%"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="mt-3"
+            >
+              <title>Placeholder</title>
+              <rect fill="#868e96" height="100%" width="100%"></rect>
+            </svg>
+            </div>
+              <div class="title text-center">
+                 <p cCardText cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder  ></span>
+              </p></div>
+            </div>
+          <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"  *ngIf="(isNewHiresLoading$|async)===true">
+            <div  >
+              <svg aria-label="Placeholder"
+                 cCardImg="top"
+                 focusable="false"
+                 height="50"
+                 preserveAspectRatio="xMidYMid slice"
+                 role="img"
+                 width="100%"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="mt-3"
+            >
+              <title>Placeholder</title>
+              <rect fill="#868e96" height="100%" width="100%"></rect>
+            </svg>
+            </div>
+              <div class="title text-center">
+                 <p cCardText cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder  ></span>
+              </p></div>
+            </div>
             <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center"
             *ngFor="let newHier of (landingPageService.newHiresList$|async)"
             >
@@ -455,14 +740,7 @@ class="mb-1"
             </div>
               <div class="title text-center">{{newHier.title}}</div>
             </div>
-            <!-- <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center">
-              <img
-                class=" "
-                src="../../../../assets/images/hires2.png"
-                alt="My Happy SVG"
-              />
-              <div class="title text-center">Priya Patil</div>
-            </div>
+            <!--
             <div class="col-md-4 mt-3  col-sm-4 col-lg-4  col-xl-4  col-xxl-4 col-4 mb-2 text-center">
               <img
                 class=" "
@@ -507,54 +785,71 @@ class="mb-1"
     <div class="bg-white border-rad bottom-divs box-shadow">
       <div class="row ps-4 pe-4 pt-4">
         <div class="col-md-12">
+          <div *ngIf="(isVacancyLoading$|async)===true">
+
           <div class="row vacancy-title-divs border-rad  ">
+            <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12  ">
+              <div class=" ">
+                <p cCardText cPlaceholderAnimation="glow" class="mb-2">
+                  <span cCol="12" cPlaceholder  ></span>
+              </div>
+            </div>
+          </div>
+          <div class="row vacancy-title-divs border-rad  ">
+            <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12  ">
+              <div class=" ">
+                <p cCardText cPlaceholderAnimation="glow" class="mb-2">
+                  <span cCol="12" cPlaceholder  ></span>
+              </div>
+            </div>
+          </div>
+          <div class="row vacancy-title-divs border-rad  ">
+            <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12  ">
+              <div class=" ">
+                <p cCardText cPlaceholderAnimation="glow" class="mb-2">
+                  <span cCol="12" cPlaceholder  ></span>
+              </div>
+            </div>
+          </div>
+          <div class="row vacancy-title-divs border-rad  ">
+            <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12  ">
+              <div class=" ">
+                <p cCardText cPlaceholderAnimation="glow" class="mb-2">
+                  <span cCol="12" cPlaceholder  ></span>
+              </div>
+            </div>
+          </div>
+          <div class="row vacancy-title-divs border-rad  ">
+            <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12  ">
+              <div class=" ">
+                <p cCardText cPlaceholderAnimation="glow" class="mb-2">
+                  <span cCol="12" cPlaceholder  ></span>
+              </div>
+            </div>
+          </div>
+          <div class="row vacancy-title-divs border-rad  ">
+            <div class="col-md-12   col-sm-12 col-lg-12  col-xl-12  col-xxl-12 col-12  ">
+              <div class=" ">
+                <p cCardText cPlaceholderAnimation="glow" class="mb-2">
+                  <span cCol="12" cPlaceholder  ></span>
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+          <div class="row vacancy-title-divs border-rad  "   *ngFor="let vacancy of (landingPageService.vacancyList$|async)"
+          >
             <div class="col-md-9   col-sm-10 col-lg-10  col-xl-10  col-xxl-10 col-9  ">
               <div class="vacancy-title">
-                Deputy Manager - Area Sales Manager
+                {{vacancy.jobtitle}}
               </div>
             </div>
             <div class="col-md-3 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-3 ">
-              <div class="vacancy-counts">4</div>
+              <div class="vacancy-counts">  {{vacancy.vacancycount}} </div>
             </div>
           </div>
 
-          <div class="row vacancy-title-divs border-rad">
-            <div class="col-md-9 col-sm-10 col-lg-10  col-xl-10  col-xxl-10 col-9 ">
-              <div class="vacancy-title">Manager</div>
-            </div>
-            <div class="col-md-3 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-3">
-              <div class="vacancy-counts">2</div>
-            </div>
-          </div>
-
-          <div class="row vacancy-title-divs border-rad">
-            <div class="col-md-9 col-sm-10 col-lg-10  col-xl-10  col-xxl-10 col-9 ">
-              <div class="vacancy-title">Deputy Manager - Area Manager</div>
-            </div>
-            <div class="col-md-3 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-3">
-              <div class="vacancy-counts">1</div>
-            </div>
-          </div>
-
-          <div class="row vacancy-title-divs border-rad">
-            <div class="col-md-9 col-sm-10 col-lg-10  col-xl-10  col-xxl-10 col-9 ">
-              <div class="vacancy-title">Manager - Area Manager</div>
-            </div>
-            <div class="col-md-3 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-3">
-              <div class="vacancy-counts">5</div>
-            </div>
-          </div>
-
-          <div class="row vacancy-title-divs border-rad">
-            <div class="col-md-9 col-sm-10 col-lg-10  col-xl-10  col-xxl-10 col-9 ">
-              <div class="vacancy-title">
-                Junior Engineer - Area Sales Officer
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-2 col-lg-2  col-xl-2  col-xxl-2 col-3">
-              <div class="vacancy-counts">3</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -799,6 +1094,54 @@ alignment="center" id="staticBackdropModal3"   [visible]="canteenMenuModal" (vis
     </div>
 </div>
 </div>
+
+  </c-modal-body>
+
+</c-modal>
+
+<c-modal #staticBackdropModal4 backdrop="static" [size]="'lg'"
+alignment="center" id="staticBackdropModal4"   [visible]="holidayCalenderModal" (visibleChange)="handleLiveDemoChange4($event)">
+
+  <c-modal-body class="holiday-Calender-div">
+    <div [cModalToggle]="staticBackdropModal4.id"  class="cursor   text-right">
+      <img class="close-img"
+    src="../../../../assets/SVG/close.svg"
+    alt="My Happy SVG"
+  />
+    </div>
+    <div class="holidayCalender">
+<div class="row">
+<div class="col-12 text-center">
+<h2 class="Calender-title">HOLIDAY CALENDAR 2024</h2>
+</div>
+</div>
+<div class="row"    >
+<div class="col-4">
+<span class="Calender-cols"> Festival  </span>
+</div>
+<div class="col-4">
+
+<span>   </span>
+</div>
+<div class="col-4">
+
+<span class="Calender-cols"> Day </span>
+</div>
+</div>
+<div class="row"    *ngFor="let calendar of (landingPageService.holidayCalendarList$|async); index as i">
+<div class="col-4">
+<span class="Calender-vals"> {{calendar.holiday}} </span>
+</div>
+<div class="col-4">
+
+<span class="Calender-vals"> {{calendar.date|date:'dd-MM-yyyy'}} </span>
+</div>
+<div class="col-4">
+
+<span class="Calender-vals"> {{calendar.day}} </span>
+</div>
+</div>
+    </div>
 
   </c-modal-body>
 

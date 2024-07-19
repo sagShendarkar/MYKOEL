@@ -16,6 +16,8 @@ export class EnumDDService {
   isLoadingSubject: BehaviorSubject<boolean>;
 
   categoryDD$=  new BehaviorSubject<any>([]);
+  jobStatusDD$=  new BehaviorSubject<any>([]);
+  jobTypeDD$=  new BehaviorSubject<any>([]);
   constructor(private http:HttpClient,private router: Router) {
 
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
@@ -26,5 +28,13 @@ export class EnumDDService {
   getCategoryDD()
   {
     return this.http.get<any>(this.baseUrl+'Enum/CategoryDD');
+  }
+  getJobStatusDD()
+  {
+    return this.http.get<any>(this.baseUrl+'Enum/JobStatusDD');
+  }
+  getJobTypeDD()
+  {
+    return this.http.get<any>(this.baseUrl+'Enum/JobTypeDD');
   }
 }

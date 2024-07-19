@@ -26,6 +26,9 @@ import { AddNewHiresComponent } from './components/new-hires/add-new-hires/add-n
 import { CompanyNewsComponent } from './components/company-news/company-news/company-news.component';
 import { AddCompanyNewsComponent } from './components/company-news/add-company-news/add-company-news.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HolidayCalenderComponent } from './components/holiday-calender/holiday-calender/holiday-calender.component';
+import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacancy.component';
+import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-list.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AddNewHiresComponent,
     CompanyNewsComponent,
     AddCompanyNewsComponent,
+    HolidayCalenderComponent,
+    AddVacancyComponent,
+    VacancyListComponent,
   ],
   imports: [
     CommonModule,

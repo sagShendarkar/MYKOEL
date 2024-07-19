@@ -15,6 +15,9 @@ import { NewHiresComponent } from './components/new-hires/new-hires/new-hires.co
 import { AddNewHiresComponent } from './components/new-hires/add-new-hires/add-new-hires.component';
 import { CompanyNewsComponent } from './components/company-news/company-news/company-news.component';
 import { AddCompanyNewsComponent } from './components/company-news/add-company-news/add-company-news.component';
+import { HolidayCalenderComponent } from './components/holiday-calender/holiday-calender/holiday-calender.component';
+import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-list.component';
+import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacancy.component';
 
 const routes: Routes = [
   {
@@ -189,6 +192,50 @@ const routes: Routes = [
       title: 'Vacancy Posting',
       isDisplayAddBtn:false,
         backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'holiday-calender',
+    component: HolidayCalenderComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Holiday Calender',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'vacancy-list',
+    component: VacancyListComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Vacancy List',
+      isDisplayAddBtn:true,
+      addBtn:{
+        title:"Add Vacancy ",
+        url:"/admin/add-vacancy"
+      },
+        backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'add-vacancy',
+    component: AddVacancyComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Add Vacancy',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/vacancy-list"
+    }
+  },
+  {
+    path: 'edit-vacancy/:id',
+    component: AddVacancyComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Edit Vacancy',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/vacancy-list"
     }
   },
 ];

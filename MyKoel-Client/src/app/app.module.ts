@@ -41,7 +41,7 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -54,52 +54,44 @@ const ADMIN_APP_CONTAINERS = [
   AdminLayoutComponent
 ];
 
-@NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS,...ADMIN_APP_CONTAINERS],
-  imports: [
-
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    AvatarModule,
-    BreadcrumbModule,
-    FooterModule,
-    DropdownModule,
-    GridModule,
-    HeaderModule,
-    SidebarModule,
-    IconModule,
-    NavModule,
-    ButtonModule,
-    FormModule,
-    UtilitiesModule,
-    ButtonGroupModule,
-    ReactiveFormsModule,
-    SidebarModule,
-    SharedModule,
-    TabsModule,
-    ListGroupModule,
-    ProgressModule,
-    BadgeModule,
-    ListGroupModule,
-    CardModule,
-    NgScrollbarModule,ModalModule,HttpClientModule,
-    CollapseModule
-  ],
-  providers: [
-
-    {
-      provide: LocationStrategy,
-      useClass: PathLocationStrategy
-    },
-    IconSetService,
-    Title,DatePipe,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    // {provide: HTTP_INTERCEPTORS,  useClass: HttpRequestParamsInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent, ...APP_CONTAINERS, ...ADMIN_APP_CONTAINERS],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        AvatarModule,
+        BreadcrumbModule,
+        FooterModule,
+        DropdownModule,
+        GridModule,
+        HeaderModule,
+        SidebarModule,
+        IconModule,
+        NavModule,
+        ButtonModule,
+        FormModule,
+        UtilitiesModule,
+        ButtonGroupModule,
+        ReactiveFormsModule,
+        SidebarModule,
+        SharedModule,
+        TabsModule,
+        ListGroupModule,
+        ProgressModule,
+        BadgeModule,
+        ListGroupModule,
+        CardModule,
+        NgScrollbarModule, ModalModule,
+        CollapseModule], providers: [
+        {
+            provide: LocationStrategy,
+            useClass: PathLocationStrategy
+        },
+        IconSetService,
+        Title, DatePipe,
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        // {provide: HTTP_INTERCEPTORS,  useClass: HttpRequestParamsInterceptor, multi: true},
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
 }
