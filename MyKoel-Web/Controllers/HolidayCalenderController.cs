@@ -18,13 +18,10 @@ namespace MyKoel_Web.Controllers
     public class HolidayCalenderController : ControllerBase
     {
          private readonly IHolidayCalenderRepository _holidayCalender;
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
 
-        public HolidayCalenderController(IHolidayCalenderRepository holidayCalender, IMapper mapper, DataContext context)
+        public HolidayCalenderController(IHolidayCalenderRepository holidayCalender)
         {
-            _context = context;
-            _mapper = mapper;
+
             _holidayCalender = holidayCalender;
         }
 

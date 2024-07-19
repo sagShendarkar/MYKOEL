@@ -30,14 +30,15 @@ namespace MyKoel_Domain.Repositories
             _context.Entry(canteen).State = EntityState.Added;
         }
 
-        public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date)
+        public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date, string Location)
         {
             var canteenMenuList = await (from c in _context.CanteenMenus
-                                         where c.DATE.Date == Date.Date
-                                         group c by c.DATE into g
+                                         where c.DATE.Date == Date.Date && c.Location==Location
+                                         group c by new { c.DATE,c.Location} into g
                                          select new CanteenMenuListDto
                                          {
-                                             Date = g.Key.Date,
+                                             Date = g.Key.DATE,
+                                             Location = g.Key.Location,
                                              BreakfastList = (from b in _context.BreakFasts
                                                               where g.Any(c => c.BREAKFASTID == b.BREAKFASTID)
                                                               select new BreakFastDto

@@ -21,12 +21,14 @@ namespace MyKoel_Web.Controllers
         private readonly DataContext _context;
          private readonly IMenuHierarchyRepository _menuHierarchy;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
 
-        public MenuHierarchyController(DataContext context,IMenuHierarchyRepository menuHierarchy,IMapper mapper)
+        public MenuHierarchyController(DataContext context,IMenuHierarchyRepository menuHierarchy,IMapper mapper,IConfiguration config)
         {
             _context = context;
             _menuHierarchy=menuHierarchy;
             _mapper= mapper;
+            _config=config;
         }
 
         [HttpGet("ShowMenuList")]
@@ -54,7 +56,7 @@ namespace MyKoel_Web.Controllers
 
                 if (mainMenu.ImageSrc != null)
                 {
-                    string rootFolderPath = @"C:\MyKoelImages";
+                    string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                     if (!Directory.Exists(rootFolderPath))
                     {
@@ -130,7 +132,7 @@ namespace MyKoel_Web.Controllers
                 }
                  if (mainMenu.ImageSrc != null)
                 {
-                    string rootFolderPath = @"C:\MyKoelImages";
+                    string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                     if (!Directory.Exists(rootFolderPath))
                     {

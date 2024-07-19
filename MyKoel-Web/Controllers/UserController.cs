@@ -23,8 +23,9 @@ namespace MyKoel_Web.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
         private readonly SignInManager<AppUser> _signInManager;
-        public UserController(DataContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IUserRepository userRepository, IMapper mapper)
+        public UserController(DataContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IUserRepository userRepository, IMapper mapper,IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,6 +33,7 @@ namespace MyKoel_Web.Controllers
             _userManager = userManager;
             _userRepository = userRepository;
             _mapper = mapper;
+            _config=config;
         }
 
         [HttpPost]
@@ -123,7 +125,7 @@ namespace MyKoel_Web.Controllers
                 var user = await _context.Users.Where(u => u.Id == User.GetUserId()).FirstOrDefaultAsync();
                 if(userProfileDto.ProfileSrc != null)
                 {
-                    string rootFolderPath = @"C:\MyKoelImages";
+                     string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                     if (!Directory.Exists(rootFolderPath))
                     {

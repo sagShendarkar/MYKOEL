@@ -11,7 +11,7 @@ namespace MyKoel_Domain.Interfaces
     {
          Task<bool> SaveAllAsync();
         void AddCanteenMenus(CanteenMenus canteen);
-        Task<CanteenMenuListDto> CanteenMenuList(DateTime Date);
+        Task<CanteenMenuListDto> CanteenMenuList(DateTime Date, string Location);
        
     }
 }
