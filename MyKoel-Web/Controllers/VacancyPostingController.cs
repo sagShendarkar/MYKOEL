@@ -52,7 +52,7 @@ namespace MyKoel_Web.Controllers
             {
                 var vacancydetails = _mapper.Map<VacancyPosting>(vacancy);
 
-                if (vacancy.PDFSTRING != null)
+                if (vacancy.FILESTRING != null)
                 {
                     string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
@@ -75,10 +75,10 @@ namespace MyKoel_Web.Controllers
                         Directory.CreateDirectory(userFolderPath);
                     }
 
-                    string fileName = Guid.NewGuid().ToString() + ".PDF";
+                    string fileName = Guid.NewGuid().ToString() + vacancy.FILETYPE;
                     string imagePath = Path.Combine(userFolderPath, fileName);
 
-                    string base64StringData = vacancy.PDFSTRING;
+                    string base64StringData = vacancy.FILESTRING;
                     string cleandata = base64StringData.Substring(base64StringData.IndexOf(',') + 1);
                     byte[] data = Convert.FromBase64String(cleandata);
 
@@ -135,7 +135,7 @@ namespace MyKoel_Web.Controllers
                 {
                     return NotFound("Section not found");
                 }
-                if (vacancyDto.PDFSTRING != null)
+                if (vacancyDto.FILESTRING != null)
                 {
                     string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
@@ -158,10 +158,10 @@ namespace MyKoel_Web.Controllers
                         Directory.CreateDirectory(userFolderPath);
                     }
 
-                    string fileName = Guid.NewGuid().ToString() + ".Pdf";
+                    string fileName = Guid.NewGuid().ToString() + vacancyDto.FILETYPE;
                     string imagePath = Path.Combine(userFolderPath, fileName);
 
-                    string base64StringData = vacancyDto.PDFSTRING;
+                    string base64StringData = vacancyDto.FILESTRING;
                     string cleandata = base64StringData.Substring(base64StringData.IndexOf(',') + 1);
                     byte[] data = Convert.FromBase64String(cleandata);
 

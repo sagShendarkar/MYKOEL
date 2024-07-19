@@ -37,6 +37,7 @@ namespace MyKoel_Domain.Repositories
                 if (Grade == "SysAdmin")
                 {
                     var mainmenuData = await (from menu in _context.MainMenuGroups
+                                              where menu.IsActive==true
                                               group menu by new { menu.MainMenuGroupId } into grouped
                                               select new MainMenuGroupDto
                                               {
@@ -53,7 +54,7 @@ namespace MyKoel_Domain.Repositories
                                                   IsPopup = grouped.FirstOrDefault().IsPopup,
                                                   IsRoute = grouped.FirstOrDefault().IsRoute,
                                                   IsChild = grouped.FirstOrDefault().IsChild,
-                                                  MenuGroupData = grouped.FirstOrDefault().Flag != "Admin Menu" ? (from mg in _context.MenuGroups
+                                                  MenuGroupData =(from mg in _context.MenuGroups
                                                                    where mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
                                                                    group mg by new { mg.MenuGroupId, mg.MainMenuGroupId } into MenuGroupData
                                                                    select new MenuGroupDto
@@ -78,23 +79,7 @@ namespace MyKoel_Domain.Repositories
                                                                                         Route = mainmenu.Route
                                                                                     }).OrderBy(a => a.Sequence).ToList()
                                                                    }).OrderBy(a => a.Sequence).ToList()
-                                                                  : 
-                                                                  (from mg in _context.MenuGroups
-                                                                   where mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
-                                                                   join um in _context.UserMenuMap on mg.MenuGroupId equals um.MenuGroupId
-                                                                   group mg by new { mg.MenuGroupId, mg.MainMenuGroupId } into MenuGroupData
-                                                                   select new MenuGroupDto
-                                                                   {
-                                                                       MenuGroupId = MenuGroupData.FirstOrDefault().MenuGroupId,
-                                                                       MainMenuGroupId = MenuGroupData.FirstOrDefault().MainMenuGroupId,
-                                                                       GroupName = MenuGroupData.FirstOrDefault().GroupName,
-                                                                       Sequence = MenuGroupData.FirstOrDefault().Sequence,
-                                                                       Icon = MenuGroupData.FirstOrDefault().Icon,
-                                                                       IsActive = MenuGroupData.FirstOrDefault().IsActive,
-                                                                       IsChild = MenuGroupData.FirstOrDefault().IsChild,
-                                                                       Route = MenuGroupData.FirstOrDefault().Route,
-                                                                   }).OrderBy(a => a.Sequence).ToList()
-
+                                                                 
 
                                               }).OrderBy(s => s.MainMenuGroupId).ToListAsync();
                     if (!string.IsNullOrEmpty(Flag))
@@ -122,7 +107,7 @@ namespace MyKoel_Domain.Repositories
                 var menuData = await (from menu in _context.MainMenuGroups
                                       join u in _context.UserMenuMap
                                       on menu.MainMenuGroupId equals u.MainMenuGroupId
-                                      where u.UserId == UserId
+                                      where u.UserId == UserId && menu.IsActive==true
                                       group menu by new { menu.MainMenuGroupId, u.UserId } into grouped
                                       select new MainMenuGroupDto
                                       {
@@ -176,7 +161,14 @@ namespace MyKoel_Domain.Repositories
 
                 if (!string.IsNullOrEmpty(Flag))
                 {
-                    menuData = menuData.Where(s => s.Flag == Flag).ToList();
+                        if (Flag == "Top MenuBar")
+                        {
+                            menuData = menuData.Where(s => s.Flag == "Top MenuBar" || s.Flag == "Admin Menu").ToList();
+                        }
+                        else
+                        {
+                            menuData = menuData.Where(s => s.Flag == Flag).ToList();
+                        }                
                 }
                 foreach (var item in menuData)
                 {
