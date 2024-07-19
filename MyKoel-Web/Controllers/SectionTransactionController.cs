@@ -18,14 +18,16 @@ namespace MyKoel_Web.Controllers
     public class SectionTransactionController : ControllerBase
     {
         private readonly ISectionTrnRepository _sectionTrnRepository;
+        private readonly IConfiguration _config;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public SectionTransactionController(ISectionTrnRepository sectionTrnRepository, IMapper mapper, DataContext context)
+        public SectionTransactionController(ISectionTrnRepository sectionTrnRepository, IMapper mapper, DataContext context,IConfiguration config)
         {
             _context = context;
             _mapper = mapper;
             _sectionTrnRepository = sectionTrnRepository;
+            _config=config;
         }
 
         [HttpGet("ShowSectionList")]
@@ -62,7 +64,7 @@ namespace MyKoel_Web.Controllers
                     {
                         if (item.IMAGESRC != null)
                         {
-                            string rootFolderPath = @"C:\MyKoelImages";
+                            string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                             if (!Directory.Exists(rootFolderPath))
                             {
@@ -172,7 +174,7 @@ namespace MyKoel_Web.Controllers
 
                             if (item.IMAGESRC != null)
                             {
-                                string rootFolderPath = @"C:\MyKoelImages";
+                                 string rootFolderPath = _config.GetValue<string>("RootFolderPath");
                                 if (!Directory.Exists(rootFolderPath))
                                 {
                                     Directory.CreateDirectory(rootFolderPath);

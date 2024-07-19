@@ -33,6 +33,8 @@ namespace MyKoel_Web.Controllers
             {
                 if (canteenDto != null)
                 {
+                    _context.CanteenMenus.RemoveRange(_context.CanteenMenus.Where(x => x.DATE.Date == canteenDto[0].Date));
+                    await _context.SaveChangesAsync();
                     foreach (var canteenMenu in canteenDto)
                     {
                         var canteenmenu = _mapper.Map<CanteenMenus>(canteenMenu);
@@ -68,14 +70,17 @@ namespace MyKoel_Web.Controllers
             }
             catch (Exception ex)
             {
-                return null;
+                     return new
+                    {
+                        Message = ex.Message
+                    };
             }
         }
 
         [HttpGet("CanteenMenuList")]
-        public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date)
+        public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date, string Location)
         {
-            return await _canteenMenuRepository.CanteenMenuList(Date);
+            return await _canteenMenuRepository.CanteenMenuList(Date, Location);
         }
 
 

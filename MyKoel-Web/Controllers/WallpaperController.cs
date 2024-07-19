@@ -21,14 +21,16 @@ namespace MyKoel_Web.Controllers
     public class WallpaperController : ControllerBase
     {
         private readonly IWallpaperRepository _wallpaperRepository;
+        private readonly IConfiguration _config;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public WallpaperController(IWallpaperRepository wallpaperRepository, IMapper mapper, DataContext context)
+        public WallpaperController(IWallpaperRepository wallpaperRepository, IMapper mapper, DataContext context,IConfiguration config)
         {
             _context = context;
             _mapper = mapper;
             _wallpaperRepository = wallpaperRepository;
+            _config=config;
         }
 
         [HttpPost("AddWallPaper")]
@@ -42,7 +44,7 @@ namespace MyKoel_Web.Controllers
                         .FirstOrDefaultAsync();
                 if (wallpaperDto.WallpaperSrc != null)
                 {
-                    string rootFolderPath = @"C:\MyKoelImages";
+                     string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
                     if (!Directory.Exists(rootFolderPath))
                     {
