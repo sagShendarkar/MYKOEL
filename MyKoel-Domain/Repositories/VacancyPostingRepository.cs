@@ -45,6 +45,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<PagedList<VacancyPostingDto>> GetVacancyList(ParameterParams parameterParams)
         {
             var vacancyData = (from v in _context.VacancyPosting
+                                where v.CLOSINGDATE.Date >= DateTime.Today.Date
                                select new VacancyPostingDto
                                {
                                    VACANCYID = v.VACANCYID,
@@ -53,7 +54,7 @@ namespace MyKoel_Domain.Repositories
                                    DEPARTMENT = v.DEPARTMENT,
                                    LOCATION = v.LOCATION,
                                    JOBTYPE = v.JOBTYPE,
-                                   JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertPdfToBase64(v.JOBDESC) : null,
+                                   JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertFileToBase64(v.JOBDESC) : null,
                                    SALARYRANGE = v.SALARYRANGE,
                                    REQUIRMENTS = v.REQUIRMENTS,
                                    POSTEDDATE = v.POSTEDDATE,
@@ -62,7 +63,7 @@ namespace MyKoel_Domain.Repositories
                                    STATUS = v.STATUS,
                                    ISACTIVE = v.ISACTIVE,
                                    VACANCYCOUNT = v.VACANCYCOUNT
-                               }).OrderByDescending(s => s.VACANCYID).AsQueryable();
+                               }).OrderByDescending(s => s.POSTEDDATE).AsQueryable();
             if (!string.IsNullOrEmpty(parameterParams.Flag))
             {
                 vacancyData = vacancyData.Where(c => parameterParams.searchPagination.Contains(c.JOBTITLE)
@@ -116,7 +117,7 @@ namespace MyKoel_Domain.Repositories
                                          DEPARTMENT = v.DEPARTMENT,
                                          LOCATION = v.LOCATION,
                                          JOBTYPE = v.JOBTYPE,
-                                         JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertPdfToBase64(v.JOBDESC) : null,
+                                         JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertFileToBase64(v.JOBDESC) : null,
                                          SALARYRANGE = v.SALARYRANGE,
                                          REQUIRMENTS = v.REQUIRMENTS,
                                          POSTEDDATE = v.POSTEDDATE,
@@ -125,7 +126,7 @@ namespace MyKoel_Domain.Repositories
                                          STATUS = v.STATUS,
                                          ISACTIVE = v.ISACTIVE,
                                          VACANCYCOUNT = v.VACANCYCOUNT,
-                                         PDFPATH= v.JOBDESC
+                                         FILEPATH= v.JOBDESC
                                      }).OrderByDescending(s => s.VACANCYID).SingleOrDefaultAsync();
             return vacancyData;
         }

@@ -21,89 +21,93 @@ namespace MyKoel_Domain.Repositories
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
 
-        public MenuHierarchyRepository(DataContext context, IMapper mapper,IImageService imageService)
+        public MenuHierarchyRepository(DataContext context, IMapper mapper, IImageService imageService)
         {
             _context = context;
             _mapper = mapper;
-            _imageService=imageService;
+            _imageService = imageService;
         }
 
 
-        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId, string Flag,string Grade)
+        public async Task<List<MainMenuGroupDto>> GetMenuData(int UserId, string Flag, string Grade)
         {
             try
             {
 
-                if(Grade=="SysAdmin")
+                if (Grade == "SysAdmin")
                 {
-                      var mainmenuData = await (from menu in _context.MainMenuGroups
-                                      group menu by new { menu.MainMenuGroupId} into grouped
-                                      select new MainMenuGroupDto
-                                      {
-                                          MainMenuGroupId = grouped.Key.MainMenuGroupId,
-                                          MenuGroupName = grouped.FirstOrDefault().MenuGroupName,
-                                          Icon = grouped.FirstOrDefault().Icon,
-                                          Sequence = grouped.FirstOrDefault().Sequence,
-                                          IsActive = grouped.FirstOrDefault().IsActive,
-                                          Route = grouped.FirstOrDefault().Route,
-                                          Flag = grouped.FirstOrDefault().Flag,
-                                          ImageIcon = grouped.FirstOrDefault().ImageIcon, // Assuming ImageIcon is a string containing file path
-                                          IsIcon = grouped.FirstOrDefault().IsIcon,
-                                          IsImage = grouped.FirstOrDefault().IsImage,
-                                          IsPopup = grouped.FirstOrDefault().IsPopup,
-                                          IsRoute = grouped.FirstOrDefault().IsRoute,
-                                          IsChild = grouped.FirstOrDefault().IsChild,
-                                          MenuGroupData = (from mg in _context.MenuGroups
-                                                           where mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
-                                                           group mg by new { mg.MenuGroupId, mg.MainMenuGroupId } into MenuGroupData
-                                                           select new MenuGroupDto
-                                                           {
-                                                               MenuGroupId = MenuGroupData.FirstOrDefault().MenuGroupId,
-                                                               MainMenuGroupId = MenuGroupData.FirstOrDefault().MainMenuGroupId,
-                                                               GroupName = MenuGroupData.FirstOrDefault().GroupName,
-                                                               Sequence = MenuGroupData.FirstOrDefault().Sequence,
-                                                               Icon = MenuGroupData.FirstOrDefault().Icon,
-                                                               IsActive = MenuGroupData.FirstOrDefault().IsActive,
-                                                               IsChild = MenuGroupData.FirstOrDefault().IsChild,
-                                                               Route = MenuGroupData.FirstOrDefault().Route,
-                                                               MenusData = (from mainmenu in _context.Menus
-                                                                               where mainmenu.MenuGroupId == MenuGroupData.FirstOrDefault().MenuGroupId
-                                                                            select new MenusDto
-                                                                            {
-                                                                                MenuId = mainmenu.MenuId,
-                                                                                MenuName = mainmenu.MenuName,
-                                                                                Sequence = mainmenu.Sequence,
-                                                                                Icon = mainmenu.Icon,
-                                                                                IsActive = mainmenu.IsActive,
-                                                                                Route = mainmenu.Route
-                                                                            }).OrderBy(a => a.Sequence).ToList()
-                                                           }).OrderBy(a => a.Sequence).ToList()
-                                      }).OrderBy(s => s.MainMenuGroupId).ToListAsync();
-                if (!string.IsNullOrEmpty(Flag))
-                {
-                    if(Flag=="Top MenuBar"){
-                    mainmenuData = mainmenuData.Where(s => s.Flag == "Top MenuBar" || s.Flag== "Admin Menu").ToList();
+                    var mainmenuData = await (from menu in _context.MainMenuGroups
+                                              where menu.IsActive==true
+                                              group menu by new { menu.MainMenuGroupId } into grouped
+                                              select new MainMenuGroupDto
+                                              {
+                                                  MainMenuGroupId = grouped.Key.MainMenuGroupId,
+                                                  MenuGroupName = grouped.FirstOrDefault().MenuGroupName,
+                                                  Icon = grouped.FirstOrDefault().Icon,
+                                                  Sequence = grouped.FirstOrDefault().Sequence,
+                                                  IsActive = grouped.FirstOrDefault().IsActive,
+                                                  Route = grouped.FirstOrDefault().Route,
+                                                  Flag = grouped.FirstOrDefault().Flag,
+                                                  ImageIcon = grouped.FirstOrDefault().ImageIcon,
+                                                  IsIcon = grouped.FirstOrDefault().IsIcon,
+                                                  IsImage = grouped.FirstOrDefault().IsImage,
+                                                  IsPopup = grouped.FirstOrDefault().IsPopup,
+                                                  IsRoute = grouped.FirstOrDefault().IsRoute,
+                                                  IsChild = grouped.FirstOrDefault().IsChild,
+                                                  MenuGroupData =(from mg in _context.MenuGroups
+                                                                   where mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
+                                                                   group mg by new { mg.MenuGroupId, mg.MainMenuGroupId } into MenuGroupData
+                                                                   select new MenuGroupDto
+                                                                   {
+                                                                       MenuGroupId = MenuGroupData.FirstOrDefault().MenuGroupId,
+                                                                       MainMenuGroupId = MenuGroupData.FirstOrDefault().MainMenuGroupId,
+                                                                       GroupName = MenuGroupData.FirstOrDefault().GroupName,
+                                                                       Sequence = MenuGroupData.FirstOrDefault().Sequence,
+                                                                       Icon = MenuGroupData.FirstOrDefault().Icon,
+                                                                       IsActive = MenuGroupData.FirstOrDefault().IsActive,
+                                                                       IsChild = MenuGroupData.FirstOrDefault().IsChild,
+                                                                       Route = MenuGroupData.FirstOrDefault().Route,
+                                                                       MenusData = (from mainmenu in _context.Menus
+                                                                                    where mainmenu.MenuGroupId == MenuGroupData.FirstOrDefault().MenuGroupId
+                                                                                    select new MenusDto
+                                                                                    {
+                                                                                        MenuId = mainmenu.MenuId,
+                                                                                        MenuName = mainmenu.MenuName,
+                                                                                        Sequence = mainmenu.Sequence,
+                                                                                        Icon = mainmenu.Icon,
+                                                                                        IsActive = mainmenu.IsActive,
+                                                                                        Route = mainmenu.Route
+                                                                                    }).OrderBy(a => a.Sequence).ToList()
+                                                                   }).OrderBy(a => a.Sequence).ToList()
+                                                                 
 
-                    }
-                    else{
-                    mainmenuData = mainmenuData.Where(s => s.Flag == Flag).ToList();
-                    }
-                }
-                foreach (var item in mainmenuData)
-                {
-                    if (!string.IsNullOrEmpty(item.ImageIcon))
+                                              }).OrderBy(s => s.MainMenuGroupId).ToListAsync();
+                    if (!string.IsNullOrEmpty(Flag))
                     {
-                        item.ImageIcon = _imageService.ConvertLocalImageToBase64(item.ImageIcon);
+                        if (Flag == "Top MenuBar")
+                        {
+                            mainmenuData = mainmenuData.Where(s => s.Flag == "Top MenuBar" || s.Flag == "Admin Menu").ToList();
+                        }
+                        else
+                        {
+                            mainmenuData = mainmenuData.Where(s => s.Flag == Flag).ToList();
+                        }
                     }
-                }
-                        return mainmenuData;
+                    foreach (var item in mainmenuData)
+                    {
+                        if (!string.IsNullOrEmpty(item.ImageIcon))
+                        {
+                            item.ImageIcon = _imageService.ConvertLocalImageToBase64(item.ImageIcon);
+                        }
+                    }
+                    return mainmenuData;
 
                 }
 
                 var menuData = await (from menu in _context.MainMenuGroups
                                       join u in _context.UserMenuMap
                                       on menu.MainMenuGroupId equals u.MainMenuGroupId
-                                      where u.UserId == UserId
+                                      where u.UserId == UserId && menu.IsActive==true
                                       group menu by new { menu.MainMenuGroupId, u.UserId } into grouped
                                       select new MainMenuGroupDto
                                       {
@@ -114,7 +118,7 @@ namespace MyKoel_Domain.Repositories
                                           IsActive = grouped.FirstOrDefault().IsActive,
                                           Route = grouped.FirstOrDefault().Route,
                                           Flag = grouped.FirstOrDefault().Flag,
-                                          ImageIcon = grouped.FirstOrDefault().ImageIcon, // Assuming ImageIcon is a string containing file path
+                                          ImageIcon = grouped.FirstOrDefault().ImageIcon,
                                           IsIcon = grouped.FirstOrDefault().IsIcon,
                                           IsImage = grouped.FirstOrDefault().IsImage,
                                           IsPopup = grouped.FirstOrDefault().IsPopup,
@@ -157,7 +161,14 @@ namespace MyKoel_Domain.Repositories
 
                 if (!string.IsNullOrEmpty(Flag))
                 {
-                    menuData = menuData.Where(s => s.Flag == Flag).ToList();
+                        if (Flag == "Top MenuBar")
+                        {
+                            menuData = menuData.Where(s => s.Flag == "Top MenuBar" || s.Flag == "Admin Menu").ToList();
+                        }
+                        else
+                        {
+                            menuData = menuData.Where(s => s.Flag == Flag).ToList();
+                        }                
                 }
                 foreach (var item in menuData)
                 {
@@ -205,7 +216,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<List<MainMenuGroupDto>> GetMenuList(string? Name)
         {
             var mainMenuData = await (from mainmenu in _context.MainMenuGroups
-                                      where mainmenu.Flag == "Top MenuBar"
+                                      where mainmenu.Flag == "Admin Menu"
                                       select new MainMenuGroupDto
                                       {
                                           MainMenuGroupId = mainmenu.MainMenuGroupId,
@@ -255,75 +266,75 @@ namespace MyKoel_Domain.Repositories
 
         public void UpdateMainMenu(MainMenuGroup mainMenu)
         {
-            _context.Entry(mainMenu).State=EntityState.Modified;
+            _context.Entry(mainMenu).State = EntityState.Modified;
         }
 
         public async Task<bool> SaveAllAsync()
         {
-            return await _context.SaveChangesAsync()>0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<MainMenuGroup> GetMainMenuById(int Id)
         {
             var Mainmenu = await _context.MainMenuGroups
-            .SingleOrDefaultAsync(x=>x.MainMenuGroupId==Id);
+            .SingleOrDefaultAsync(x => x.MainMenuGroupId == Id);
             return Mainmenu;
         }
 
         public void AddNewMainMenu(MainMenuGroup mainMenu)
         {
-            _context.Entry(mainMenu).State=EntityState.Added;
+            _context.Entry(mainMenu).State = EntityState.Added;
         }
 
         public async Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId)
         {
-            var Mainmenu= await (from m in _context.MainMenuGroups
-                          where m.MainMenuGroupId == MainMenuId
-                          select new AddMainMenuGroupDto
-                          {
-                            MainMenuGroupId= m.MainMenuGroupId,
-                            MenuGroupName= m.MenuGroupName,
-                            Sequence=m.Sequence,
-                            Icon=m.Icon,
-                            IsActive=m.IsActive,
-                            IsChild=m.IsChild,
-                            Route=m.Route,
-                            IsImage=m.IsImage,
-                            IsRoute=m.IsRoute,
-                            IsIcon=m.IsIcon,
-                            ImageIcon=!string.IsNullOrEmpty(m.ImageIcon)? _imageService.ConvertLocalImageToBase64(m.ImageIcon):null,
-                            Flag=m.Flag
-                          }).SingleOrDefaultAsync();
-                return Mainmenu;
+            var Mainmenu = await (from m in _context.MainMenuGroups
+                                  where m.MainMenuGroupId == MainMenuId
+                                  select new AddMainMenuGroupDto
+                                  {
+                                      MainMenuGroupId = m.MainMenuGroupId,
+                                      MenuGroupName = m.MenuGroupName,
+                                      Sequence = m.Sequence,
+                                      Icon = m.Icon,
+                                      IsActive = m.IsActive,
+                                      IsChild = m.IsChild,
+                                      Route = m.Route,
+                                      IsImage = m.IsImage,
+                                      IsRoute = m.IsRoute,
+                                      IsIcon = m.IsIcon,
+                                      ImageIcon = !string.IsNullOrEmpty(m.ImageIcon) ? _imageService.ConvertLocalImageToBase64(m.ImageIcon) : null,
+                                      Flag = m.Flag
+                                  }).SingleOrDefaultAsync();
+            return Mainmenu;
         }
 
         public async Task<PagedList<AddMainMenuGroupDto>> GetMainMenuList(ParameterParams parameterParams)
         {
-             var Mainmenu=  (from m in _context.MainMenuGroups
-                            where m.IsActive==true && (m.Flag.ToLower()== ("Quick Links").ToLower())
-                          select new AddMainMenuGroupDto
-                          {
-                            MainMenuGroupId= m.MainMenuGroupId,
-                            MenuGroupName= m.MenuGroupName,
-                            Sequence=m.Sequence,
-                            Icon=m.Icon,
-                            IsActive=m.IsActive,
-                            IsChild=m.IsChild,
-                            Route=m.Route,
-                            IsImage=m.IsImage,
-                            IsRoute=m.IsRoute,
-                            IsIcon=m.IsIcon,
-                            ImageIcon=!string.IsNullOrEmpty(m.ImageIcon)? _imageService.ConvertLocalImageToBase64(m.ImageIcon):null,
-                            Flag=m.Flag
-                          }).AsQueryable();
-           return await PagedList<AddMainMenuGroupDto>.CreateAsync(Mainmenu.ProjectTo<AddMainMenuGroupDto>(_mapper.ConfigurationProvider)
-                                 .AsNoTracking(), parameterParams.PageNumber, parameterParams.PageSize);
+            var Mainmenu = (from m in _context.MainMenuGroups
+                            where m.IsActive == true && (m.Flag.ToLower() == ("Quick Links").ToLower())
+                            select new AddMainMenuGroupDto
+                            {
+                                MainMenuGroupId = m.MainMenuGroupId,
+                                MenuGroupName = m.MenuGroupName,
+                                Sequence = m.Sequence,
+                                Icon = m.Icon,
+                                IsActive = m.IsActive,
+                                IsChild = m.IsChild,
+                                Route = m.Route,
+                                IsImage = m.IsImage,
+                                IsRoute = m.IsRoute,
+                                IsIcon = m.IsIcon,
+                                ImageIcon = !string.IsNullOrEmpty(m.ImageIcon) ? _imageService.ConvertLocalImageToBase64(m.ImageIcon) : null,
+                                Flag = m.Flag
+                            }).AsQueryable();
+            return await PagedList<AddMainMenuGroupDto>.CreateAsync(Mainmenu.ProjectTo<AddMainMenuGroupDto>(_mapper.ConfigurationProvider)
+                                  .AsNoTracking(), parameterParams.PageNumber, parameterParams.PageSize);
         }
 
         public void DeleteMainMenu(MainMenuGroup mainMenu)
         {
-            mainMenu.IsActive=false;
-            _context.Entry(mainMenu).State=EntityState.Modified;
+            mainMenu.IsActive = false;
+            _context.Entry(mainMenu).State = EntityState.Modified;
 
         }
     }

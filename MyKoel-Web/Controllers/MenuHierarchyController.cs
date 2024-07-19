@@ -12,38 +12,41 @@ using MyKoel_Domain.Models.Master;
 using AutoMapper;
 using iot_Domain.Helpers;
 using API.Extensions;
+using Microsoft.EntityFrameworkCore;
 namespace MyKoel_Web.Controllers
 {
-   [ApiController]
+    [ApiController]
     [Route("api/[controller]")]
     public class MenuHierarchyController : ControllerBase
     {
         private readonly DataContext _context;
-         private readonly IMenuHierarchyRepository _menuHierarchy;
+        private readonly IMenuHierarchyRepository _menuHierarchy;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+        private readonly IUserRepository _userRepository;
 
-        public MenuHierarchyController(DataContext context,IMenuHierarchyRepository menuHierarchy,IMapper mapper,IConfiguration config)
+        public MenuHierarchyController(DataContext context, IMenuHierarchyRepository menuHierarchy, IMapper mapper, IConfiguration config, IUserRepository userRepository)
         {
             _context = context;
-            _menuHierarchy=menuHierarchy;
-            _mapper= mapper;
-            _config=config;
+            _menuHierarchy = menuHierarchy;
+            _mapper = mapper;
+            _config = config;
+            _userRepository = userRepository;
         }
 
         [HttpGet("ShowMenuList")]
         public async Task<ActionResult<IEnumerable<MainMenuGroupDto>>> GetMenuList(string? Flag, string? Grade)
         {
-            
-            var UserId=User.GetUserId();
-            var menu=await _menuHierarchy.GetMenuData(UserId,Flag,Grade);
+
+            var UserId = User.GetUserId();
+            var menu = await _menuHierarchy.GetMenuData(UserId, Flag, Grade);
             return menu;
         }
-        
+
         [HttpGet("MenuList")]
         public async Task<List<MainMenuGroupDto>> MenuList(string? Name)
         {
-            var menu=await _menuHierarchy.GetMenuList(Name);
+            var menu = await _menuHierarchy.GetMenuList(Name);
             return menu;
         }
 
@@ -88,10 +91,25 @@ namespace MyKoel_Web.Controllers
 
                     mainMenu.ImageIcon = Path.Combine(folderPath, fileName);
                 }
-                var mainmenu = _mapper.Map<MainMenuGroup>(mainMenu);
-                _menuHierarchy.AddNewMainMenu(mainmenu);
+                var mainmenus = _mapper.Map<MainMenuGroup>(mainMenu);
+                  _menuHierarchy.AddNewMainMenu(mainmenus);
                 if (await _menuHierarchy.SaveAllAsync())
                 {
+                    var users = await _context.Users.Where(s=>s.Grade != "SysAdmin").ToListAsync();
+                    foreach (var user in users)
+                    {
+                        var quicklinkacccess = new UserAccessMapping
+                        {
+                            AccessMappingId = 0,
+                            MainMenuGroupId = mainmenus.MainMenuGroupId,
+                            UserId = user.Id,
+                            MenuGroupId = null,
+                            MenuId = null
+                        };
+                        _userRepository.AddUserMenuAccess(quicklinkacccess);
+                    }
+                    await _userRepository.SaveAllAsync();
+                    
                     return new
                     {
                         Status = 200,
@@ -130,7 +148,7 @@ namespace MyKoel_Web.Controllers
                 {
                     return NotFound("Section not found");
                 }
-                 if (mainMenu.ImageSrc != null)
+                if (mainMenu.ImageSrc != null)
                 {
                     string rootFolderPath = _config.GetValue<string>("RootFolderPath");
 
@@ -146,7 +164,7 @@ namespace MyKoel_Web.Controllers
                         Directory.CreateDirectory(folderPath);
                     }
 
-                  
+
                     string fileName = Guid.NewGuid().ToString() + ".Svg";
                     string imagePath = Path.Combine(folderPath, fileName);
 
@@ -165,7 +183,7 @@ namespace MyKoel_Web.Controllers
 
                     mainMenu.ImageIcon = Path.Combine(folderPath, fileName);
                 }
-               
+
                 var updatedmainmenu = _mapper.Map(mainMenu, existing);
                 _menuHierarchy.UpdateMainMenu(updatedmainmenu);
                 if (await _menuHierarchy.SaveAllAsync())
@@ -197,10 +215,10 @@ namespace MyKoel_Web.Controllers
             }
         }
 
-       [HttpGet("GetMainMenuDetails")]
+        [HttpGet("GetMainMenuDetails")]
         public async Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId)
         {
-            var menu=await _menuHierarchy.GetMainMenuDetails(MainMenuId);
+            var menu = await _menuHierarchy.GetMainMenuDetails(MainMenuId);
             return menu;
         }
 

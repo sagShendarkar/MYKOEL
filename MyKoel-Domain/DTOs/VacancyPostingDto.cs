@@ -23,8 +23,10 @@ namespace MyKoel_Domain.DTOs
         public string CONTACTINFO   { get; set; } 
         public int STATUS  { get; set; }
         public bool ISACTIVE {get;set;}
-        public string PDFSTRING { get; set; }
-        public string PDFPATH { get; set; }
+        public string FILESTRING { get; set; }
+        public string FILETYPE { get; set; }
+
+        public string FILEPATH { get; set; }
 
 
     }

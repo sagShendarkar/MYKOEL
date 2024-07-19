@@ -18,10 +18,6 @@ namespace MyKoel_Domain.Repositories
                 string format = GetImageFormat(extension);
 
                 string base64ImageSource;
-                if (format == "pdf")
-                {
-                    base64ImageSource = $"data:application/pdf;base64,{base64String}";
-                }
 
                 if (format == "svg")
                 {
@@ -63,21 +59,57 @@ namespace MyKoel_Domain.Repositories
             }
         }
 
-        public string ConvertPdfToBase64(string filePath)
+
+        private string GetFileMimeType(string extension)
+        {
+            switch (extension.ToLower())
+            {
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                case ".png":
+                    return "image/png";
+                case ".gif":
+                    return "image/gif";
+                case ".bmp":
+                    return "image/bmp";
+                case ".svg":
+                    return "image/svg+xml";
+                case ".pdf":
+                    return "application/pdf";
+                case ".txt":
+                    return "text/plain";
+                case ".doc":
+                case ".docx":
+                    return "application/msword";
+                case ".xls":
+                case ".xlsx":
+                    return "application/vnd.ms-excel";
+                default:
+                    throw new ArgumentException($"Unsupported file format: {extension}");
+            }
+        }
+
+        public string ConvertFileToBase64(string filePath)
         {
             try
             {
                 byte[] fileBytes = File.ReadAllBytes(filePath);
                 string base64String = Convert.ToBase64String(fileBytes);
-                    base64String = $"data:application/pdf;base64,{base64String}";
-                return base64String;
+                string extension = Path.GetExtension(filePath);
+                string mimeType = GetFileMimeType(extension);
+
+                string base64FileSource = $"data:{mimeType};base64,{base64String}";
+
+                return base64FileSource;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error converting PDF to base64: {ex.Message}");
+                Console.WriteLine($"Error converting file to base64: {ex.Message}");
                 return null;
             }
         }
+
 
     }
 }
