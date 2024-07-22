@@ -344,7 +344,7 @@ namespace MyKoel_Domain.Repositories
                                       //   join u in _context.UserMenuMap
                                       //   on menu.MenusId equals u.MenusId
                                       //where u.UserId == UserId && menu.IsActive==true
-                                  where (Level == 1) ? menu.Level == Level : true && (MenuId > 0 ? menu.MenusId == MenuId : true)
+                                  where (menu.Flag=="Top MenuBar" || menu.Flag=="Admin Menu" )&&(Level == 1) ? menu.Level == Level : true && (MenuId > 0 ? menu.MenusId == MenuId : true)
                                   group menu by new { menu.MenusId } into grouped
                                   select new MenuDataListDto
                                   {
