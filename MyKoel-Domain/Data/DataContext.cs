@@ -52,6 +52,7 @@ namespace MyKoel_Domain.Data
         public DbSet<HolidayCalendar> HolidayCalendars { get; set; }
         public DbSet<VacancyPosting> VacancyPosting { get; set; }
         public DbSet<VacancyInquiry> VacancyInquiry { get; set; }
+        public DbSet<MenuMaster> MenuMaster { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -143,8 +144,8 @@ namespace MyKoel_Domain.Data
              builder.Entity<VacancyPosting>()
         .HasKey(m => m.VACANCYID);
 
-
-
+             builder.Entity<MenuMaster>()
+        .HasKey(m => m.MenusId);
 
         }
 
