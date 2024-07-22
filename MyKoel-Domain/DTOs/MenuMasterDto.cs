@@ -10,7 +10,7 @@ namespace MyKoel_Domain.DTOs
     {
         public int MenusId { get; set; }
         public string MenuName { get; set; }
-        public int ParentId { get; set; } 
+        public int? ParentId { get; set; } 
         public int Level { get; set; }
         public int Sequence { get; set; }
         public string Icon { get; set; }
@@ -31,7 +31,7 @@ namespace MyKoel_Domain.DTOs
     {
         public int MenusId { get; set; }
         public string MenuName { get; set; }
-         public int ParentId { get; set; } 
+         public int? ParentId { get; set; } 
         public int Level { get; set; }
         public int Sequence { get; set; }
         public string Icon { get; set; }
