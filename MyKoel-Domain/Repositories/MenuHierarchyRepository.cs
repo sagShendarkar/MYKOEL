@@ -352,6 +352,7 @@ namespace MyKoel_Domain.Repositories
                                       MenuName = grouped.FirstOrDefault().MenuName,
                                       Icon = grouped.FirstOrDefault().Icon,
                                       ParentId=grouped.FirstOrDefault().ParentId,
+                                      Level=grouped.FirstOrDefault().Level,
                                       Sequence = grouped.FirstOrDefault().Sequence,
                                       IsActive = grouped.FirstOrDefault().IsActive,
                                       Route = grouped.FirstOrDefault().Route,
@@ -371,6 +372,8 @@ namespace MyKoel_Domain.Repositories
                                                         {
                                                             MenusId = MenuGroupData.FirstOrDefault().MenusId,
                                                             MenuName = MenuGroupData.FirstOrDefault().MenuName,
+                                                            ParentId= MenuGroupData.FirstOrDefault().ParentId,
+                                                            Level= MenuGroupData.FirstOrDefault().Level,
                                                             Icon = MenuGroupData.FirstOrDefault().Icon,
                                                             Sequence = MenuGroupData.FirstOrDefault().Sequence,
                                                             IsActive = MenuGroupData.FirstOrDefault().IsActive,
@@ -381,7 +384,7 @@ namespace MyKoel_Domain.Repositories
                                                             IsImage = MenuGroupData.FirstOrDefault().IsImage,
                                                             IsPopup = MenuGroupData.FirstOrDefault().IsPopup,
                                                             IsRoute = MenuGroupData.FirstOrDefault().IsRoute,
-                                                            IsChild = MenuGroupData.FirstOrDefault().IsChild,
+                                                            IsChild = MenuGroupData.FirstOrDefault().IsChild
                                                         }).OrderBy(a => a.Sequence).ToList()
                                   }).OrderBy(s => s.MenusId).ToListAsync();
 
