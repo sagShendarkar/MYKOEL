@@ -23,8 +23,7 @@ if(isMoodFilled==='YES'){
 this.headerService.headerTitle$.next(route?.data?.['title']);
 this.headerService.isDisplayAddBtn$.next(route?.data?.['isDisplayAddBtn']);
 this.headerService.backBtnUrl$.next(route?.data?.['backBtnUrl']);
-if(route?.data?.['isDisplayAddBtn']){
-
+if(route?.data?.['isDisplayAddBtn']){ 
 this.headerService.addBtn$.next(route?.data?.['addBtn']);
 }
     const currentUser = this.authService.isTokenAvailable();
@@ -32,14 +31,15 @@ this.headerService.addBtn$.next(route?.data?.['addBtn']);
       // logged in so return true
       return true;
     }
-
     // not logged in so redirect to login page with the return url
      this.authService.logout();
     return false;
 }else{
-
+  if (this.authService.isTokenAvailable()) {
      this.router.navigateByUrl("/mood-check/"+userId);
-
+  }else{
+    this.router.navigate(['login']);
+  }
 }
 return false;
   }
