@@ -366,7 +366,7 @@ namespace MyKoel_Domain.Repositories
                                       NextLevelMenus = (from mg in _context.MenuMaster
                                                             //    join u in _context.UserMenuMap
                                                             //    on mg.MenusId equals u.MenusId
-                                                        where mg.ParentId == MenuId && mg.Level == Level
+                                                        where mg.ParentId == MenuId &&mg.ParentId != null && mg.Level == Level
                                                         group mg by new { mg.MenusId } into MenuGroupData
                                                         select new MenuMasterDto
                                                         {
