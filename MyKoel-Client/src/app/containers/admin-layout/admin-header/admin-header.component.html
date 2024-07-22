@@ -41,14 +41,14 @@
             <div cDropdownMenu class="mega-menus">
               <div class="row mb-2 mt-3">
                 <ng-container *ngFor="let menuGroup of mainMenu.menuGroupData">
-                  <div class="col-md-6" *ngIf="menuGroup.menusData.length > 0">
+                  <div class="col-md-6 mega-menu-border" *ngIf="menuGroup.menusData.length > 0">
                     <div class="row">
                       <span class="text-underline cursor">
                         {{ menuGroup.groupName }}</span
                       >
                     </div>
 
-                    <div class="row mega-menu-border mb-2 pb-1">
+                    <div class="row  mb-2 pb-1">
                       <div
                         class="col-md-3"
                         *ngFor="let menu of menuGroup.menusData"

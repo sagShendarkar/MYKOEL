@@ -883,10 +883,7 @@ alignment="center" id="staticBackdropModal"   [visible]="visionModal" (visibleCh
 <div class="row mt-3">
 <div class="col-md-8">
 <div>
-  <p class="vision-text mt-4">
-    We power a caring, prosperous and sustainable future.
-
-
+  <p class="vision-text mt-4" [innerHTML]="vision">
   </p>
 </div>
 </div>
@@ -929,12 +926,7 @@ alignment="center" id="staticBackdropModal1"   [visible]="misionModal" (visibleC
 <div class="row mt-3">
 <div class="col-md-8">
 <div>
-  <p class="vision-text mt-4">
-    We engineer solutions to enable our customers to live their limitless potential.
-
-
-
-
+  <p class="vision-text mt-4" [innerHTML]="mission">
   </p>
 </div>
 </div>
@@ -976,7 +968,10 @@ alignment="center" id="staticBackdropModal2"   [visible]="valueModal" (visibleCh
 </div>
 <div class="row mt-3">
 <div class="col-md-8">
-<div class="mb-3">
+  <div [innerHTML]="values">
+
+  </div>
+<!-- <div class="mb-3">
   <span class=" value-title-text  ">
     Excellence-
   </span><span class="value-desc">In everything we do, quality without compromise
@@ -1009,7 +1004,7 @@ alignment="center" id="staticBackdropModal2"   [visible]="valueModal" (visibleCh
   <span class=" value-title-text  ">
     Innovative Thniking-
   </span><span class="value-desc">Be bold and brave, & stay relevant </span>
-</div>
+</div> -->
 </div>
 <div class="col-md-4">
 <div class="value-img-div" >

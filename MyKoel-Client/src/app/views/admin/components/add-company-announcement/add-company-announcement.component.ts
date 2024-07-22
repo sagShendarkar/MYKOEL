@@ -255,15 +255,15 @@ if(element.imageflag===1){
       this.filename=name;
       this.filetype=extn;
       // if(event.target.files[0].size  < 50000 || event.target.files[0].size > 200000)
-      if (event.target.files[0].size > 200000) {
+      if (event.target.files[0].size > 5000000) {
         console.log('test img');
 
         Swal.fire({
           icon: 'error',
-          text: 'Image size must be less than 200KB!',
+          text: 'Image size must be less than 5MB!',
         });
       }
-      if (event.target.files[0].size <= 200000) {
+      if (event.target.files[0].size <= 5000000) {
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (event) => {

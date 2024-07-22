@@ -18,6 +18,8 @@ import { AddCompanyNewsComponent } from './components/company-news/add-company-n
 import { HolidayCalenderComponent } from './components/holiday-calender/holiday-calender/holiday-calender.component';
 import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-list.component';
 import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacancy.component';
+import { QuickLinksListComponent } from './components/quick-links/quick-links-list/quick-links-list.component';
+import { AddQuickLinksComponent } from './components/quick-links/add-quick-links/add-quick-links.component';
 
 const routes: Routes = [
   {
@@ -236,6 +238,40 @@ const routes: Routes = [
       title: 'Edit Vacancy',
       isDisplayAddBtn:false,
         backBtnUrl:"/admin/vacancy-list"
+    }
+  },
+  {
+    path: 'quick-links',
+    component: QuickLinksListComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Quick Links List',
+      isDisplayAddBtn:true,
+      addBtn:{
+        title:"Add Quick Links ",
+        url:"/admin/add-quick-links"
+      },
+        backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'add-quick-links',
+    component: AddQuickLinksComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Add Vacancy',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/quick-links"
+    }
+  },
+  {
+    path: 'edit-quick-links/:id',
+    component: AddQuickLinksComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Edit Quick Links',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/quick-links"
     }
   },
 ];

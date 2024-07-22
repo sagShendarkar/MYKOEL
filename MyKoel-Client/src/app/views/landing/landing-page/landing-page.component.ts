@@ -11,7 +11,9 @@ import { HeaderService } from 'src/app/containers/admin-layout/services/header.s
 })
 export class LandingPageComponent {
 wallpaperImage:any="";
-
+vision="";
+mission="";
+values="";
   isDisplayslider$=  new BehaviorSubject<boolean>(false);
   isBirthdayDisplayslider$=  new BehaviorSubject<boolean>(false);
   isBirthdayLoading$=  new BehaviorSubject<boolean>(false);
@@ -52,6 +54,9 @@ ngOnInit(): void {
   this.getBirthdayList();
   this.getHolidayCalendarList();
   this.getVacancyList();
+  this.getOurVisionList();
+  this.getOurMissionList();
+  this.getOurValuesList();
 }
 ngAfterViewInit(): void {
 
@@ -92,13 +97,37 @@ this.isVacancyLoading$.next(false);
     })
   );
 }
-getAnnouncementList(){ 
+getAnnouncementList(){
   this.isAnnouncementLoading$.next(true);
   this.unsubscribe.add(
     this.landingPageService.getSectionList('Announcement',2).subscribe((res)=>{
 console.log(res);
 this.landingPageService.announcementList$.next(res);
 this.isAnnouncementLoading$.next(false);
+    })
+  );
+}
+getOurVisionList(){
+  this.unsubscribe.add(
+    this.landingPageService.getSectionList('Our Vision',1).subscribe((res)=>{
+console.log(res);
+this.vision=res[0].description;
+    })
+  );
+}
+getOurMissionList(){
+  this.unsubscribe.add(
+    this.landingPageService.getSectionList('Our Mission',1).subscribe((res)=>{
+console.log(res);
+this.mission=res[0].description;
+    })
+  );
+}
+getOurValuesList(){
+  this.unsubscribe.add(
+    this.landingPageService.getSectionList('Our Values',1).subscribe((res)=>{
+console.log(res);
+this.values=res[0].description;
     })
   );
 }
