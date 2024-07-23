@@ -11,14 +11,23 @@
 
             <div class="col-4">
               <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Location</label>
-
-                <!-- <div
+                <label cLabel for="exampleFormControlInput1">BreakFast Name</label>
+                <input cFormControl
+                id="exampleFormControlInput1"
+                placeholder="Enter BreakFast Name here..."
+                formControlName="breakFastName"
+                type="text"
+                 [ngClass]="{
+                 'is-invalid':
+                   submitted && BreakfastForm.get('breakFastName')?.hasError('required')
+               }"
+         />
+                <div
                 class="invalid-feedback"
-                *ngIf="BreakfastForm.get('Location')?.hasError('required')"
+                *ngIf="BreakfastForm.get('breakFastName')?.hasError('required')"
                 >
-                Location is required.
-                </div> -->
+                BreakFast Name is required.
+                </div>
               </div>
             </div>
 
@@ -68,7 +77,7 @@ Save
           alt="My Happy SVG"
         /> -->
 
-        <img class="ms-3 cursor" 
+        <img class="ms-3 cursor"
         src="../../../../../assets/SVG/edit-icon.svg"
         alt="My Happy SVG"
       />

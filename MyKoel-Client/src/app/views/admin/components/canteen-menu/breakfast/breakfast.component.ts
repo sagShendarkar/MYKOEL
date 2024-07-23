@@ -99,8 +99,46 @@ export class BREAKFASTComponent {
       if (this.BreakfastForm.invalid) {
         return;
       }
-
+      this.addBreakFast();
     }
+
+  addBreakFast() {
+
+
+    this.breakfastService.isLoadingSubject.next(true);
+    this.unsubscribe.add(
+      this.breakfastService
+        .addBreakfast(this.BreakfastForm.value)
+        .subscribe(
+          (res: any) => {
+            if (res.status === 200) {
+              this.breakfastService.isLoadingSubject.next(false);
+              Swal.fire(
+                'Success!',
+                '<span>BreakFast added successfully !!!</span>',
+                'success'
+              );
+             this.loadBreakfastList()
+            } else if (res.status === 400) {
+              this.breakfastService.isLoadingSubject.next(false);
+              Swal.fire(
+                'Error!',
+                '<span>Something went wrong, please try again later !!!</span>',
+                'error'
+              );
+            }
+          },
+          (err) => {
+            this.breakfastService.isLoadingSubject.next(false);
+            Swal.fire(
+              'Error!',
+              '<span>Something went wrong, please try again later !!!</span>',
+              'error'
+            );
+          }
+        )
+    );
+  }
     ngOnDestroy(): void {
       this.unsubscribe.unsubscribe();
     }

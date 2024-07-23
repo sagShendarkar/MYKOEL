@@ -65,7 +65,7 @@ export class BreakfastService {
 
 //uploadBreakfast
 
-uploadBreakfast(formValue:any=null)
+addBreakfast(formValue:any=null)
 {
   return this.http.post(this.baseUrl + 'BreakFast/AddBreakfast',formValue);
 
