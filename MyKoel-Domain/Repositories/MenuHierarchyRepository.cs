@@ -338,21 +338,21 @@ namespace MyKoel_Domain.Repositories
 
         }
 
-        public async Task<List<MenuDataListDto>> GetMenuLevelsData(int UserId, int? MenuId, int? Level)
+        public async Task<List<MenuDataListDto>> GetMenuLevelsData(int UserId, int? MenuId, int? Level, string? Flag)
         {
             var menuData = await (from menu in _context.MenuMaster
                                       //   join u in _context.UserMenuMap
                                       //   on menu.MenusId equals u.MenusId
                                       //where u.UserId == UserId && menu.IsActive==true
-                                  where (menu.Flag=="Top MenuBar" || menu.Flag=="Admin Menu" )&&(Level == 1) ? menu.Level == Level : true && (MenuId > 0 ? menu.MenusId == MenuId : true)
+                                  where (Level == 1) ? menu.Level == Level : true && (MenuId > 0 ? menu.MenusId == MenuId : true)
                                   group menu by new { menu.MenusId } into grouped
                                   select new MenuDataListDto
                                   {
                                       MenusId = grouped.Key.MenusId,
                                       MenuName = grouped.FirstOrDefault().MenuName,
                                       Icon = grouped.FirstOrDefault().Icon,
-                                      ParentId=grouped.FirstOrDefault().ParentId,
-                                      Level=grouped.FirstOrDefault().Level,
+                                      ParentId = grouped.FirstOrDefault().ParentId,
+                                      Level = grouped.FirstOrDefault().Level,
                                       Sequence = grouped.FirstOrDefault().Sequence,
                                       IsActive = grouped.FirstOrDefault().IsActive,
                                       Route = grouped.FirstOrDefault().Route,
@@ -366,14 +366,14 @@ namespace MyKoel_Domain.Repositories
                                       NextLevelMenus = (from mg in _context.MenuMaster
                                                             //    join u in _context.UserMenuMap
                                                             //    on mg.MenusId equals u.MenusId
-                                                        where mg.ParentId == MenuId &&mg.ParentId != null && mg.Level == Level
+                                                        where mg.ParentId == MenuId && mg.ParentId != null && mg.Level == Level
                                                         group mg by new { mg.MenusId } into MenuGroupData
                                                         select new MenuMasterDto
                                                         {
                                                             MenusId = MenuGroupData.FirstOrDefault().MenusId,
                                                             MenuName = MenuGroupData.FirstOrDefault().MenuName,
-                                                            ParentId= MenuGroupData.FirstOrDefault().ParentId,
-                                                            Level= MenuGroupData.FirstOrDefault().Level,
+                                                            ParentId = MenuGroupData.FirstOrDefault().ParentId,
+                                                            Level = MenuGroupData.FirstOrDefault().Level,
                                                             Icon = MenuGroupData.FirstOrDefault().Icon,
                                                             Sequence = MenuGroupData.FirstOrDefault().Sequence,
                                                             IsActive = MenuGroupData.FirstOrDefault().IsActive,
@@ -388,27 +388,156 @@ namespace MyKoel_Domain.Repositories
                                                         }).OrderBy(a => a.Sequence).ToList()
                                   }).OrderBy(s => s.MenusId).ToListAsync();
 
-            // if (!string.IsNullOrEmpty(Flag))
-            // {
-            //         if (Flag == "Top MenuBar")
-            //         {
-            //             menuData = menuData.Where(s => s.Flag == "Top MenuBar" || s.Flag == "Admin Menu").ToList();
-            //         }
-            //         else
-            //         {
-            //             menuData = menuData.Where(s => s.Flag == Flag).ToList();
-            //         }                
-            // }
-            // foreach (var item in menuData)
-            // {
-            //     if (!string.IsNullOrEmpty(item.ImageIcon))
-            //     {
-            //         item.ImageIcon = _imageService.ConvertLocalImageToBase64(item.ImageIcon);
-            //     }
-            // }
+            if (!string.IsNullOrEmpty(Flag))
+            {
+                if (Flag == "Top MenuBar")
+                {
+                    menuData = menuData.Where(s => s.Flag == "Top MenuBar" || s.Flag == "Admin Menu").ToList();
+                }
+                else
+                {
+                    menuData = menuData.Where(s => s.Flag == Flag).ToList();
+                }
+            }
+            foreach (var item in menuData)
+            {
+                if (!string.IsNullOrEmpty(item.ImageIcon))
+                {
+                    item.ImageIcon = _imageService.ConvertLocalImageToBase64(item.ImageIcon);
+                }
+            }
 
             return menuData;
 
+        }
+
+        public async Task<List<MenuMasterDto>> GetMenu4thLevelsData(int UserId, int? MenuId, int? Level, string? Flag)
+        {
+            var menuData = await (from menu in _context.MenuMaster
+                                      //   join u in _context.UserMenuMap
+                                      //   on menu.MainMenuGroupId equals u.MainMenuGroupId
+                                      //   where u.UserId == UserId && menu.IsActive == true
+                                  where (Level == 1) ? menu.Level == Level : true && (MenuId > 0 ? menu.MenusId == MenuId : true)
+                                  group menu by new { menu.MenusId } into grouped
+                                  select new MenuMasterDto
+                                  {
+                                      MenusId = grouped.Key.MenusId,
+                                      MenuName = grouped.FirstOrDefault().MenuName,
+                                      Icon = grouped.FirstOrDefault().Icon,
+                                      Sequence = grouped.FirstOrDefault().Sequence,
+                                      IsActive = grouped.FirstOrDefault().IsActive,
+                                      Route = grouped.FirstOrDefault().Route,
+                                      Flag = grouped.FirstOrDefault().Flag,
+                                      ImageIcon = grouped.FirstOrDefault().ImageIcon,
+                                      IsIcon = grouped.FirstOrDefault().IsIcon,
+                                      IsImage = grouped.FirstOrDefault().IsImage,
+                                      IsPopup = grouped.FirstOrDefault().IsPopup,
+                                      IsRoute = grouped.FirstOrDefault().IsRoute,
+                                      IsChild = grouped.FirstOrDefault().IsChild,
+                                      SecondLevelMenuList = (from mg in _context.MenuMaster
+                                                             where mg.ParentId == grouped.FirstOrDefault().MenusId && mg.ParentId != null && mg.Level == 2
+                                                             group mg by new { } into MenuGroupData
+
+                                                             //    join u in _context.UserMenuMap
+                                                             //    on mg.MenuGroupId equals u.MenuGroupId
+                                                             //where u.UserId == UserId
+                                                             //   && u.MenuGroupId == mg.MenuGroupId
+                                                             //   && mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
+                                                             select new SecondLevelMenu
+                                                             {
+                                                                 MenusId = MenuGroupData.FirstOrDefault().MenusId,
+                                                                 MenuName = MenuGroupData.FirstOrDefault().MenuName,
+                                                                 ParentId = MenuGroupData.FirstOrDefault().ParentId,
+                                                                 Level = MenuGroupData.FirstOrDefault().Level,
+                                                                 Icon = MenuGroupData.FirstOrDefault().Icon,
+                                                                 Sequence = MenuGroupData.FirstOrDefault().Sequence,
+                                                                 IsActive = MenuGroupData.FirstOrDefault().IsActive,
+                                                                 Route = MenuGroupData.FirstOrDefault().Route,
+                                                                 Flag = MenuGroupData.FirstOrDefault().Flag,
+                                                                 ImageIcon = MenuGroupData.FirstOrDefault().ImageIcon,
+                                                                 IsIcon = MenuGroupData.FirstOrDefault().IsIcon,
+                                                                 IsImage = MenuGroupData.FirstOrDefault().IsImage,
+                                                                 IsPopup = MenuGroupData.FirstOrDefault().IsPopup,
+                                                                 IsRoute = MenuGroupData.FirstOrDefault().IsRoute,
+                                                                 IsChild = MenuGroupData.FirstOrDefault().IsChild,
+                                                                 ThirdLevelMenuList = (from mg in _context.MenuMaster
+                                                                                       where mg.ParentId == MenuGroupData.FirstOrDefault().MenusId && mg.ParentId != null && mg.Level == 3
+                                                                                       group mg by new { mg.MenusId } into submenudata
+
+                                                                                       //    join u in _context.UserMenuMap
+                                                                                       //    on mg.MenuGroupId equals u.MenuGroupId
+                                                                                       //where u.UserId == UserId
+                                                                                       //   && u.MenuGroupId == mg.MenuGroupId
+                                                                                       //   && mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
+                                                                                       select new ThirdLevelMenu
+                                                                                       {
+                                                                                           MenusId = submenudata.FirstOrDefault().MenusId,
+                                                                                           MenuName = submenudata.FirstOrDefault().MenuName,
+                                                                                           ParentId = submenudata.FirstOrDefault().ParentId,
+                                                                                           Level = submenudata.FirstOrDefault().Level,
+                                                                                           Icon = submenudata.FirstOrDefault().Icon,
+                                                                                           Sequence = submenudata.FirstOrDefault().Sequence,
+                                                                                           IsActive = submenudata.FirstOrDefault().IsActive,
+                                                                                           Route = submenudata.FirstOrDefault().Route,
+                                                                                           Flag = submenudata.FirstOrDefault().Flag,
+                                                                                           ImageIcon = submenudata.FirstOrDefault().ImageIcon,
+                                                                                           IsIcon = submenudata.FirstOrDefault().IsIcon,
+                                                                                           IsImage = submenudata.FirstOrDefault().IsImage,
+                                                                                           IsPopup = submenudata.FirstOrDefault().IsPopup,
+                                                                                           IsRoute = submenudata.FirstOrDefault().IsRoute,
+                                                                                           IsChild = submenudata.FirstOrDefault().IsChild,
+                                                                                           FourthLevelMenuList = (from mg in _context.MenuMaster
+                                                                                                                  where mg.ParentId == submenudata.FirstOrDefault().MenusId && mg.ParentId != null && mg.Level == 4
+                                                                                                                  group mg by new { mg.MenusId } into childMenu
+
+                                                                                                                  //    join u in _context.UserMenuMap
+                                                                                                                  //    on mg.MenuGroupId equals u.MenuGroupId
+                                                                                                                  //where u.UserId == UserId
+                                                                                                                  //   && u.MenuGroupId == mg.MenuGroupId
+                                                                                                                  //   && mg.MainMenuGroupId == grouped.Key.MainMenuGroupId
+                                                                                                                  select new FourthLevelMenu
+                                                                                                                  {
+                                                                                                                      MenusId = childMenu.FirstOrDefault().MenusId,
+                                                                                                                      MenuName = childMenu.FirstOrDefault().MenuName,
+                                                                                                                      ParentId = childMenu.FirstOrDefault().ParentId,
+                                                                                                                      Level = childMenu.FirstOrDefault().Level,
+                                                                                                                      Icon = childMenu.FirstOrDefault().Icon,
+                                                                                                                      Sequence = childMenu.FirstOrDefault().Sequence,
+                                                                                                                      IsActive = childMenu.FirstOrDefault().IsActive,
+                                                                                                                      Route = childMenu.FirstOrDefault().Route,
+                                                                                                                      Flag = childMenu.FirstOrDefault().Flag,
+                                                                                                                      ImageIcon = childMenu.FirstOrDefault().ImageIcon,
+                                                                                                                      IsIcon = childMenu.FirstOrDefault().IsIcon,
+                                                                                                                      IsImage = childMenu.FirstOrDefault().IsImage,
+                                                                                                                      IsPopup = childMenu.FirstOrDefault().IsPopup,
+                                                                                                                      IsRoute = childMenu.FirstOrDefault().IsRoute,
+                                                                                                                      IsChild = childMenu.FirstOrDefault().IsChild,
+                                                                                                                  }).OrderBy(a => a.Sequence).ToList()
+
+                                                                                       }).OrderBy(a => a.Sequence).ToList()
+                                                             }).ToList()
+                                  }).OrderBy(s => s.MenusId).ToListAsync();
+
+            if (!string.IsNullOrEmpty(Flag))
+            {
+                if (Flag == "Top MenuBar")
+                {
+                    menuData = menuData.Where(s => s.Flag == "Top MenuBar" || s.Flag == "Admin Menu").ToList();
+                }
+                else
+                {
+                    menuData = menuData.Where(s => s.Flag == Flag).ToList();
+                }
+            }
+            foreach (var item in menuData)
+            {
+                if (!string.IsNullOrEmpty(item.ImageIcon))
+                {
+                    item.ImageIcon = _imageService.ConvertLocalImageToBase64(item.ImageIcon);
+                }
+            }
+
+            return menuData;
         }
     }
 }

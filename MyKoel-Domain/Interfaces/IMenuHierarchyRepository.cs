@@ -20,7 +20,8 @@ namespace MyKoel_Domain.Interfaces
         Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId);
         Task<PagedList<AddMainMenuGroupDto>> GetMainMenuList(ParameterParams parameterParams);
         void DeleteMainMenu(MainMenuGroup mainMenu);
-        Task<List<MenuDataListDto>> GetMenuLevelsData(int UserId, int? MenuId, int? Level);
+        Task<List<MenuDataListDto>> GetMenuLevelsData(int UserId, int? MenuId, int? Level, string? Flag);
+        Task<List<MenuMasterDto>> GetMenu4thLevelsData(int UserId, int? MenuId, int? Level, string? Flag);
 
     }
 }
