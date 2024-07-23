@@ -43,10 +43,10 @@ addBtnDetails={
   {
     let params=new HttpParams();
     // params=params.append('UserId',userId);
-    // let Grade=localStorage.getItem('Grade');
-    // if(Grade==="SysAdmin"){
-    // params=params.append('Grade',"SysAdmin");
-    // }
+    let Grade=localStorage.getItem('Grade');
+    if(Grade==="SysAdmin"){
+    params=params.append('Grade',"SysAdmin");
+    }
 
     // if(menusId!==0){
     // params=params.append('MenuId',menusId);
@@ -54,6 +54,6 @@ addBtnDetails={
 
     // params=params.append('Flag','Top MenuBar');
 
-    return this.http.get<any>(this.baseUrl+'MenuHierarchy/4thLevelMenuList');
+    return this.http.get<any>(this.baseUrl+'MenuHierarchy/4thLevelMenuList',{params});
   }
 }
