@@ -70,4 +70,9 @@ addBreakfast(formValue:any=null)
   return this.http.post(this.baseUrl + 'BreakFast/AddBreakfast',formValue);
 
 }
+updateBreakfast(formValue:any=null)
+{
+  return this.http.post(this.baseUrl + 'BreakFast/UpdateBreakfastDetails',formValue);
+
+}
 }

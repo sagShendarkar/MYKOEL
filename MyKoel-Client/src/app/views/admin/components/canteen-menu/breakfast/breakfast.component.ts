@@ -18,6 +18,7 @@ export class BREAKFASTComponent {
   paginationParams: PaginationParams;
   isNoData: boolean = false;
 
+  isAddMode: Boolean = true;
   searchUpdate = new Subject<string>();
 
   submitted = false;
@@ -94,6 +95,7 @@ export class BREAKFASTComponent {
 
     patchValue(breakfastDetails:any){
       this.BreakfastForm.patchValue(breakfastDetails);
+      this.isAddMode=false;
     }
     onSubmit(){
       this.submitted = true;
@@ -103,7 +105,13 @@ export class BREAKFASTComponent {
       if (this.BreakfastForm.invalid) {
         return;
       }
+      if(this.isAddMode){
+
       this.addBreakFast();
+      }else{
+
+      this.updateBreakFast();
+      }
     }
 
   addBreakFast() {
@@ -115,6 +123,8 @@ export class BREAKFASTComponent {
         .addBreakfast(this.BreakfastForm.value)
         .subscribe(
           (res: any) => {
+            this.submitted=false;
+            this.resetForm();
             if (res.status === 200) {
               this.breakfastService.isLoadingSubject.next(false);
               Swal.fire(
@@ -142,6 +152,53 @@ export class BREAKFASTComponent {
           }
         )
     );
+  }
+  updateBreakFast() {
+
+
+    this.breakfastService.isLoadingSubject.next(true);
+    this.unsubscribe.add(
+      this.breakfastService
+        .updateBreakfast(this.BreakfastForm.value)
+        .subscribe(
+          (res: any) => {
+            this.isAddMode=true;
+            this.submitted=false;
+            this.resetForm();
+            if (res.status === 200) {
+              this.breakfastService.isLoadingSubject.next(false);
+              Swal.fire(
+                'Success!',
+                '<span>BreakFast updated successfully !!!</span>',
+                'success'
+              );
+             this.loadBreakfastList()
+            } else if (res.status === 400) {
+              this.breakfastService.isLoadingSubject.next(false);
+              Swal.fire(
+                'Error!',
+                '<span>Something went wrong, please try again later !!!</span>',
+                'error'
+              );
+            }
+          },
+          (err) => {
+            this.breakfastService.isLoadingSubject.next(false);
+            Swal.fire(
+              'Error!',
+              '<span>Something went wrong, please try again later !!!</span>',
+              'error'
+            );
+          }
+        )
+    );
+  }
+
+  resetForm(){
+    this.BreakfastForm.controls['breakFastId'].setValue(0);
+    this.BreakfastForm.controls['breakFastName'].setValue(null);
+    this.BreakfastForm.controls['isActive'].setValue(true);
+
   }
     ngOnDestroy(): void {
       this.unsubscribe.unsubscribe();
