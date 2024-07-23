@@ -21,6 +21,7 @@ import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacanc
 import { QuickLinksListComponent } from './components/quick-links/quick-links-list/quick-links-list.component';
 import { AddQuickLinksComponent } from './components/quick-links/add-quick-links/add-quick-links.component';
 import { BREAKFASTComponent } from './components/canteen-menu/breakfast/breakfast.component';
+import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component';
 
 const routes: Routes = [
   {
@@ -281,6 +282,17 @@ const routes: Routes = [
     canActivate:[AuthGuard],
     data: {
       title: 'Breakfast List',
+      isDisplayAddBtn:false,
+
+        backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'lunch',
+    component: LUNCHComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Lunch List',
       isDisplayAddBtn:false,
 
         backBtnUrl:"/home"
