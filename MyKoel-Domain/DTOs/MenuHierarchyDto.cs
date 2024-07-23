@@ -24,6 +24,8 @@ namespace MyKoel_Domain.DTOs
         public bool? IsIcon { get; set; }
         public bool IsActive { get; set; }
         public string ImageSrc {get;set;}
+        public string ImageBase64 {get;set;}
+
   
       
     }

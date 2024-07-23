@@ -283,7 +283,8 @@ namespace MyKoel_Domain.Repositories
                                       IsImage = m.IsImage,
                                       IsRoute = m.IsRoute,
                                       IsIcon = m.IsIcon,
-                                      ImageIcon = !string.IsNullOrEmpty(m.ImageIcon) ? _imageService.ConvertLocalImageToBase64(m.ImageIcon) : null,
+                                      ImageIcon=m.ImageIcon,
+                                      ImageBase64 = !string.IsNullOrEmpty(m.ImageIcon) ? _imageService.ConvertLocalImageToBase64(m.ImageIcon) : null,
                                       Flag = m.Flag
                                   }).SingleOrDefaultAsync();
             return Mainmenu;
