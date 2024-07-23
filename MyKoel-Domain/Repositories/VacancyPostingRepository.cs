@@ -162,5 +162,22 @@ namespace MyKoel_Domain.Repositories
             }
             return gradelist;
         }
+
+        public async Task<JobDescriptionDto> GetJobDescriptionDoc(int Id)
+        {
+            var vacancyData = await (from v in _context.VacancyPosting
+                                where v.VACANCYID==Id
+                               select new JobDescriptionDto
+                               {
+                                   VACANCYID = v.VACANCYID,
+                                   GRADE = v.GRADE,
+                                   JOBTITLE = v.JOBTITLE,
+                                   DEPARTMENT = v.DEPARTMENT,
+                                   JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertFileToBase64(v.JOBDESC) : null,
+                                   VACANCYCOUNT = v.VACANCYCOUNT
+                               }).OrderByDescending(s => s.VACANCYID).FirstOrDefaultAsync();
+            return vacancyData;
+            
+        }
     }
 }

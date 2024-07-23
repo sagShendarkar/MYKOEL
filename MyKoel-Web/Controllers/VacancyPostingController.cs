@@ -255,5 +255,13 @@ namespace MyKoel_Web.Controllers
             return data;
         }
 
+        [HttpGet("JobDescriptionById/{Id}")]
+        public async Task<ActionResult<JobDescriptionDto>> GetJobDescriptionDoc(int Id)
+        {
+            var data = await _vacancyRepository.GetJobDescriptionDoc(Id);
+            return data;
+        }
+       
+
     }
 }
