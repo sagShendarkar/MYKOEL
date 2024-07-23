@@ -84,11 +84,11 @@
 
                   <div
                     class="col-md-3"
-                    *ngIf="menuGroup?.thirdLevelMenuList.length === 0"
+                    *ngIf="menuGroup.thirdLevelMenuList.length === 0"
                   >
                     <li>
                       <a cDropdownItem [routerLink]="menuGroup.route"
-                        >{{ menuGroup.groupName }}
+                        > {{ menuGroup.menuName }}
                       </a>
                     </li>
                   </div>
