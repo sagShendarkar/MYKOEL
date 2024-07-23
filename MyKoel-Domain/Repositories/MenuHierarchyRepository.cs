@@ -11,6 +11,7 @@ using MyKoel_Domain.Data;
 using MyKoel_Domain.DTOs;
 using MyKoel_Domain.Interfaces;
 using MyKoel_Domain.Models.Master;
+using MyKoel_Domain.Models.Masters;
 
 namespace MyKoel_Domain.Repositories
 {
@@ -213,14 +214,16 @@ namespace MyKoel_Domain.Repositories
             return menuData;
         }
 
-        public async Task<List<MainMenuGroupDto>> GetMenuList(string? Name)
+        public async Task<List<MenuHierarchyDto>> GetMenuList(string? Name)
         {
-            var mainMenuData = await (from mainmenu in _context.MainMenuGroups
+            var mainMenuData = await (from mainmenu in _context.MenuMaster
                                       where mainmenu.Flag == "Admin Menu"
-                                      select new MainMenuGroupDto
+                                      select new MenuHierarchyDto
                                       {
-                                          MainMenuGroupId = mainmenu.MainMenuGroupId,
-                                          MenuGroupName = mainmenu.MenuGroupName,
+                                          MenusId = mainmenu.MenusId,
+                                          MenuName = mainmenu.MenuName,
+                                          Level=mainmenu.Level,
+                                          ParentId=mainmenu.ParentId,
                                           Icon = mainmenu.Icon,
                                           Sequence = mainmenu.Sequence,
                                           IsActive = mainmenu.IsActive,
@@ -231,40 +234,16 @@ namespace MyKoel_Domain.Repositories
                                           IsImage = mainmenu.IsImage,
                                           IsPopup = mainmenu.IsPopup,
                                           IsRoute = mainmenu.IsRoute,
-                                          IsChild = mainmenu.IsChild,
-                                          MenuGroupData = (from mg in _context.MenuGroups
-                                                           where mg.MainMenuGroupId == mainmenu.MainMenuGroupId
-                                                           select new MenuGroupDto
-                                                           {
-                                                               MenuGroupId = mg.MenuGroupId,
-                                                               MainMenuGroupId = mg.MainMenuGroupId,
-                                                               GroupName = mg.GroupName,
-                                                               Sequence = mg.Sequence,
-                                                               Icon = mg.Icon,
-                                                               IsActive = mg.IsActive,
-                                                               IsChild = mg.IsChild,
-                                                               Route = mg.Route,
-                                                               MenusData = (from menu in _context.Menus
-                                                                            where menu.MenuGroupId == mg.MenuGroupId
-                                                                            select new MenusDto
-                                                                            {
-                                                                                MenuId = menu.MenuId,
-                                                                                MenuName = menu.MenuName,
-                                                                                Sequence = menu.Sequence,
-                                                                                Icon = menu.Icon,
-                                                                                IsActive = menu.IsActive,
-                                                                                Route = menu.Route
-                                                                            }).OrderBy(a => a.Sequence).ToList()
-                                                           }).OrderBy(a => a.Sequence).ToList()
+                                          IsChild = mainmenu.IsChild
                                       }).ToListAsync();
             if (!string.IsNullOrEmpty(Name))
             {
-                mainMenuData = mainMenuData.Where(s => s.MenuGroupName.ToLower().Contains(Name.ToLower())).ToList();
+                mainMenuData = mainMenuData.Where(s => s.MenuName.ToLower().Contains(Name.ToLower())).ToList();
             }
             return mainMenuData;
         }
 
-        public void UpdateMainMenu(MainMenuGroup mainMenu)
+        public void UpdateMainMenu(MenuMaster mainMenu)
         {
             _context.Entry(mainMenu).State = EntityState.Modified;
         }
@@ -274,27 +253,29 @@ namespace MyKoel_Domain.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<MainMenuGroup> GetMainMenuById(int Id)
+        public async Task<MenuMaster> GetMainMenuById(int Id)
         {
-            var Mainmenu = await _context.MainMenuGroups
-            .SingleOrDefaultAsync(x => x.MainMenuGroupId == Id);
+            var Mainmenu = await _context.MenuMaster
+            .SingleOrDefaultAsync(x => x.MenusId == Id);
             return Mainmenu;
         }
 
-        public void AddNewMainMenu(MainMenuGroup mainMenu)
+        public void AddNewMainMenu(MenuMaster mainMenu)
         {
             _context.Entry(mainMenu).State = EntityState.Added;
         }
 
-        public async Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId)
+        public async Task<MenuHierarchyDto> GetMainMenuDetails(int MainMenuId)
         {
-            var Mainmenu = await (from m in _context.MainMenuGroups
-                                  where m.MainMenuGroupId == MainMenuId
-                                  select new AddMainMenuGroupDto
+            var Mainmenu = await (from m in _context.MenuMaster
+                                  where m.MenusId == MainMenuId
+                                  select new MenuHierarchyDto
                                   {
-                                      MainMenuGroupId = m.MainMenuGroupId,
-                                      MenuGroupName = m.MenuGroupName,
+                                      MenusId = m.MenusId,
+                                      MenuName = m.MenuName,
                                       Sequence = m.Sequence,
+                                      Level=m.Level,
+                                      ParentId=m.ParentId,
                                       Icon = m.Icon,
                                       IsActive = m.IsActive,
                                       IsChild = m.IsChild,
@@ -308,16 +289,18 @@ namespace MyKoel_Domain.Repositories
             return Mainmenu;
         }
 
-        public async Task<PagedList<AddMainMenuGroupDto>> GetMainMenuList(ParameterParams parameterParams)
+        public async Task<PagedList<MenuHierarchyDto>> GetMainMenuList(ParameterParams parameterParams)
         {
-            var Mainmenu = (from m in _context.MainMenuGroups
+            var Mainmenu = (from m in _context.MenuMaster
                             where m.IsActive == true && (m.Flag.ToLower() == ("Quick Links").ToLower())
-                            select new AddMainMenuGroupDto
+                            select new MenuHierarchyDto
                             {
-                                MainMenuGroupId = m.MainMenuGroupId,
-                                MenuGroupName = m.MenuGroupName,
+                                MenusId = m.MenusId,
+                                MenuName = m.MenuName,
                                 Sequence = m.Sequence,
                                 Icon = m.Icon,
+                                Level=m.Level,
+                                ParentId=m.ParentId,
                                 IsActive = m.IsActive,
                                 IsChild = m.IsChild,
                                 Route = m.Route,
@@ -327,11 +310,11 @@ namespace MyKoel_Domain.Repositories
                                 ImageIcon = !string.IsNullOrEmpty(m.ImageIcon) ? _imageService.ConvertLocalImageToBase64(m.ImageIcon) : null,
                                 Flag = m.Flag
                             }).AsQueryable();
-            return await PagedList<AddMainMenuGroupDto>.CreateAsync(Mainmenu.ProjectTo<AddMainMenuGroupDto>(_mapper.ConfigurationProvider)
+            return await PagedList<MenuHierarchyDto>.CreateAsync(Mainmenu.ProjectTo<MenuHierarchyDto>(_mapper.ConfigurationProvider)
                                   .AsNoTracking(), parameterParams.PageNumber, parameterParams.PageSize);
         }
 
-        public void DeleteMainMenu(MainMenuGroup mainMenu)
+        public void DeleteMainMenu(MenuMaster mainMenu)
         {
             mainMenu.IsActive = false;
             _context.Entry(mainMenu).State = EntityState.Modified;
@@ -560,5 +543,11 @@ namespace MyKoel_Domain.Repositories
             return menuData;
 
         }
+
+        public void UpdateMainMenu(Migrations.MenuMaster mainMenu)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

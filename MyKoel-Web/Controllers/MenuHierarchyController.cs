@@ -13,6 +13,7 @@ using AutoMapper;
 using iot_Domain.Helpers;
 using API.Extensions;
 using Microsoft.EntityFrameworkCore;
+using MyKoel_Domain.Models.Masters;
 namespace MyKoel_Web.Controllers
 {
     [ApiController]
@@ -44,7 +45,7 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("MenuList")]
-        public async Task<List<MainMenuGroupDto>> MenuList(string? Name)
+        public async Task<List<MenuHierarchyDto>> MenuList(string? Name)
         {
             var menu = await _menuHierarchy.GetMenuList(Name);
             return menu;
@@ -52,7 +53,7 @@ namespace MyKoel_Web.Controllers
 
 
         [HttpPost("AddMainMenu")]
-        public async Task<object> AddMainMenu(AddMainMenuGroupDto mainMenu)
+        public async Task<object> AddMainMenu(MenuHierarchyDto mainMenu)
         {
             try
             {
@@ -91,7 +92,7 @@ namespace MyKoel_Web.Controllers
 
                     mainMenu.ImageIcon = Path.Combine(folderPath, fileName);
                 }
-                var mainmenus = _mapper.Map<MainMenuGroup>(mainMenu);
+                var mainmenus = _mapper.Map<MenuMaster>(mainMenu);
                   _menuHierarchy.AddNewMainMenu(mainmenus);
                 if (await _menuHierarchy.SaveAllAsync())
                 {
@@ -101,7 +102,8 @@ namespace MyKoel_Web.Controllers
                         var quicklinkacccess = new UserAccessMapping
                         {
                             AccessMappingId = 0,
-                            MainMenuGroupId = mainmenus.MainMenuGroupId,
+                            MainMenuGroupId = null,
+                            MenusId = mainmenus.MenusId,
                             UserId = user.Id,
                             MenuGroupId = null,
                             MenuId = null
@@ -138,11 +140,11 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpPost("UpdateMainMenu")]
-        public async Task<IActionResult> UpdateMainMenu(AddMainMenuGroupDto mainMenu)
+        public async Task<IActionResult> UpdateMainMenu(MenuHierarchyDto mainMenu)
         {
             try
             {
-                var existing = await _menuHierarchy.GetMainMenuById(mainMenu.MainMenuGroupId);
+                var existing = await _menuHierarchy.GetMainMenuById(mainMenu.MenusId);
 
                 if (existing == null)
                 {
@@ -216,14 +218,14 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("GetMainMenuDetails")]
-        public async Task<AddMainMenuGroupDto> GetMainMenuDetails(int MainMenuId)
+        public async Task<MenuHierarchyDto> GetMainMenuDetails(int MainMenuId)
         {
             var menu = await _menuHierarchy.GetMainMenuDetails(MainMenuId);
             return menu;
         }
 
         [HttpGet("ShowMainMenuList")]
-        public async Task<List<AddMainMenuGroupDto>> ShowMainMenuList([FromQuery] ParameterParams parameterParams)
+        public async Task<List<MenuHierarchyDto>> ShowMainMenuList([FromQuery] ParameterParams parameterParams)
         {
             var mainmenuList = await _menuHierarchy.GetMainMenuList(parameterParams);
             Response.AddPaginationHeader(mainmenuList.CurrentPage, mainmenuList.PageSize,
