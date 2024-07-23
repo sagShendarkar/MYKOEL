@@ -126,7 +126,8 @@ namespace MyKoel_Domain.Repositories
                                          STATUS = v.STATUS,
                                          ISACTIVE = v.ISACTIVE,
                                          VACANCYCOUNT = v.VACANCYCOUNT,
-                                         FILEPATH= v.JOBDESC
+                                         FILEPATH= v.JOBDESC,
+                                         FILETYPE=v.FILETYPE
                                      }).OrderByDescending(s => s.VACANCYID).SingleOrDefaultAsync();
             return vacancyData;
         }

@@ -1,3 +1,4 @@
+import { BREAKFASTComponent } from './components/canteen-menu/breakfast/breakfast.component';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +30,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HolidayCalenderComponent } from './components/holiday-calender/holiday-calender/holiday-calender.component';
 import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacancy.component';
 import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-list.component';
+import { QuickLinksListComponent } from './components/quick-links/quick-links-list/quick-links-list.component';
+import { AddQuickLinksComponent } from './components/quick-links/add-quick-links/add-quick-links.component';
+import { CanteenMenuComponent } from './components/canteen-menu/canteen-menu/canteen-menu.component';
+import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component';
 
 
 @NgModule({
@@ -49,6 +54,10 @@ import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-
     HolidayCalenderComponent,
     AddVacancyComponent,
     VacancyListComponent,
+    QuickLinksListComponent,
+    AddQuickLinksComponent,
+    CanteenMenuComponent,
+    LUNCHComponent, BREAKFASTComponent
   ],
   imports: [
     CommonModule,

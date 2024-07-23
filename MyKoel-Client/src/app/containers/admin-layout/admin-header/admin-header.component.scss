@@ -29,8 +29,13 @@
   font-size: 18px;
   color: #000;
 }
-.mega-menu-border{
+.mega-menu-border:nth-of-type(odd){
   border-right: 1px solid #B15A1F;
+}
+  .dropdown-item {
+  padding: 5px 0 !important;
+  color: #000;
+  font-size: 16px !important;
 }
 
 :host ::ng-deep   .dropdown-item {

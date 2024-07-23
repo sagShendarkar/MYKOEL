@@ -21,7 +21,7 @@ btnDetails:any;
   constructor(public headerService:HeaderService,private router: Router,    private route: ActivatedRoute,
     private authService: AuthService ) {
 
-
+      
   this.ProfileImage=(localStorage.getItem('ProfileImage')!==null&&localStorage.getItem('ProfileImage')!=='null')?localStorage.getItem('ProfileImage')?.toString():"./../../../../assets/images/profile.png";
 
       this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";

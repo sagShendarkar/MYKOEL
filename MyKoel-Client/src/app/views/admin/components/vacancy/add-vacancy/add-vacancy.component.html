@@ -326,21 +326,33 @@
                 <input cFormControl
                 id="exampleFormControlInput1"
                 placeholder="Enter title here..."
-                formControlName="pdfpath"
-                accept=".pdf"
+                formControlName="filepath"
+                accept=".pdf,.doc,.txt,.xlsx"
                 type="hidden"
                  [ngClass]="{
                  'is-invalid':
-                   submitted && vacancyform.get('pdfpath')?.hasError('required')
+                   submitted && vacancyform.get('filepath')?.hasError('required')
                }"
          />
 
-         <div *ngIf="vacancyform.get('pdfpath')?.value !==null">
-          <span   (click)="openFile(vacancyform.get('pdfpath')?.value)" class="cursor"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+         <div *ngIf="vacancyform.get('filepath')?.value !==null">
+
+          <div *ngIf="vacancyform.get('filetype')?.value ==='pdf'">
+            <span   (click)="openFile(vacancyform.get('filepath')?.value)" class="cursor"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                </div>
+                                <div *ngIf="vacancyform.get('filetype')?.value ==='xlsx'">
+            <span   (click)="openFile(vacancyform.get('filepath')?.value)" class="cursor"> <i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
+                                </div>
+                                <div *ngIf="vacancyform.get('filetype')?.value ==='docx'">
+            <span   (click)="openFile(vacancyform.get('filepath')?.value)" class="cursor"> <i class="fa fa-file-word-o" aria-hidden="true"></i></span>
+                                </div>  <div *ngIf="vacancyform.get('filetype')?.value ==='txt'">
+            <span   (click)="openFile(vacancyform.get('filepath')?.value)" class="cursor"> <i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                                </div>
+          <!-- <span   (click)="openFile(vacancyform.get('filepath')?.value)" class="cursor"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i></span> -->
                               </div>
                 <div
                 class="invalid-feedback"
-                *ngIf="vacancyform.get('pdfpath')?.hasError('required')"
+                *ngIf="vacancyform.get('filepath')?.hasError('required')"
                 >
                 job desc is required.
                 </div>

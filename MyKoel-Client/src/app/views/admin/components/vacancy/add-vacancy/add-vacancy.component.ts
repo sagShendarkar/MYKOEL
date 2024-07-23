@@ -109,16 +109,18 @@ console.log(this.vacancyform.valid);
       closingdate: new FormControl(null, Validators.required),
       contactinfo: new FormControl(null, Validators.required),
       status: new FormControl(1, Validators.required),
+      filetype: new FormControl(null, Validators.required),
       isactive: new FormControl(true, ),
       pdfstring: new FormControl(null, ),
-      pdfpath: new FormControl(null, Validators.required),
+      filepath: new FormControl(null, Validators.required),
     });
   }
 
 
 
   onChange(event: any) {
-
+    var extn = event.target.files[0].name.split('.').pop();
+    var name = event.target.files[0].name;
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (event) => {
@@ -128,8 +130,9 @@ console.log(this.vacancyform.valid);
       img.src = event.target?.result as string;
     this.vacancyform.controls['pdfstring'].setValue(event.target?.result as string);
     this.vacancyform.controls['jobdesc'].setValue(event.target?.result as string);
-    this.vacancyform.controls['pdfpath'].setValue(event.target?.result as string);
-
+    this.vacancyform.controls['filepath'].setValue(event.target?.result as string);
+    this.vacancyform.controls['filetype'].setValue(extn);
+//filetype
 
       let element: HTMLElement = document.getElementById(
         'pdf'

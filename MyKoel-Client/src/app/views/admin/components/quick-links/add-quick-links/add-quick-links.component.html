@@ -1,0 +1,237 @@
+<div class=" row">
+  <div class="col-12">
+
+    <c-card class="mb-4">
+
+      <c-card-body>
+        <form [formGroup]="quickLinkform">
+          <div class=" row">
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Menu Name</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter job title here..."
+                       formControlName="menuGroupName"
+                       type="text"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && quickLinkform.get('menuGroupName')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('menuGroupName')?.hasError('required')"
+                >
+                menu Name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Sequence</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter sequence here..."
+                       formControlName="sequence"
+                       type="text"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && quickLinkform.get('sequence')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('sequence')?.hasError('required')"
+                >
+                sequence is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Icon</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter icon here..."
+                       formControlName="icon"
+                       type="text"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && quickLinkform.get('icon')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('icon')?.hasError('required')"
+                >
+                icon is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Image</label>
+                <input
+                cFormControl
+                id="formFileSm"
+                sizing="md"
+                type="file"
+                accept=".jpg,.jpeg,.png.svg"
+                (change)="onSelectFile($event)"
+              />
+<input type="hidden" formControlName="imageIcon"
+[ngClass]="{
+'is-invalid':
+  submitted &&
+  quickLinkform.get('imageIcon')?.errors
+}" />
+<div
+class="invalid-feedback"
+*ngIf="quickLinkform.get('imageIcon')?.hasError('required')"
+>
+Image is required.
+</div>
+                 <img [src]="quickLinkform.get('imageIcon')?.value" style="background-color: #eee;"
+                 (click)="openFile(quickLinkform.get('imageIcon')?.value)" height="80" class="mt-7" />
+              <img
+                *ngIf="isViewImage"
+                [src]="viewImage"
+                (click)="openFile(viewImage)"
+                height="80"
+                class="mt-7"
+              />
+              <br />
+              <div *ngIf="isImageSuccess" class="success mt-2">
+                File uploaded successfully!
+              </div>
+              <div *ngIf="isImageFail" class="badge-light-danger">
+                File size must be less than 5 MB
+              </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <div class="mb-3  ">
+                <label cLabel for="exampleFormControlInput1">route</label>
+                <input cFormControl
+                       id="exampleFormControlInput1"
+                       placeholder="Enter route..."
+                       formControlName="route"
+                       type="text"
+                       min="0"
+                        [ngClass]="{
+                        'is-invalid':
+                          submitted && quickLinkform.get('route')?.hasError('required')
+                      }"
+                />
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('route')?.hasError('required')"
+                >
+                route is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <div class="mb-3 pt-4">
+                <c-form-check sizing="xl" switch>
+                  <input cFormCheckInput checked type="checkbox"
+                  formControlName="isChild" />
+                  <label cFormCheckLabel> Is Child</label>
+                </c-form-check>
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('isChild')?.hasError('required')"
+                >
+                Is Child is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3 pt-4">
+                <c-form-check sizing="xl" switch>
+                  <input cFormCheckInput checked type="checkbox"
+                  (change)="ontoggle($event,'image')"
+                  formControlName="isImage" />
+                  <label cFormCheckLabel> Is Image</label>
+                </c-form-check>
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('isImage')?.hasError('required')"
+                >
+                Is Image is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3 pt-4">
+                <c-form-check sizing="xl" switch>
+                  <input cFormCheckInput checked type="checkbox"
+                  formControlName="isRoute" />
+                  <label cFormCheckLabel> Is Route</label>
+                </c-form-check>
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('isRoute')?.hasError('required')"
+                >
+                Is Route is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <div class="mb-3 pt-4">
+                <c-form-check sizing="xl" switch>
+                  <input cFormCheckInput checked type="checkbox"
+                  formControlName="isPopup" />
+                  <label cFormCheckLabel> Is Popup</label>
+                </c-form-check>
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('isPopup')?.hasError('required')"
+                >
+                Is Popup is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3 pt-4">
+                <c-form-check sizing="xl" switch>
+                  <input cFormCheckInput checked type="checkbox"
+                  (change)="ontoggle($event,'icon')"
+                  formControlName="isIcon" />
+                  <label cFormCheckLabel> Is Icon</label>
+                </c-form-check>
+                <div
+                class="invalid-feedback"
+                *ngIf="quickLinkform.get('isIcon')?.hasError('required')"
+                >
+                Is Icon is required.
+                </div>
+              </div>
+            </div>    <div class="col-12 text-right">
+             <button class="btn cancel-btn" size="lg"  (click)="routeToList()">
+Cancel
+             </button>
+             <button class="btn save-btn ms-4"  size="lg" (click)="onSubmit()">
+Save
+             </button>
+            </div>
+          </div>
+        </form>
+        </c-card-body>
+        </c-card>
+  </div>
+</div>
