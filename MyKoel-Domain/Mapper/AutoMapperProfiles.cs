@@ -46,10 +46,9 @@ namespace API.Mapper
             CreateMap<VacancyPosting, VacancyPostingDto>();
             CreateMap<VacancyPostingDto, VacancyPostingDto>();      
             CreateMap<HolidayCalenderDto, HolidayCalenderDto>();
-            CreateMap<AddMainMenuGroupDto, MainMenuGroup>();
-            CreateMap<MainMenuGroup, AddMainMenuGroupDto>();
-            CreateMap<AddMainMenuGroupDto, AddMainMenuGroupDto>();
-
+            CreateMap<MenuHierarchyDto, MenuMaster>();
+            CreateMap<MenuMaster, MenuHierarchyDto>();
+            CreateMap<MenuHierarchyDto, MenuHierarchyDto>();
         }
     }
 }
