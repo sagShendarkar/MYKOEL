@@ -23,13 +23,13 @@
             <div class="col-md-6  col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-4"
             *ngFor="let wallpaperMenus of(landingPageService.wallpaperMenus$|async) ; let i=index">
 
-              <div class="banner-menus cursor" (click)="openModalPopup(true,wallpaperMenus.menuGroupName)" >
+              <div class="banner-menus cursor" (click)="openModalPopup(true,wallpaperMenus.menuName)" >
                 <img
 class="mb-1"
                 [src]="wallpaperMenus.imageIcon"
-                  [alt]="wallpaperMenus.menuGroupName"
+                  [alt]="wallpaperMenus.menuName"
                 />
-                <span class="ms-2 mb-1"> {{wallpaperMenus.menuGroupName}} </span>
+                <span class="ms-2 mb-1"> {{wallpaperMenus.menuName}} </span>
               </div>
             </div>
             <!-- <div class="col-md-6 col-sm-6 col-lg-6  col-xl-3  col-xxl-3 col-12 mb-2">
@@ -108,13 +108,13 @@ class="mb-1"
             <span>
               <img
                 [src]="quickLinks.imageIcon"
-                [alt]="quickLinks.menuGroupName"
+                [alt]="quickLinks.menuName"
               />
             </span>
           </div>
 
           <div class="col-md-12">
-            <span> {{quickLinks.menuGroupName}} </span>
+            <span> {{quickLinks.menuName}} </span>
           </div>
         </div>
           <div class="row" *ngIf="!quickLinks.isRoute">
@@ -122,13 +122,13 @@ class="mb-1"
             <span>
               <img
                 [src]="quickLinks.imageIcon"
-                [alt]="quickLinks.menuGroupName"
+                [alt]="quickLinks.menuName"
               />
             </span>
           </div>
 
           <div class="col-md-12">
-            <span> {{quickLinks.menuGroupName}} </span>
+            <span> {{quickLinks.menuName}} </span>
           </div>
         </div>
       </div>

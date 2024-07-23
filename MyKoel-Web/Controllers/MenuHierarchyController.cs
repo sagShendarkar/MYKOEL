@@ -267,9 +267,14 @@ namespace MyKoel_Web.Controllers
 
 
        [HttpGet("4thLevelMenuList")]
-        public async Task<List<MenuMasterDto>> LevelMenuList(int UserId, int? MenuId, int? Level,string? Flag)
+        public async Task<List<MenuMasterDto>> LevelMenuList(int UserId, string? Grade,string? Flag)
         {
-            var menu = await _menuHierarchy.GetMenu4thLevelsData(UserId,MenuId,Level,Flag);
+            if(Grade=="SysAdmin")
+            {
+            var menudata = await _menuHierarchy.GetMenuLevelsForSysAdmin(User.GetUserId(),Flag);
+            return menudata;
+            }
+            var menu = await _menuHierarchy.GetMenu4thLevelsData(User.GetUserId(),Flag);
             return menu;
         }
 
