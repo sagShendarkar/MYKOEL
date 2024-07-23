@@ -58,7 +58,11 @@ ngAfterViewInit(): void {
   }
   getMenuHierarchy(){
     this.unsubscribe.add(
-      this.headerService.getMenuHierarchy(1).subscribe((res:any[])=>{
+      // this.headerService.getMenuHierarchy(1).subscribe((res:any[])=>{
+      //   this.headerService.menuList$.next(res);
+
+      // })
+      this.headerService.get4LevelMenuHierarchy().subscribe((res:any[])=>{
         this.headerService.menuList$.next(res);
 
       })

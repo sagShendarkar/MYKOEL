@@ -42,18 +42,18 @@ addBtnDetails={
   get4LevelMenuHierarchy(userId=0,level:number=0,menusId=0)
   {
     let params=new HttpParams();
-    params=params.append('UserId',userId);
-    let Grade=localStorage.getItem('Grade');
+    // params=params.append('UserId',userId);
+    // let Grade=localStorage.getItem('Grade');
     // if(Grade==="SysAdmin"){
     // params=params.append('Grade',"SysAdmin");
     // }
 
-    if(menusId!==0){
-    params=params.append('MenuId',menusId);
-    }
+    // if(menusId!==0){
+    // params=params.append('MenuId',menusId);
+    // }
 
-    params=params.append('Level',level);
+    // params=params.append('Flag','Top MenuBar');
 
-    return this.http.get<any>(this.baseUrl+'MenuHierarchy/4thLevelMenuList',{params});
+    return this.http.get<any>(this.baseUrl+'MenuHierarchy/4thLevelMenuList');
   }
 }

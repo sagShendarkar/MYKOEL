@@ -54,7 +54,7 @@ namespace MyKoel_Domain.Repositories
                                    DEPARTMENT = v.DEPARTMENT,
                                    LOCATION = v.LOCATION,
                                    JOBTYPE = v.JOBTYPE,
-                                   JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertFileToBase64(v.JOBDESC) : null,
+                                //    JOBDESC = !string.IsNullOrEmpty(v.JOBDESC) ? _imageService.ConvertFileToBase64(v.JOBDESC) : null,
                                    SALARYRANGE = v.SALARYRANGE,
                                    REQUIRMENTS = v.REQUIRMENTS,
                                    POSTEDDATE = v.POSTEDDATE,
