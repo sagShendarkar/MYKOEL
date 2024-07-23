@@ -38,7 +38,7 @@ namespace MyKoel_Web.Controllers
             return breakfast;
         }
         [HttpPost("AddBreakfast")]
-        public async Task<ActionResult<BreakFastDto>> AddNewBreakfast(BreakFastDto breakfastDto)
+        public async Task<object> AddNewBreakfast(BreakFastDto breakfastDto)
         {
             try
             {
@@ -49,18 +49,28 @@ namespace MyKoel_Web.Controllers
                 if (await _breakFastRepository.SaveAllAsync())
                 {
 
-                    return new BreakFastDto
+                    return new 
                     {
-                        BreakFastId = breakfastDto.BreakFastId,
-                        BreakFastName = breakfastDto.BreakFastName
+                        Status = 200,
+                        Message = "Data Added Successfully"
                     };
                 }
-                return BadRequest("Failed To Add Data");
+                return  new 
+                {
+                    Status = 400,
+                     Message = "Failed To Add Data"
+                };
 
             }
             catch (Exception ex)
             {
-                return null;
+                var result = new
+                {
+                    Status = 400,
+                    Message = ex.Message
+                };
+                return Ok(result);
+
             }
         }
 
@@ -72,7 +82,7 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpPost("UpdateBreakfastDetails")]
-        public async Task<ActionResult> UpdateBreakfastDetails(BreakFastDto updateBreakfastDto)
+        public async Task<object> UpdateBreakfastDetails(BreakFastDto updateBreakfastDto)
         {
             try
             {
@@ -88,7 +98,12 @@ namespace MyKoel_Web.Controllers
                     };
                     return Ok(result);
                 }
-                return BadRequest("Failed To Update Data");
+                return  new 
+                {
+                    Status = 400,
+                     Message = "Failed To Update Data"
+                };         
+                
             }
             catch (Exception ex)
             {
@@ -103,7 +118,7 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpPost("DeleteBreakfast/{Id}")]
-        public async Task<ActionResult> DeleteBreakfast(int Id)
+        public async Task<object> DeleteBreakfast(int Id)
         {
 
             var data = await _breakFastRepository.GetBreakfastById(Id);
@@ -119,8 +134,11 @@ namespace MyKoel_Web.Controllers
                     };
                     return Ok(result);
                 }
-                return BadRequest("Failed To Delete Data");
-
+                return  new 
+                {
+                    Status = 400,
+                     Message = "Failed To Delete Data"
+                };  
             }
             catch (Exception ex)
             {
