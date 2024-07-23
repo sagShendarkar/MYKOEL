@@ -91,6 +91,10 @@ export class BREAKFASTComponent {
         event.page;
       this.loadBreakfastList();
     }
+
+    patchValue(breakfastDetails:any){
+      this.BreakfastForm.patchValue(breakfastDetails);
+    }
     onSubmit(){
       this.submitted = true;
       // stop here if form is invalid

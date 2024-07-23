@@ -65,11 +65,11 @@ Save
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let holidaycalender of (breakfastService.BreakfastList$|async)">
+      <tr *ngFor="let breakfast of (breakfastService.BreakfastList$|async)">
 
-        <td>{{holidaycalender.breakFastName}}</td>
-        <!-- <td class="desc-div">{{holidaycalender.locations}} </td> -->
-        <!-- <td> {{holidaycalender.date| date:'dd-MM-yyyy'}}   </td> -->
+        <td>{{breakfast.breakFastName}}</td>
+        <!-- <td class="desc-div">{{breakfast.locations}} </td> -->
+        <!-- <td> {{breakfast.date| date:'dd-MM-yyyy'}}   </td> -->
         <td>
         <div>
           <!-- <img
@@ -77,7 +77,7 @@ Save
           alt="My Happy SVG"
         /> -->
 
-        <img class="ms-3 cursor"
+        <img class="ms-3 cursor" (click)="patchValue(breakfast)"
         src="../../../../../assets/SVG/edit-icon.svg"
         alt="My Happy SVG"
       />
