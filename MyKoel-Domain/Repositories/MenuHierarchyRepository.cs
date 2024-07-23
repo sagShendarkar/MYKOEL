@@ -483,9 +483,9 @@ namespace MyKoel_Domain.Repositories
                                       SecondLevelMenuList = (from mg in _context.MenuMaster
                                                             where   mg.ParentId == grouped.FirstOrDefault().MenusId 
                                                              && mg.ParentId != null && mg.Level == 2 
-                                                             group mg by new { } into MenuGroupData
+                                                             group mg by new {mg.MenusId } into MenuGroupData
                                                              select new SecondLevelMenu
-                                                             {
+                                                            {
                                                                  MenusId = MenuGroupData.FirstOrDefault().MenusId,
                                                                  MenuName = MenuGroupData.FirstOrDefault().MenuName,
                                                                  ParentId = MenuGroupData.FirstOrDefault().ParentId,
@@ -545,7 +545,7 @@ namespace MyKoel_Domain.Repositories
                                                                                                                   }).OrderBy(a => a.Sequence).ToList()
 
                                                                                        }).OrderBy(a => a.Sequence).ToList()
-                                                             }).ToList()
+                                                            }).ToList()
                                   }).OrderBy(s => s.MenusId).ToListAsync();
 
             
