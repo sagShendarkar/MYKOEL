@@ -17,14 +17,14 @@
       <tbody>
       <tr *ngFor="let quickLink of (quickLinksService.quickLinksMenuList$|async)">
 
-        <td>{{quickLink.menuGroupName}}</td>
+        <td>{{quickLink.menuName}}</td>
         <td>
         <div>
           <img
           src="../../../../../assets/SVG/view-icon.svg"
           alt="My Happy SVG"
         />
-         <img class="ms-3 cursor" [routerLink]="'/admin/edit-quick-links/'+quickLink.mainMenuGroupId"
+         <img class="ms-3 cursor" [routerLink]="'/admin/edit-quick-links/'+quickLink.menusId"
         src="../../../../../assets/SVG/edit-icon.svg"
         alt="My Happy SVG"
       />

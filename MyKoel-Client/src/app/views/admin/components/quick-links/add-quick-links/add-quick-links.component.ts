@@ -65,10 +65,12 @@ export class AddQuickLinksComponent {
   initializeForm() {
     this.quickLinkform = new FormGroup({
 
-      mainMenuGroupId: new FormControl(0),
-      menuGroupName: new FormControl(null, Validators.required),
+      menusId: new FormControl(0),
+      menuName: new FormControl(null, Validators.required),
       sequence: new FormControl('', Validators.required),
       icon: new FormControl('', ),
+      parentId: new FormControl(null, ),
+      level: new FormControl(1),
       route: new FormControl(null, ),
       imageIcon: new FormControl('', ),
       flag: new FormControl('Quick Links', Validators.required),

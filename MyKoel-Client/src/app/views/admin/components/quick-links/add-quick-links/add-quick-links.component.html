@@ -13,16 +13,16 @@
                 <input cFormControl
                        id="exampleFormControlInput1"
                        placeholder="Enter job title here..."
-                       formControlName="menuGroupName"
+                       formControlName="menuName"
                        type="text"
                         [ngClass]="{
                         'is-invalid':
-                          submitted && quickLinkform.get('menuGroupName')?.hasError('required')
+                          submitted && quickLinkform.get('menuName')?.hasError('required')
                       }"
                 />
                 <div
                 class="invalid-feedback"
-                *ngIf="quickLinkform.get('menuGroupName')?.hasError('required')"
+                *ngIf="quickLinkform.get('menuName')?.hasError('required')"
                 >
                 menu Name is required.
                 </div>
