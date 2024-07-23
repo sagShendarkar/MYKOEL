@@ -20,6 +20,7 @@ import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-
 import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacancy.component';
 import { QuickLinksListComponent } from './components/quick-links/quick-links-list/quick-links-list.component';
 import { AddQuickLinksComponent } from './components/quick-links/add-quick-links/add-quick-links.component';
+import { BREAKFASTComponent } from './components/canteen-menu/breakfast/breakfast.component';
 
 const routes: Routes = [
   {
@@ -272,6 +273,17 @@ const routes: Routes = [
       title: 'Edit Quick Links',
       isDisplayAddBtn:false,
         backBtnUrl:"/admin/quick-links"
+    }
+  },
+  {
+    path: 'breakfast',
+    component: BREAKFASTComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Breakfast List',
+      isDisplayAddBtn:false,
+
+        backBtnUrl:"/home"
     }
   },
 ];
