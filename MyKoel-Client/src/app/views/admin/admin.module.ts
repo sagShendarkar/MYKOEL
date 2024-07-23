@@ -1,3 +1,4 @@
+import { BREAKFASTComponent } from './components/canteen-menu/breakfast/breakfast.component';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +32,8 @@ import { AddVacancyComponent } from './components/vacancy/add-vacancy/add-vacanc
 import { VacancyListComponent } from './components/vacancy/vacancy-list/vacancy-list.component';
 import { QuickLinksListComponent } from './components/quick-links/quick-links-list/quick-links-list.component';
 import { AddQuickLinksComponent } from './components/quick-links/add-quick-links/add-quick-links.component';
+import { CanteenMenuComponent } from './components/canteen-menu/canteen-menu/canteen-menu.component';
+import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component';
 
 
 @NgModule({
@@ -53,6 +56,8 @@ import { AddQuickLinksComponent } from './components/quick-links/add-quick-links
     VacancyListComponent,
     QuickLinksListComponent,
     AddQuickLinksComponent,
+    CanteenMenuComponent,
+    LUNCHComponent, BREAKFASTComponent
   ],
   imports: [
     CommonModule,
