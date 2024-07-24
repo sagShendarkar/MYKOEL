@@ -53,6 +53,7 @@ namespace MyKoel_Domain.Data
         public DbSet<VacancyPosting> VacancyPosting { get; set; }
         public DbSet<VacancyInquiry> VacancyInquiry { get; set; }
         public DbSet<MenuMaster> MenuMaster { get; set; }
+        public DbSet<BirthdayMessage> BirthdayMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

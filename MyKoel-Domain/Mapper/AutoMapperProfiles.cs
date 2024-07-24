@@ -49,6 +49,9 @@ namespace API.Mapper
             CreateMap<MenuHierarchyDto, MenuMaster>();
             CreateMap<MenuMaster, MenuHierarchyDto>();
             CreateMap<MenuHierarchyDto, MenuHierarchyDto>();
+            CreateMap<BirthdayMessageDto, BirthdayMessage>();
+            CreateMap<BirthdayMessage, BirthdayMessageDto>();
+            CreateMap<BirthdayMessageDto, BirthdayMessageDto>();
         }
     }
 }

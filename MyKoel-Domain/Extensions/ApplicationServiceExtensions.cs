@@ -33,6 +33,7 @@ namespace MyKoel_Domain.Extensions
             services.AddScoped<IValuesRepository, ValuesRepository>();
             services.AddScoped<IHolidayCalenderRepository, HolidayCalenderRepository>();
             services.AddScoped<IVacancyPosting, VacancyPostingRepository>();
+            services.AddScoped<IBirthdayMessageRepository, BirthdayMessageRepository>();
 
             return services;
         }

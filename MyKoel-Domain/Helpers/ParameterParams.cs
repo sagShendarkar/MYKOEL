@@ -11,7 +11,7 @@ namespace iot_Domain.Helpers
         public string? Flag { get; set; }
         public string? Location { get; set; }
         public string? Grade { get; set; }
-
+        public int? Day {get;set;}
 
     }
 }
