@@ -351,7 +351,7 @@ namespace MyKoel_Domain.Repositories
                                                              on mg.MenusId equals u.MenusId
                                                              where  u.UserId == UserId && mg.MenusId == u.MenusId && mg.ParentId == grouped.FirstOrDefault().MenusId 
                                                              && mg.ParentId != null && mg.Level == 2 
-                                                             group mg by new { } into MenuGroupData
+                                                             group mg by new {mg.MenusId } into MenuGroupData
                                                              select new SecondLevelMenu
                                                              {
                                                                  MenusId = MenuGroupData.FirstOrDefault().MenusId,

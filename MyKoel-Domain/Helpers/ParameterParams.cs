@@ -10,7 +10,8 @@ namespace iot_Domain.Helpers
         public int UserId { get; set; }
         public string? Flag { get; set; }
         public string? Location { get; set; }
-        
+        public string? Grade { get; set; }
+
 
     }
 }
