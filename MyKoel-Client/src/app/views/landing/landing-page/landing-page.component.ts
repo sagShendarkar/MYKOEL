@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { HeaderService } from 'src/app/containers/admin-layout/services/header.service';
+import { HolidayCalenderService } from '../../admin/services/holiday-calender.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -20,6 +21,7 @@ values="";
   isAnnouncementLoading$=  new BehaviorSubject<boolean>(false);
   isNewHiresLoading$=  new BehaviorSubject<boolean>(false);
   isVacancyLoading$=  new BehaviorSubject<boolean>(false);
+  isNoBirthday$=  new BehaviorSubject<boolean>(false);
   userName:any="";
   private unsubscribe: Subscription = new Subscription();
   public visionModal = false;
@@ -33,7 +35,8 @@ values="";
 
   slides: any[] = [];
   constructor(
-    private domSanitizer: DomSanitizer,public headerService:HeaderService,public landingPageService:LandingPageService
+    private domSanitizer: DomSanitizer,public headerService:HeaderService,
+    public landingPageService:LandingPageService,public holidayCalenderService: HolidayCalenderService,
   ) {
 
     this.userName=localStorage.getItem('username')!==null?localStorage.getItem('username')?.toString():"";
@@ -46,6 +49,7 @@ values="";
   }
 
 ngOnInit(): void {
+  this.getLocationList();
   this.getWallpaperMenus();
   this.getQuickLinksMenus();
   this.getAnnouncementList();
@@ -63,6 +67,24 @@ ngAfterViewInit(): void {
   this.wallpaperImage=(localStorage.getItem('WallpaperPath')!==null&&localStorage.getItem('WallpaperPath')!=='null')?localStorage.getItem('WallpaperPath')?.toString():"../../../../assets/images/banner.png";
 
 }
+
+getLocationList() {
+  this.unsubscribe.add(
+    this.holidayCalenderService.getLocationList().subscribe((res) => {
+      this.holidayCalenderService.locationList$.next(res);
+    })
+  );
+}
+onLocationChange(event:any){
+console.log(event);
+if(event){
+
+  this.getHolidayCalendarList(event.locations);
+}else{
+
+  this.getHolidayCalendarList();
+}
+}
 getWallpaperMenus(){
   this.unsubscribe.add(
     this.landingPageService.getLandingPageMenus(1,'Wallpaper Menus').subscribe((res)=>{
@@ -79,9 +101,9 @@ this.landingPageService.quickLinksMenus$.next(res);
     })
   );
 }
-getHolidayCalendarList(){
+getHolidayCalendarList(location=""){
   this.unsubscribe.add(
-    this.landingPageService.getHolidayCalendarList().subscribe((res)=>{
+    this.landingPageService.getHolidayCalendarList(location).subscribe((res)=>{
 
 this.landingPageService.holidayCalendarList$.next(res);
     })
@@ -147,6 +169,9 @@ getBirthdayList(){
   this.unsubscribe.add(
     this.landingPageService.getBirthdayList().subscribe((res)=>{
 console.log(res);
+if(res.length===0){
+  this.isNoBirthday$.next(true);
+}
 this.landingPageService.birthdayList$.next(res);
 this.isBirthdayLoading$.next(false);
 
@@ -212,5 +237,11 @@ if(popupName==='Holiday Calender'){
 }
   ngOnDestroy(): void {
      this.headerService.isDisplayBreadcrumb$.next(true);
+
+this.landingPageService.vacancyList$.next([]);
+this.landingPageService.newHiresList$.next([]);
+this.landingPageService.newsList$.next([]);
+this.landingPageService.announcementList$.next([]);
+this.landingPageService.birthdayList$.next([]);
   }
 }

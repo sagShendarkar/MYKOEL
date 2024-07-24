@@ -147,7 +147,9 @@ namespace MyKoel_Web.Controllers
                                                   MoodId = w.MoodId,
                                                   Rating = w.Rating,
                                               }).FirstOrDefaultAsync(),
-                        Grade = usersdata.Grade
+                        Grade = usersdata.Grade,
+                         Location= usersdata.Location
+
 
                     };
                     return Ok(JsonConvert.SerializeObject(responseData));
@@ -195,57 +197,26 @@ namespace MyKoel_Web.Controllers
                             return JsonConvert.SerializeObject(Data);
                         }
                         // added default access for profile,links and footer menus
-                        var menulist = await _context.MainMenuGroups.Where(s => (s.IsActive==true) && (s.Flag.ToLower().Contains(("Top MenuBar").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
+                        var menulist = await _context.MenuMaster.Where(s => (s.IsActive==true) && (s.Flag.ToLower().Contains(("Top MenuBar").ToLower()) || s.Flag.ToLower().Contains(("Quick Links").ToLower())
                         || s.Flag.ToLower().Contains(("Footer Menus").ToLower()) || s.Flag.ToLower().Contains(("Wallpaper Menus").ToLower()))).ToListAsync();
                         var userAccess = new List<UserAccessMappingDto>();
                         foreach (var item in menulist)
                         {
 
 
-                            if (item.MainMenuGroupId > 0)
+                            if (item.MenusId > 0)
                             {
 
                                 var mainMenuGroup = new UserAccessMappingDto
                                 {
                                     AccessMappingId = 0,
-                                    MainMenuGroupId = item.MainMenuGroupId,
+                                    MenusId = item.MenusId,
                                     UserId = usermodel.Id,
                                     MenuGroupId = null,
-                                    MenuId = null
+                                    MenuId = null,
+                                    MainMenuGroupId=null
                                 };
                                 userAccess.Add(mainMenuGroup);
-                                var menugroup = _context.MenuGroups.Where(s => s.MainMenuGroupId == item.MainMenuGroupId).ToList();
-                                if (menugroup.Count == 0)
-                                {
-                                    var MenuGroup = new UserAccessMappingDto
-                                    {
-                                        AccessMappingId = 0,
-                                        MainMenuGroupId = item.MainMenuGroupId,
-                                        UserId = usermodel.Id,
-                                        MenuGroupId = null,
-                                        MenuId = null
-                                    };
-                                    userAccess.Add(MenuGroup);
-                                }
-
-                                foreach (var item2 in menugroup)
-                                {
-
-                                    var menus = _context.Menus.Where(s => s.MenuGroupId == item2.MenuGroupId).ToList();
-
-                                    foreach (var item3 in menus)
-                                    {
-                                        var MenusGroup = new UserAccessMappingDto
-                                        {
-                                            AccessMappingId = 0,
-                                            MainMenuGroupId = item.MainMenuGroupId,
-                                            UserId = usermodel.Id,
-                                            MenuGroupId = item2.MenuGroupId,
-                                            MenuId = item3.MenuId
-                                        };
-                                        userAccess.Add(MenusGroup);
-                                    }
-                                }
 
                             }
 
@@ -331,7 +302,8 @@ namespace MyKoel_Web.Controllers
                                                       Comment = w.Comment,
                                                       MoodId = w.MoodId,
                                                       Rating = w.Rating,
-                                                  }).FirstOrDefaultAsync()
+                                                  }).FirstOrDefaultAsync(),
+                           Location= userdata.Location
 
                         };
                         return Ok(JsonConvert.SerializeObject(responseData));

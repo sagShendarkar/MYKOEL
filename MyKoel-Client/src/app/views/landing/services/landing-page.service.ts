@@ -32,7 +32,7 @@ export class LandingPageService {
     params=params.append('Grade',"SysAdmin");
     }
     params=params.append('Flag',Flag);
-    return this.http.get<any>(this.baseUrl+'MenuHierarchy/ShowMenuList',{params});
+    return this.http.get<any>(this.baseUrl+'MenuHierarchy/4thLevelMenuList',{params});
   }
   getSectionList(Flag:string='',PageSize=0,PageNumber=1)
   {

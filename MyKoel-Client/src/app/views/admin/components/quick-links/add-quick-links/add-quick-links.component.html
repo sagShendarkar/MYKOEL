@@ -13,16 +13,16 @@
                 <input cFormControl
                        id="exampleFormControlInput1"
                        placeholder="Enter job title here..."
-                       formControlName="menuGroupName"
+                       formControlName="menuName"
                        type="text"
                         [ngClass]="{
                         'is-invalid':
-                          submitted && quickLinkform.get('menuGroupName')?.hasError('required')
+                          submitted && quickLinkform.get('menuName')?.hasError('required')
                       }"
                 />
                 <div
                 class="invalid-feedback"
-                *ngIf="quickLinkform.get('menuGroupName')?.hasError('required')"
+                *ngIf="quickLinkform.get('menuName')?.hasError('required')"
                 >
                 menu Name is required.
                 </div>
@@ -96,8 +96,8 @@ class="invalid-feedback"
 >
 Image is required.
 </div>
-                 <img [src]="quickLinkform.get('imageIcon')?.value" style="background-color: #eee;"
-                 (click)="openFile(quickLinkform.get('imageIcon')?.value)" height="80" class="mt-7" />
+                 <img [src]="quickLinkform.get('imageBase64')?.value" style="background-color: #eee;"
+                 (click)="openFile(quickLinkform.get('imageBase64')?.value)" height="80" class="mt-7" />
               <img
                 *ngIf="isViewImage"
                 [src]="viewImage"

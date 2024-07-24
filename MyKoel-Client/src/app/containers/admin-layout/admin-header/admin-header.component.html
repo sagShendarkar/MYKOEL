@@ -30,37 +30,58 @@
 
     <c-header-nav class="d-none d-lg-flex">
       <c-nav-item *ngFor="let mainMenu of headerService.menuList$ | async">
-        <div *ngIf="mainMenu.route !== null">
+        <div *ngIf="mainMenu.isChild === false">
           <a cNavLink [routerLink]="mainMenu.route" routerLinkActive="active">
-            {{ mainMenu.menuGroupName }}
+            {{ mainMenu.menuName }}
           </a>
         </div>
-        <div *ngIf="mainMenu.route === null">
+        <div *ngIf="mainMenu.isChild === true">
           <c-dropdown variant="nav-item">
-            <a cDropdownToggle href> {{ mainMenu.menuGroupName }} </a>
+            <a cDropdownToggle href> {{ mainMenu.menuName }} </a>
             <div cDropdownMenu class="mega-menus">
               <div class="row mb-2 mt-3">
-                <ng-container *ngFor="let menuGroup of mainMenu.menuGroupData">
-                  <div class="col-md-6 mega-menu-border" *ngIf="menuGroup.menusData.length > 0">
+                <ng-container *ngFor="let menuGroup of mainMenu.secondLevelMenuList">
+                  <div class="col-md-6 mega-menu-border" *ngIf="menuGroup.thirdLevelMenuList.length > 0">
                     <div class="row">
-                      <span class="text-underline cursor">
-                        {{ menuGroup.groupName }}</span
+                      <span class="text-underline cursor level2th-menu">
+                        {{ menuGroup.menuName }}</span
                       >
                     </div>
 
                     <div class="row  mb-2 pb-1">
                       <div
-                        class="col-md-3"
-                        *ngFor="let menu of menuGroup.menusData"
+                        class="col-md-4"
+                        *ngFor="let menu of menuGroup.thirdLevelMenuList"
                       >
                         <li>
-                          <a
+                          <a *ngIf="menu.isChild===false"
                             cDropdownItem
                             [routerLink]="menu.route"
                             class="cursor"
                             (click)="getSelectedMenu(menu.menuId)"
                             >{{ menu.menuName }}
                           </a>
+
+
+                          <a  *ngIf="menu.isChild===true" cDropdownItem routerLink="./" class="child-showhim">{{ menu.menuName }}
+                             <i class="fa fa-angle-down  down-icon ms-1"></i>
+                             <i class="fa fa-angle-up up-icon  ms-1"></i>
+                            <div class="child-showme">
+    <div class="row"   *ngFor="let menu4level of menu.fourthLevelMenuList">
+      <div class="col-md-12">
+        <ul class="level4th-menu">
+        <li>
+          <a cDropdownItem routerLink="./"> {{menu4level.menuName}} </a>
+ </li>
+        </ul>
+      </div>
+
+    </div>
+
+                            </div>
+
+                          </a>
+
                         </li>
                       </div>
                     </div>
@@ -68,11 +89,11 @@
 
                   <div
                     class="col-md-3"
-                    *ngIf="menuGroup.menusData.length === 0"
+                    *ngIf="menuGroup.thirdLevelMenuList.length === 0"
                   >
                     <li>
                       <a cDropdownItem [routerLink]="menuGroup.route"
-                        >{{ menuGroup.groupName }}
+                        > {{ menuGroup.menuName }}
                       </a>
                     </li>
                   </div>

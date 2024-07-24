@@ -17,6 +17,7 @@
         <th scope="col">Posted date</th>
         <th scope="col">Closing date</th>
         <th scope="col">Vacancy count</th>
+        <th scope="col">JD</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
@@ -24,18 +25,28 @@
       <tr *ngFor="let vacancy of (vacancyService.VacancyPostingList$|async)">
 
         <td>{{vacancy.jobtitle}}</td>
-        <td>{{vacancy.department}}</td>
+        <td [width]="'40'" >{{vacancy.department}}</td>
         <td  >{{vacancy.location}} </td>
-        <td  >{{vacancy.grade}} </td>
+        <td [width]="'40'" >{{vacancy.grade}} </td>
         <td> {{vacancy.posteddate| date:'dd-MM-yyyy'}}   </td>
         <td> {{vacancy.closingdate| date:'dd-MM-yyyy'}}   </td>
         <td  >{{vacancy.vacancycount}} </td>
+        <td  >
+          <div class="download-icon" (click)="JobDescriptionById(vacancy.vacancyid)">
+
+ <img
+          src="../../../../../../assets/images/download-icon.png"
+          alt="My Happy SVG"
+        />
+          </div>
+        </td>
         <td>
         <div>
-          <img
+          <img class="action-icons"
           src="../../../../../assets/SVG/view-icon.svg"
           alt="My Happy SVG"
-        /> <img class="ms-3 cursor" [routerLink]="'/admin/edit-vacancy/'+vacancy.vacancyid"
+        />
+        <img class="ms-3 cursor action-icons" [routerLink]="'/admin/edit-vacancy/'+vacancy.vacancyid"
         src="../../../../../assets/SVG/edit-icon.svg"
         alt="My Happy SVG"
       />

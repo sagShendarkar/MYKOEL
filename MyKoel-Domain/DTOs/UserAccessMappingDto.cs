@@ -12,6 +12,7 @@ namespace MyKoel_Domain.DTOs
         public int? MenuGroupId { get; set; } 
         public int? MenuId { get; set; }
         public int UserId { get; set; }
+        public int? MenusId { get; set; }
 
        
     }

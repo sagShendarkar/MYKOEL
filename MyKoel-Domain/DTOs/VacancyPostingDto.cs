@@ -25,9 +25,17 @@ namespace MyKoel_Domain.DTOs
         public bool ISACTIVE {get;set;}
         public string FILESTRING { get; set; }
         public string FILETYPE { get; set; }
-
         public string FILEPATH { get; set; }
 
+    }
 
+    public class JobDescriptionDto
+    {
+        public int VACANCYID { get; set; }
+        public string GRADE   { get; set; } 
+        public string JOBTITLE  { get; set; }
+         public string VACANCYCOUNT  { get; set; }
+         public string DEPARTMENT   { get; set; } 
+        public string JOBDESC   { get; set; } 
     }
 }

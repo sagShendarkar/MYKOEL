@@ -65,12 +65,15 @@ export class AddQuickLinksComponent {
   initializeForm() {
     this.quickLinkform = new FormGroup({
 
-      mainMenuGroupId: new FormControl(0),
-      menuGroupName: new FormControl(null, Validators.required),
+      menusId: new FormControl(0),
+      menuName: new FormControl(null, Validators.required),
       sequence: new FormControl('', Validators.required),
       icon: new FormControl('', ),
+      parentId: new FormControl(null, ),
+      level: new FormControl(1),
       route: new FormControl(null, ),
       imageIcon: new FormControl('', ),
+      imageBase64: new FormControl('', ),
       flag: new FormControl('Quick Links', Validators.required),
       imageSrc: new FormControl(null, ),
       isActive: new FormControl(false,),
@@ -115,6 +118,7 @@ export class AddQuickLinksComponent {
           img.src = event.target?.result as string;
           this.quickLinkform.controls['imageSrc'].setValue(img.src);
           this.quickLinkform.controls['imageIcon'].setValue(img.src);
+          this.quickLinkform.controls['imageBase64'].setValue(img.src);
           this.isImageFail = false;
           this.isViewImage = false;
           this.viewImage = null;

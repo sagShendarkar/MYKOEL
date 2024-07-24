@@ -38,7 +38,7 @@ namespace MyKoel_Web.Controllers
             return Lunch;
         }
         [HttpPost("AddLunch")]
-        public async Task<ActionResult<LunchDto>> AddNewLunch(LunchDto LunchDto)
+        public async Task<object> AddNewLunch(LunchDto LunchDto)
         {
             try
             {
@@ -49,14 +49,17 @@ namespace MyKoel_Web.Controllers
                 if (await _lunchRepository.SaveAllAsync())
                 {
 
-                    return new LunchDto
+                    return new
                     {
-                        LunchId = LunchDto.LunchId,
-                        LunchName = LunchDto.LunchName
+                        Status = 200,
+                        Message = "Data Added Successfully"
                     };
                 }
-                return BadRequest("Failed To Add Data");
-
+                return new
+                {
+                    Status = 400,
+                    Message = "Failed To Add Data"
+                };
             }
             catch (Exception ex)
             {
@@ -65,14 +68,14 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpGet("ShowLunchById/{Id}")]
-        public async Task<ActionResult<LunchMaster>> GetLunchDetailsByCode(int Id)
+        public async Task<object> GetLunchDetailsByCode(int Id)
         {
             var data = await _lunchRepository.GetLunchById(Id);
             return data;
         }
 
         [HttpPost("UpdateLunchDetails")]
-        public async Task<ActionResult> UpdateLunchDetails(LunchDto updateLunchDto)
+        public async Task<object> UpdateLunchDetails(LunchDto updateLunchDto)
         {
             try
             {
@@ -81,6 +84,7 @@ namespace MyKoel_Web.Controllers
                 _lunchRepository.UpdateLunch(Lunch);
                 if (await _lunchRepository.SaveAllAsync())
                 {
+
                     var result = new
                     {
                         Status = 200,
@@ -88,7 +92,11 @@ namespace MyKoel_Web.Controllers
                     };
                     return Ok(result);
                 }
-                return BadRequest("Failed To Update Data");
+                return new
+                {
+                    Status = 400,
+                    Message = "Failed To Update Data"
+                };
             }
             catch (Exception ex)
             {
@@ -103,7 +111,7 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpPost("DeleteLunch/{Id}")]
-        public async Task<ActionResult> DeleteLunch(int Id)
+        public async Task<object> DeleteLunch(int Id)
         {
 
             var data = await _lunchRepository.GetLunchById(Id);
@@ -119,7 +127,11 @@ namespace MyKoel_Web.Controllers
                     };
                     return Ok(result);
                 }
-                return BadRequest("Failed To Delete Data");
+                return new
+                {
+                    Status = 400,
+                    Message = "Failed To Delete Data"
+                };
 
             }
             catch (Exception ex)
@@ -143,4 +155,3 @@ namespace MyKoel_Web.Controllers
 
     }
 }
- 

@@ -15,6 +15,7 @@ namespace MyKoel_Domain.Models.Master
         public int? MenuGroupId { get; set; } 
         public int? MenuId { get; set; }
         public int UserId { get; set; }
+        public int? MenusId { get; set; }
         public AppUser User { get; set; }
         public virtual Menus Menu { get; set; }
 

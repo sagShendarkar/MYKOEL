@@ -38,7 +38,7 @@ export class QuickLinksService {
     params=params.append('searchPagination',paginationParams.searchPagination);
     params=params.append('Flag',paginationParams.flag);
     params=params.append('Grade','SysAdmin');
-    return this.getPaginatedResult(this.baseUrl + 'MenuHierarchy/ShowMenuList',params);
+    return this.getPaginatedResult(this.baseUrl + 'MenuHierarchy/ShowMainMenuList',params);
   }
 
   private getPaginatedResult<T>(url='',params:any):Observable<PaginatedResult<T>>  {

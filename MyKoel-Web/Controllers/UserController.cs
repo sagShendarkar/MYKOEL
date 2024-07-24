@@ -70,10 +70,17 @@ namespace MyKoel_Web.Controllers
         [HttpPost("AddUserAccess")]
         public async Task<object> AddUserAccess(List<UserAccessMappingDto> userAccess)
         {
+
             var userAccessMappings = _mapper.Map<List<UserAccessMapping>>(userAccess);
             foreach (var item in userAccessMappings)
             {
-                //var mainmenu= _context.UserMenuMap.Where(m=>  m.UserId==item.UserId).FirstOrDefault();
+                var AdminMenus = _context.MenuMaster.Where(x => x.Flag == "Admin Menu").ToList();
+                foreach (var menu in AdminMenus)
+                {
+                    _context.UserMenuMap.Remove((_context.UserMenuMap.Where(x => x.UserId == item.UserId && x.MenusId==menu.MenusId)).FirstOrDefault());
+                }
+                await _context.SaveChangesAsync();
+
 
                 if (item.MainMenuGroupId > 0)
                 {
@@ -82,6 +89,7 @@ namespace MyKoel_Web.Controllers
                         AccessMappingId = 0,
                         MainMenuGroupId = item.MainMenuGroupId,
                         UserId = item.UserId,
+                        MenusId=item.MenusId,
                         MenuGroupId = item.MenuGroupId,
                         MenuId = item.MenuId
                     };

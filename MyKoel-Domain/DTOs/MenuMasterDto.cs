@@ -6,32 +6,7 @@ using System.Threading.Tasks;
 namespace MyKoel_Domain.DTOs
 {
     #nullable disable
-    public class MenuHierarchyDto
-    {      
-        public int MenusId { get; set; }
-        public string MenuName { get; set; }
-        public int? ParentId { get; set; } 
-        public int? Level { get; set; }
-        public int Sequence { get; set; }
-        public string Icon { get; set; }
-        public bool IsChild { get; set; }
-        public string Route { get; set; }
-        public string ImageIcon { get; set; }
-        public string Flag { get; set; }
-        public bool? IsImage { get; set; }
-        public bool? IsRoute { get; set; }
-        public bool? IsPopup { get; set; }
-        public bool? IsIcon { get; set; }
-        public bool IsActive { get; set; }
-        public string ImageSrc {get;set;}
-        public string ImageBase64 {get;set;}
-
-  
-      
-    }
-    
-
-    public class ThirdLevelMenu
+    public class MenuMasterDto
     {
         public int MenusId { get; set; }
         public string MenuName { get; set; }
@@ -48,10 +23,12 @@ namespace MyKoel_Domain.DTOs
         public bool? IsPopup { get; set; }
         public bool? IsIcon { get; set; }
         public bool IsActive { get; set; }
-        public List<FourthLevelMenu> FourthLevelMenuList {get; set;}
+        public List<SecondLevelMenu> SecondLevelMenuList { get; set;}
 
     }
-    public class FourthLevelMenu
+
+
+    public class MenuDataListDto
     {
         public int MenusId { get; set; }
         public string MenuName { get; set; }
@@ -68,6 +45,38 @@ namespace MyKoel_Domain.DTOs
         public bool? IsPopup { get; set; }
         public bool? IsIcon { get; set; }
         public bool IsActive { get; set; }
+        public List<MenuMasterDto> NextLevelMenus {get;set;}
+        // public List<MenuMasterDto> Level3Menus {get;set;}
+        // public List<MenuMasterDto> Level4Menus {get;set;}
     }
-    
+
+
+
+
+    public class SecondLevelMenu
+    {
+        public int MenusId { get; set; }
+        public string MenuName { get; set; }
+         public int? ParentId { get; set; } 
+        public int? Level { get; set; }
+        public int Sequence { get; set; }
+        public string Icon { get; set; }
+        public bool IsChild { get; set; }
+        public string Route { get; set; }
+        public string ImageIcon { get; set; }
+        public string Flag { get; set; }
+        public bool? IsImage { get; set; }
+        public bool? IsRoute { get; set; }
+        public bool? IsPopup { get; set; }
+        public bool? IsIcon { get; set; }
+        public bool IsActive { get; set; }
+        public List<ThirdLevelMenu> ThirdLevelMenuList {get;set;}
+
+    }
+
+
+     
+
+
+
 }

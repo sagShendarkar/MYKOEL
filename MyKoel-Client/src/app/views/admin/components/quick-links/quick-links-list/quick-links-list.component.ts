@@ -82,5 +82,6 @@ export class QuickLinksListComponent {
 
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
+    this.quickLinksService.quickLinksMenuList$.next([]);
   }
 }

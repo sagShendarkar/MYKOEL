@@ -33,7 +33,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date, string Location)
         {
             var canteenMenuList = await (from c in _context.CanteenMenus
-                                         where c.DATE.Date == Date.Date && c.Location==Location
+                                         where c.DATE.Date == Date.Date &&   (!string.IsNullOrEmpty(Location) ? c.Location.ToLower() == Location.ToLower():true)
                                          group c by new { c.DATE,c.Location} into g
                                          select new CanteenMenuListDto
                                          {

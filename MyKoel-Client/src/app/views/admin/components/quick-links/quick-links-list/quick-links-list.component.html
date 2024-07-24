@@ -11,20 +11,22 @@
       <thead>
       <tr class="header-tr">
         <th scope="col">Menu Name </th>
+        <th scope="col">Route </th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let quickLink of (quickLinksService.quickLinksMenuList$|async)">
 
-        <td>{{quickLink.menuGroupName}}</td>
+        <td>{{quickLink.menuName}}</td>
+        <td>{{quickLink.route}}</td>
         <td>
         <div>
           <img
           src="../../../../../assets/SVG/view-icon.svg"
           alt="My Happy SVG"
         />
-         <img class="ms-3 cursor" [routerLink]="'/admin/edit-quick-links/'+quickLink.mainMenuGroupId"
+         <img class="ms-3 cursor" [routerLink]="'/admin/edit-quick-links/'+quickLink.menusId"
         src="../../../../../assets/SVG/edit-icon.svg"
         alt="My Happy SVG"
       />
