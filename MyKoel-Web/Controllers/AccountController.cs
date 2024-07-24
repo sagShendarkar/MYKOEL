@@ -147,7 +147,9 @@ namespace MyKoel_Web.Controllers
                                                   MoodId = w.MoodId,
                                                   Rating = w.Rating,
                                               }).FirstOrDefaultAsync(),
-                        Grade = usersdata.Grade
+                        Grade = usersdata.Grade,
+                         Location= usersdata.Location
+
 
                     };
                     return Ok(JsonConvert.SerializeObject(responseData));
@@ -300,7 +302,8 @@ namespace MyKoel_Web.Controllers
                                                       Comment = w.Comment,
                                                       MoodId = w.MoodId,
                                                       Rating = w.Rating,
-                                                  }).FirstOrDefaultAsync()
+                                                  }).FirstOrDefaultAsync(),
+                           Location= userdata.Location
 
                         };
                         return Ok(JsonConvert.SerializeObject(responseData));
