@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import {
-  ClassicEditor,
-  Bold,
-  Essentials,
-  Heading,
-  Indent,
-  IndentBlock,
-  Italic,
-  Link,
-  List,
-  MediaEmbed,
-  Paragraph,
-  Table,
-  Undo,Underline
-} from 'ckeditor5';
+// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+// import {
+//   ClassicEditor,
+//   Bold,
+//   Essentials,
+//   Heading,
+//   Indent,
+//   IndentBlock,
+//   Italic,
+//   Link,
+//   List,
+//   MediaEmbed,
+//   Paragraph,
+//   Table,
+//   Undo,Underline
+// } from 'ckeditor5';
 
-import 'ckeditor5/ckeditor5.css';
+// import 'ckeditor5/ckeditor5.css';
 import { Subscription } from 'rxjs';
 import { SectionService } from '../../services/section.service';
 import Swal from 'sweetalert2';
@@ -29,29 +29,29 @@ import Swal from 'sweetalert2';
 })
 export class VisionMissionValuesComponent {
   title = 'angular';
-  public Editor = ClassicEditor;
-  public config = {
-    toolbar: [
-      'undo', 'redo', '|',
-      'heading', '|', 'bold','Underline', 'italic', '|',
-      'link', 'insertTable', 'mediaEmbed', '|',
-      'bulletedList', 'numberedList', 'indent', 'outdent'
-    ],
-    plugins: [
-      Bold,Underline,
-      Essentials,
-      Heading,
-      Indent,
-      IndentBlock,
-      Italic,
-      Link,
-      List,
-      MediaEmbed,
-      Paragraph,
-      Table,
-      Undo
-    ]
-  }
+  // public Editor = ClassicEditor;
+  // public config = {
+  //   toolbar: [
+  //     'undo', 'redo', '|',
+  //     'heading', '|', 'bold','Underline', 'italic', '|',
+  //     'link', 'insertTable', 'mediaEmbed', '|',
+  //     'bulletedList', 'numberedList', 'indent', 'outdent'
+  //   ],
+  //   plugins: [
+  //     Bold,Underline,
+  //     Essentials,
+  //     Heading,
+  //     Indent,
+  //     IndentBlock,
+  //     Italic,
+  //     Link,
+  //     List,
+  //     MediaEmbed,
+  //     Paragraph,
+  //     Table,
+  //     Undo
+  //   ]
+  // }
 
 
   submitted = false;
