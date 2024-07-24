@@ -45,7 +45,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<PagedList<VacancyPostingDto>> GetVacancyList(ParameterParams parameterParams)
         {
             var vacancyData = (from v in _context.VacancyPosting
-                                where v.CLOSINGDATE.Date >= DateTime.Today.Date
+                                where v.CLOSINGDATE.Date >= DateTime.Today.Date && (!string.IsNullOrEmpty(parameterParams.Grade)? v.GRADE.ToLower().Contains(parameterParams.Grade.ToLower()): true)
                                select new VacancyPostingDto
                                {
                                    VACANCYID = v.VACANCYID,
@@ -64,10 +64,10 @@ namespace MyKoel_Domain.Repositories
                                    ISACTIVE = v.ISACTIVE,
                                    VACANCYCOUNT = v.VACANCYCOUNT
                                }).OrderByDescending(s => s.POSTEDDATE).AsQueryable();
-            if (!string.IsNullOrEmpty(parameterParams.Flag))
+            if (!string.IsNullOrEmpty(parameterParams.searchPagination))
             {
                 vacancyData = vacancyData.Where(c => parameterParams.searchPagination.Contains(c.JOBTITLE)
-                || parameterParams.searchPagination.Contains(c.JOBDESC) || parameterParams.searchPagination.Contains(c.LOCATION)
+                || parameterParams.searchPagination.Contains(c.GRADE) || parameterParams.searchPagination.Contains(c.LOCATION)
                 );
             }
             return await PagedList<VacancyPostingDto>.CreateAsync(vacancyData.ProjectTo<VacancyPostingDto>(_mapper.ConfigurationProvider)
