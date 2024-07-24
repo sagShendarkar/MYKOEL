@@ -27,20 +27,41 @@ namespace MyKoel_Web.Controllers
         }
 
         [HttpPost("AddCanteenMenus")]
-        public async Task<object> AddCanteenMenus(List<CanteenDto> canteenDto)
+        public async Task<object> AddCanteenMenus(CanteenDto canteenDto)
         {
             try
             {
                 if (canteenDto != null)
                 {
-                    _context.CanteenMenus.RemoveRange(_context.CanteenMenus.Where(x => x.DATE.Date == canteenDto[0].Date));
-                    await _context.SaveChangesAsync();
-                    foreach (var canteenMenu in canteenDto)
-                    {
-                        var canteenmenu = _mapper.Map<CanteenMenus>(canteenMenu);
-                        _canteenMenuRepository.AddCanteenMenus(canteenmenu);
+                    // _context.CanteenMenus.RemoveRange(_context.CanteenMenus.Where(x => x.DATE.Date == canteenDto.Date.Date));
+                    // await _context.SaveChangesAsync();
 
+                    foreach (var lunchId in canteenDto.LunchId)
+                    {
+                        var canteenMenu = new CanteenMenus
+                        {
+                            DATE = canteenDto.Date,
+                            LUNCHID = lunchId,
+                            Location = canteenDto.Location,
+                            BREAKFASTID=null
+                        };
+
+                        _context.CanteenMenus.Add(canteenMenu);
                     }
+
+                    foreach (var breakfastId in canteenDto.BreakFastId)
+                    {
+                        var canteenMenu = new CanteenMenus
+                        {
+                            DATE = canteenDto.Date,
+                            BREAKFASTID = breakfastId,
+                            Location = canteenDto.Location,
+                            LUNCHID=null
+                        };
+
+                        _context.CanteenMenus.Add(canteenMenu);
+                    }
+
                     if (await _context.SaveChangesAsync() > 0)
                     {
                         return new
@@ -70,19 +91,23 @@ namespace MyKoel_Web.Controllers
             }
             catch (Exception ex)
             {
-                     return new
-                    {
-                        Message = ex.Message
-                    };
+                return new
+                {
+                    Message = ex.Message
+                };
             }
         }
 
-        [HttpGet("CanteenMenuList")]
-        public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date, string Location)
+        [HttpGet("BreakfastMenuList")]
+        public async Task<List<CanteenMenuListDto>> BreakfastList(DateTime Date, string Location)
         {
-            return await _canteenMenuRepository.CanteenMenuList(Date, Location);
+            return await _canteenMenuRepository.BreakfastList(Date, Location);
         }
 
-
+        [HttpGet("LunchMenuList")]
+        public async Task<List<CanteenMenuListDto>> LunchMenuList(DateTime Date, string Location)
+        {
+            return await _canteenMenuRepository.LunchList(Date, Location);
+        }
     }
 }

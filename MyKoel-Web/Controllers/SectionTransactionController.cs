@@ -22,12 +22,12 @@ namespace MyKoel_Web.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public SectionTransactionController(ISectionTrnRepository sectionTrnRepository, IMapper mapper, DataContext context,IConfiguration config)
+        public SectionTransactionController(ISectionTrnRepository sectionTrnRepository, IMapper mapper, DataContext context, IConfiguration config)
         {
             _context = context;
             _mapper = mapper;
             _sectionTrnRepository = sectionTrnRepository;
-            _config=config;
+            _config = config;
         }
 
         [HttpGet("ShowSectionList")]
@@ -92,6 +92,15 @@ namespace MyKoel_Web.Controllers
                             if (sectionTrnDto.FLAG == "New Hires")
                             {
                                 folderPath = Path.Combine(rootFolderPath, "New Hires");
+
+                                if (!Directory.Exists(folderPath))
+                                {
+                                    Directory.CreateDirectory(folderPath);
+                                }
+                            }
+                            if (sectionTrnDto.FLAG == "Company Awards")
+                            {
+                                folderPath = Path.Combine(rootFolderPath, "Company Awards");
 
                                 if (!Directory.Exists(folderPath))
                                 {
@@ -174,7 +183,7 @@ namespace MyKoel_Web.Controllers
 
                             if (item.IMAGESRC != null)
                             {
-                                 string rootFolderPath = _config.GetValue<string>("RootFolderPath");
+                                string rootFolderPath = _config.GetValue<string>("RootFolderPath");
                                 if (!Directory.Exists(rootFolderPath))
                                 {
                                     Directory.CreateDirectory(rootFolderPath);
@@ -207,6 +216,15 @@ namespace MyKoel_Web.Controllers
                                         Directory.CreateDirectory(folderPath);
                                     }
                                 }
+                                if (sectionDto.FLAG == "Company Awards")
+                            {
+                                folderPath = Path.Combine(rootFolderPath, "Company Awards");
+
+                                if (!Directory.Exists(folderPath))
+                                {
+                                    Directory.CreateDirectory(folderPath);
+                                }
+                            }
 
                                 string fileName = Guid.NewGuid().ToString() + ".png";
                                 string imagePath = Path.Combine(folderPath, fileName);
@@ -362,7 +380,7 @@ namespace MyKoel_Web.Controllers
                             continue;
                         }
 
-                       var sectiondata= _mapper.Map(section, existingSection);
+                        var sectiondata = _mapper.Map(section, existingSection);
                         _sectionTrnRepository.UpdateSection(sectiondata);
                         if (await _sectionTrnRepository.SaveAllAsync())
                         {

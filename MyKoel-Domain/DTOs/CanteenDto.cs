@@ -10,9 +10,10 @@ namespace MyKoel_Domain.DTOs
     {
         public int CanteenMenusId{ get; set; }
         public DateTime Date {get;set;}
-        public int? LunchId {get;set;}
-        public int? BreakFastId {get;set;}
         public string Location {get;set;}
+
+        public List<int> LunchId {get;set;}
+        public List<int> BreakFastId {get;set;}
 
     }
 
@@ -22,8 +23,7 @@ namespace MyKoel_Domain.DTOs
         public int CanteenMenusId{ get; set; }
         public DateTime Date {get;set;}
         public string Location {get;set;}
-        public List<BreakFastDto> BreakfastList {get;set;}
-        public List<LunchDto> LunchList {get;set;}
+        public string Name {get;set;}
 
     }
     
