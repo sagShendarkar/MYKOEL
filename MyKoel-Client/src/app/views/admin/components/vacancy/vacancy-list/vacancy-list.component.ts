@@ -102,5 +102,6 @@ export class VacancyListComponent {
 
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
+    this.vacancyService.VacancyPostingList$.next([]);
   }
 }

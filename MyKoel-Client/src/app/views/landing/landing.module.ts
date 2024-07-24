@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { SharedModule } from '../../shared/shared.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { SharedModule } from '../../shared/shared.module';
     TableModule,
     WidgetsModule,
     CarouselModule,ModalModule,
-    SharedModule,PlaceholderModule
+    SharedModule,PlaceholderModule,NgSelectModule
   ]
 })
 export class LandingModule { }
