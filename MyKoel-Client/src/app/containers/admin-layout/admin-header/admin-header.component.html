@@ -41,9 +41,9 @@
             <div cDropdownMenu class="mega-menus">
               <div class="row mb-2 mt-3">
                 <ng-container *ngFor="let menuGroup of mainMenu.secondLevelMenuList">
-                  <div class="col-md-6" *ngIf="menuGroup.thirdLevelMenuList.length > 0">
+                  <div class="col-md-6 mega-menu-border" *ngIf="menuGroup.thirdLevelMenuList.length > 0">
                     <div class="row">
-                      <span class="text-underline cursor">
+                      <span class="text-underline cursor level2th-menu">
                         {{ menuGroup.menuName }}</span
                       >
                     </div>
@@ -64,11 +64,16 @@
 
 
                           <a  *ngIf="menu.isChild===true" cDropdownItem routerLink="./" class="child-showhim">{{ menu.menuName }}
-
+                             <i class="fa fa-angle-down  down-icon ms-1"></i>
+                             <i class="fa fa-angle-up up-icon  ms-1"></i>
                             <div class="child-showme">
     <div class="row"   *ngFor="let menu4level of menu.fourthLevelMenuList">
       <div class="col-md-12">
-        <li><a cDropdownItem routerLink="./"> {{menu4level.menuName}} </a></li>
+        <ul class="level4th-menu">
+        <li>
+          <a cDropdownItem routerLink="./"> {{menu4level.menuName}} </a>
+ </li>
+        </ul>
       </div>
 
     </div>
