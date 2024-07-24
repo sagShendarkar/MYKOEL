@@ -214,7 +214,7 @@ namespace MyKoel_Domain.Repositories
         public async Task<List<LocationDto>> LocationList(string Location)
         {
             var locationlist = await (from h in _context.Users
-                                     where  h.Location != null && (!string.IsNullOrEmpty(Location)? h.Location.ToLower() == Location.ToLower():true)
+                                     where !string.IsNullOrEmpty(h.Location) && (!string.IsNullOrEmpty(Location)? h.Location.ToLower() == Location.ToLower():true)
                                      select new LocationDto
                                      {
                                          Locations = h.Location
