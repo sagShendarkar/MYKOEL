@@ -96,8 +96,8 @@ class="invalid-feedback"
 >
 Image is required.
 </div>
-                 <img [src]="quickLinkform.get('imageIcon')?.value" style="background-color: #eee;"
-                 (click)="openFile(quickLinkform.get('imageIcon')?.value)" height="80" class="mt-7" />
+                 <img [src]="quickLinkform.get('imageBase64')?.value" style="background-color: #eee;"
+                 (click)="openFile(quickLinkform.get('imageBase64')?.value)" height="80" class="mt-7" />
               <img
                 *ngIf="isViewImage"
                 [src]="viewImage"

@@ -72,6 +72,28 @@ export class VacancyListComponent {
         )
     );
   }
+  JobDescriptionById(id=0) {
+    this.unsubscribe.add(
+      this.vacancyService
+        .getJobDescriptionById(id)
+        .subscribe(
+          (res: any) => {
+            console.log(res);
+            // filepath
+
+    window.open(res.filepath, '_blank');
+          },
+          (err) => {
+            this.vacancyService.isLoadingSubject.next(false);
+            Swal.fire(
+              'Error!',
+              '<span>Something went wrong, please try again later !!!</span>',
+              'error'
+            );
+          }
+        )
+    );
+  }
   pageChanged(event: any) {
     this.vacancyService.paginationParams.pageNumber =
       event.page;

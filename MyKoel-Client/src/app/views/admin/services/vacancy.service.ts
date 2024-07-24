@@ -76,6 +76,10 @@ export class VacancyService {
   {
     return this.http.get<any>(this.baseUrl+'VacancyPosting/GetVacancyById/'+id);
   }
+  getJobDescriptionById(id:number)
+  {
+    return this.http.get<any>(this.baseUrl+'VacancyPosting/GetVacancyById/'+id);
+  }
   addVacancy(VacancyValue:any=null)
   {
     return this.http.post(this.baseUrl + 'VacancyPosting/AddVacancy',VacancyValue);

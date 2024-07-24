@@ -20,6 +20,7 @@ values="";
   isAnnouncementLoading$=  new BehaviorSubject<boolean>(false);
   isNewHiresLoading$=  new BehaviorSubject<boolean>(false);
   isVacancyLoading$=  new BehaviorSubject<boolean>(false);
+  isNoBirthday$=  new BehaviorSubject<boolean>(false);
   userName:any="";
   private unsubscribe: Subscription = new Subscription();
   public visionModal = false;
@@ -147,6 +148,9 @@ getBirthdayList(){
   this.unsubscribe.add(
     this.landingPageService.getBirthdayList().subscribe((res)=>{
 console.log(res);
+if(res.length===0){
+  this.isNoBirthday$.next(true);
+}
 this.landingPageService.birthdayList$.next(res);
 this.isBirthdayLoading$.next(false);
 

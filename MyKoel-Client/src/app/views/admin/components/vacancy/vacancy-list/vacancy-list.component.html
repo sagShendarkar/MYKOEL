@@ -17,6 +17,7 @@
         <th scope="col">Posted date</th>
         <th scope="col">Closing date</th>
         <th scope="col">Vacancy count</th>
+        <th scope="col">JD</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
@@ -30,6 +31,15 @@
         <td> {{vacancy.posteddate| date:'dd-MM-yyyy'}}   </td>
         <td> {{vacancy.closingdate| date:'dd-MM-yyyy'}}   </td>
         <td  >{{vacancy.vacancycount}} </td>
+        <td  >
+          <div class="download-icon" (click)="JobDescriptionById(vacancy.vacancyid)">
+
+ <img
+          src="../../../../../../assets/images/download-icon.png"
+          alt="My Happy SVG"
+        />
+          </div>
+        </td>
         <td>
         <div>
           <img
