@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {  BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { SharedModule } from '../../shared/shared.module';
@@ -36,6 +36,7 @@ import { CanteenMenuComponent } from './components/canteen-menu/canteen-menu/can
 import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component';
 
 
+import { AngularEditorModule } from '@kolkov/angular-editor';
 @NgModule({
   declarations: [
     CompanyAnnouncementComponent,
@@ -78,7 +79,9 @@ import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component'
     ListGroupModule,
     SpinnerModule,
     TableModule,
-    BsDatepickerModule,CKEditorModule,NgSelectModule
+    BsDatepickerModule,  NgSelectModule,
+    AngularEditorModule
+
   ]
 })
 export class AdminModule { }

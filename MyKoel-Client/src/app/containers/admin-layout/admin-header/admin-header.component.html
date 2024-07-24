@@ -41,7 +41,7 @@
             <div cDropdownMenu class="mega-menus">
               <div class="row mb-2 mt-3">
                 <ng-container *ngFor="let menuGroup of mainMenu.secondLevelMenuList">
-                  <div class="col-md-6 mega-menu-border" *ngIf="menuGroup.thirdLevelMenuList.length > 0">
+                  <div class="col-md-4 mega-menu-border" *ngIf="menuGroup.thirdLevelMenuList.length > 0">
                     <div class="row">
                       <span class="text-underline cursor level2th-menu">
                         {{ menuGroup.menuName }}</span
@@ -50,7 +50,7 @@
 
                     <div class="row  mb-2 pb-1">
                       <div
-                        class="col-md-4"
+                        class="col-md-6"
                         *ngFor="let menu of menuGroup.thirdLevelMenuList"
                       >
                         <li>
@@ -91,7 +91,10 @@
                     class="col-md-3"
                     *ngIf="menuGroup.thirdLevelMenuList.length === 0"
                   >
-                    <li>
+                  <span class="text-underline cursor level2th-menu" *ngIf="menuGroup.isRoute===false">
+                    {{ menuGroup.menuName }}</span
+                  >
+                    <li  *ngIf="menuGroup.isRoute===true">
                       <a cDropdownItem [routerLink]="menuGroup.route"
                         > {{ menuGroup.menuName }}
                       </a>

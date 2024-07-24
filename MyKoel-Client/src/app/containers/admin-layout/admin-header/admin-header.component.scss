@@ -29,9 +29,12 @@
   font-size: 18px;
   color: #000;
 }
-.mega-menu-border:nth-of-type(odd){
+.mega-menu-border {
   border-right: 1px solid #B15A1F;
-  padding-right: 4%;
+}
+
+div.container .div-row:last-child {
+  border-right: 1px solid #fff;
 }
 .mega-menu-border:nth-of-type(even){
    padding-left: 2%;

@@ -65,7 +65,7 @@ ngOnInit(): void {
         console.log(event.target.files[0]);
 
         // if(event.target.files[0].size  < 50000 || event.target.files[0].size > 200000)
-        if (event.target.files[0].size > 500000) {
+        if (event.target.files[0].size > 5000000) {
           console.log('test img');
 
           Swal.fire({
@@ -73,7 +73,7 @@ ngOnInit(): void {
             text: 'Image size must be less than 5MB!',
           });
         }
-        if (event.target.files[0].size <= 500000) {
+        if (event.target.files[0].size <= 5000000) {
           var reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event) => {
@@ -151,7 +151,7 @@ if(res.status===400){
         console.log(event.target.files[0]);
 
         // if(event.target.files[0].size  < 50000 || event.target.files[0].size > 200000)
-        if (event.target.files[0].size > 500000) {
+        if (event.target.files[0].size > 5000000) {
           console.log('test img');
 
           Swal.fire({
@@ -159,7 +159,7 @@ if(res.status===400){
             text: 'Image size must be less than 5MB!',
           });
         }
-        if (event.target.files[0].size <= 500000) {
+        if (event.target.files[0].size <= 5000000) {
           var reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event) => {
