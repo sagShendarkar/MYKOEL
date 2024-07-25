@@ -26,5 +26,16 @@ namespace MyKoel_Domain.DTOs
         public string Name {get;set;}
 
     }
+
+
+     public class CanteenMenusDto
+    {
+        public int CanteenMenusId{ get; set; }
+        public DateTime Date {get;set;}
+        public string Location {get;set;}
+        public List<BreakFastDto> BreakfastList {get;set;}
+        public List<LunchDto> LunchList {get;set;}
+
+    }
     
 }

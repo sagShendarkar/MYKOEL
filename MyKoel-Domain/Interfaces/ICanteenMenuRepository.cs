@@ -13,6 +13,7 @@ namespace MyKoel_Domain.Interfaces
         void AddCanteenMenus(CanteenMenus canteen);
         Task<List<CanteenMenuListDto>> BreakfastList(DateTime Date, string Location);
         Task<List<CanteenMenuListDto>> LunchList(DateTime Date, string Location);
-
+        Task<CanteenMenusDto> CanteenMenusList(DateTime Date, string Location);
+        Task<bool> RemoveCanteenMenu (DateTime Date, string Location);
     }
 }

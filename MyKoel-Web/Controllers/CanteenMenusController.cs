@@ -32,10 +32,8 @@ namespace MyKoel_Web.Controllers
             try
             {
                 if (canteenDto != null)
-                {
-                    // _context.CanteenMenus.RemoveRange(_context.CanteenMenus.Where(x => x.DATE.Date == canteenDto.Date.Date));
-                    // await _context.SaveChangesAsync();
 
+                    await _canteenMenuRepository.RemoveCanteenMenu(canteenDto.Date,canteenDto.Location);
                     foreach (var lunchId in canteenDto.LunchId)
                     {
                         var canteenMenu = new CanteenMenus
@@ -78,16 +76,6 @@ namespace MyKoel_Web.Controllers
                             Message = "Failed To Add Data"
                         };
                     }
-
-                }
-                else
-                {
-                    return new
-                    {
-                        Status = 400,
-                        Message = "Invalid Data"
-                    };
-                }
             }
             catch (Exception ex)
             {
@@ -108,6 +96,12 @@ namespace MyKoel_Web.Controllers
         public async Task<List<CanteenMenuListDto>> LunchMenuList(DateTime Date, string Location)
         {
             return await _canteenMenuRepository.LunchList(Date, Location);
+        }
+
+        [HttpGet("CanteenMenuList")]
+        public async Task<CanteenMenusDto> CanteenMenuList(DateTime Date, string Location)
+        {
+            return await _canteenMenuRepository.CanteenMenusList(Date, Location);
         }
     }
 }
