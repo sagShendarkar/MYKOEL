@@ -30,36 +30,72 @@ namespace MyKoel_Domain.Repositories
             _context.Entry(canteen).State = EntityState.Added;
         }
 
-        public async Task<CanteenMenuListDto> CanteenMenuList(DateTime Date, string Location)
+        public async Task<List<CanteenMenuListDto>> BreakfastList(DateTime Date, string Location)
         {
             var canteenMenuList = await (from c in _context.CanteenMenus
-                                         where c.DATE.Date == Date.Date &&   (!string.IsNullOrEmpty(Location) ? c.Location.ToLower() == Location.ToLower():true)
-                                         group c by new { c.DATE,c.Location} into g
+                                         join b in _context.BreakFasts
+                                         on c.BREAKFASTID equals b.BREAKFASTID
+                                         where c.DATE.Date == Date.Date && (!string.IsNullOrEmpty(Location) ? c.Location.ToLower() == Location.ToLower() : true)
                                          select new CanteenMenuListDto
                                          {
-                                             Date = g.Key.DATE,
+                                             Date = c.DATE,
+                                             Location = c.Location,
+                                             Name = b.BREAKFASTNAME
+                                         }).ToListAsync();
+            return canteenMenuList;
+        }
+        public async Task<List<CanteenMenuListDto>> LunchList(DateTime Date, string Location)
+        {
+            var canteenMenuList = await (from c in _context.CanteenMenus
+                                         join b in _context.LunchMaster
+                                         on c.LUNCHID equals b.LUNCHID
+                                         where c.DATE.Date == Date.Date && (!string.IsNullOrEmpty(Location) ? c.Location.ToLower() == Location.ToLower() : true)
+                                         select new CanteenMenuListDto
+                                         {
+                                             Date = c.DATE,
+                                             Location = c.Location,
+                                             Name = b.LUNCHNAME
+                                         }).ToListAsync();
+            return canteenMenuList;
+        }
+
+
+        public async Task<CanteenMenusDto> CanteenMenusList(DateTime Date, string Location)
+        {
+            var canteenMenuList = await (from c in _context.CanteenMenus
+                                         where c.DATE.Date == Date.Date && (!string.IsNullOrEmpty(Location) ? c.Location.ToLower() == Location.ToLower() : true)
+                                         group c by new { c.DATE.Date, c.Location } into g
+                                         select new CanteenMenusDto
+                                         {
+                                             Date = g.Key.Date,
                                              Location = g.Key.Location,
                                              BreakfastList = (from b in _context.BreakFasts
-                                                              where g.Any(c => c.BREAKFASTID == b.BREAKFASTID)
+                                                              join ct in _context.CanteenMenus
+                                                              on b.BREAKFASTID equals ct.BREAKFASTID
+                                                              where ct.DATE.Date == g.Key.Date
                                                               select new BreakFastDto
                                                               {
                                                                   BreakFastId = b.BREAKFASTID,
                                                                   BreakFastName = b.BREAKFASTNAME,
                                                                   IsActive = b.ISACTIVE
-                                                              }).ToList(),
+                                                              }).Distinct().ToList(),
                                              LunchList = (from l in _context.LunchMaster
-                                                          where g.Any(c => c.LUNCHID == l.LUNCHID)
+                                                          join ct in _context.CanteenMenus
+                                                             on l.LUNCHID equals ct.LUNCHID
+                                                          where ct.DATE.Date == g.Key.Date
                                                           select new LunchDto
                                                           {
                                                               LunchId = l.LUNCHID,
                                                               LunchName = l.LUNCHNAME,
                                                               IsActive = l.ISACTIVE
-                                                          }).ToList()
+                                                          }).Distinct().ToList()
                                          })
                                          .FirstOrDefaultAsync();
 
             return canteenMenuList;
         }
+
+
 
         public async Task<bool> SaveAllAsync()
         {
@@ -80,5 +116,14 @@ namespace MyKoel_Domain.Repositories
             isDisposed = true;
         }
 
+        public async Task<bool> RemoveCanteenMenu(DateTime Date, string Location)
+        {
+            var Existingmenus = await _context.CanteenMenus.Where(x => x.DATE.Date == Date.Date && x.Location == Location).ToListAsync();
+            if (Existingmenus.Count > 0)
+            {
+                _context.CanteenMenus.RemoveRange(Existingmenus);
+            }
+            return true;
+        }
     }
 }

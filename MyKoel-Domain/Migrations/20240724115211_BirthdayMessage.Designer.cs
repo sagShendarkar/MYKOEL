@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyKoel_Domain.Data;
 
@@ -11,9 +12,11 @@ using MyKoel_Domain.Data;
 namespace MyKoel_Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240724115211_BirthdayMessage")]
+    partial class BirthdayMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -477,6 +480,12 @@ namespace MyKoel_Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int>("CREATEDBY")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CREATEDDATE")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DAY")
                         .HasColumnType("int");
 
@@ -485,6 +494,12 @@ namespace MyKoel_Domain.Migrations
 
                     b.Property<string>("MESSAGE")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UPDATEDBY")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UPDATEDDATE")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
