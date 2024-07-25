@@ -23,6 +23,7 @@ import { AddQuickLinksComponent } from './components/quick-links/add-quick-links
 import { BREAKFASTComponent } from './components/canteen-menu/breakfast/breakfast.component';
 import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component';
 import { CanteenMenuComponent } from './components/canteen-menu/canteen-menu/canteen-menu.component';
+import { AddCanteenMenuComponent } from './components/canteen-menu/add-canteen-menu/add-canteen-menu.component';
 
 const routes: Routes = [
   {
@@ -305,9 +306,22 @@ const routes: Routes = [
     canActivate:[AuthGuard],
     data: {
       title: 'Canteen Menu List',
-      isDisplayAddBtn:false,
-
+      isDisplayAddBtn:true,
+      addBtn:{
+        title:"Add Canteen Menu ",
+        url:"/admin/add-canteen-menu"
+      },
         backBtnUrl:"/home"
+    }
+  },
+  {
+    path: 'add-canteen-menu',
+    component: AddCanteenMenuComponent,
+    canActivate:[AuthGuard],
+    data: {
+      title: 'Add Canteen Menu',
+      isDisplayAddBtn:false,
+        backBtnUrl:"/admin/canteen-menu"
     }
   },
 ];

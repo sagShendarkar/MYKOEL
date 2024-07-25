@@ -19,6 +19,7 @@ export class BreakfastService {
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
   BreakfastList$=  new BehaviorSubject<any>([]);
+  BreakfastDropdownList$=  new BehaviorSubject<any>([]);
    locationList$=  new BehaviorSubject<any>([]);
   constructor(private http:HttpClient,private router: Router) {
 
@@ -68,6 +69,11 @@ export class BreakfastService {
 addBreakfast(formValue:any=null)
 {
   return this.http.post(this.baseUrl + 'BreakFast/AddBreakfast',formValue);
+
+}
+getBreakfastDropdownList()
+{
+  return this.http.get(this.baseUrl + 'BreakFast/BreakfastDropdownList');
 
 }
 updateBreakfast(formValue:any=null)

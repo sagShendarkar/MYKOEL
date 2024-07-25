@@ -1,0 +1,177 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <c-card class="mb-4">
+
+      <c-card-body>
+
+        <form [formGroup]="canteenMenuform">
+          <div class=" row">
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Start Date</label>
+
+                <input type="text"
+                placeholder="Start Date"
+                class="form-control" bsDatepicker formControlName="date"   [ngClass]="{
+                  'is-invalid':
+                    submitted && canteenMenuform.get('date')?.hasError('required')
+                }"
+                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MMM-YYYY' }">
+
+                <div
+                class="invalid-feedback"
+                *ngIf="canteenMenuform.get('date')?.hasError('required')"
+                >
+                Date  is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Location</label>
+                <ng-select
+                [items]="(holidayCalenderService.locationList$|async)"
+                bindLabel="locations"
+                placeholder="Select Location"
+                bindValue="locations"
+                formControlName="location"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted &&
+                    canteenMenuform.get('location')?.hasError('required')
+                }"
+              >
+              </ng-select>
+                <div
+                class="invalid-feedback"
+                *ngIf="canteenMenuform.get('location')?.hasError('required')"
+                >
+                Location is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-12">
+<div class="row">
+
+  <div class="col-4">
+  <label cLabel for="exampleFormControlInput1">Breakfast</label>
+    <div class="row">
+
+      <div class="col-5">
+        <div>
+          <div class="row ">
+
+            <div class="col-12">
+              <div class="border-div main-div">
+
+              <div class="border-div value-div" *ngFor="let breakfast of (breakfastService.BreakfastDropdownList$|async)" >
+
+<span  class="cursor " (click)="addToBreakfastList(breakfast)" > {{breakfast.breakFastName}} </span>
+              </div>
+              </div>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-2">
+<div>
+  <i class="fa fa-long-arrow-left"></i>
+</div>
+<div>
+  <i class="fa fa-long-arrow-right"></i>
+</div>
+      </div>
+      <div class="col-5">
+        <div>
+          <div class="row ">
+
+            <div class="col-12">
+              <div class="border-div main-div">
+
+              <div class="border-div value-div" *ngFor="let breakfast of selectedBreakfastList" >
+
+<span class="cursor"  (click)="removeFromSelectedBreakfastList(breakfast)" > {{breakfast.breakFastName}} </span>
+              </div>
+              </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div class="col-4">
+      <label cLabel for="exampleFormControlInput1">Lunch</label>
+        <div class="row">
+
+          <div class="col-5">
+            <div>
+              <div class="row ">
+
+                <div class="col-12">
+                  <div class="border-div main-div">
+
+                  <div class="border-div value-div" *ngFor="let lunch of (lunchService.LunchDropdownList$|async)" >
+
+    <span  class="cursor " (click)="addToLunchList(lunch)" > {{lunch.lunchName}} </span>
+                  </div>
+                  </div>
+                </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-2">
+    <div>
+      <i class="fa fa-long-arrow-left"></i>
+    </div>
+    <div>
+      <i class="fa fa-long-arrow-right"></i>
+    </div>
+          </div>
+          <div class="col-5">
+            <div>
+              <div class="row ">
+
+                <div class="col-12">
+                  <div class="border-div main-div">
+
+                  <div class="border-div value-div" *ngFor="let lunch of selectedlunchList" >
+
+    <span class="cursor"  (click)="removeFromSelectedLunchList(lunch)" > {{lunch.lunchName}} </span>
+                  </div>
+                  </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+          </div>
+
+
+        </div>
+</div>
+
+            </div>
+
+
+            <div class="col-12 text-right pt-3">
+
+             <button class="btn save-btn ms-4 mt-3"  size="lg" (click)="onSubmit()">
+Save
+             </button>
+             <button class="btn cancel-btn ms-4 mt-3"  size="lg" (click)="routeToList()">
+              Cancel
+             </button>
+            </div>
+          </div>
+        </form>
+</c-card-body>
+</c-card>
+</div>
+</div>

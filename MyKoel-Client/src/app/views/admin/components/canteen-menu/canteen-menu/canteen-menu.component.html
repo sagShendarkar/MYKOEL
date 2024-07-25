@@ -9,17 +9,21 @@
 
   <input type="text"
                 placeholder="Start Date"
-                class="form-control" bsDatepicker formControlName="startdate"   >
+                class="form-control" bsDatepicker
+                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MMM-YYYY' }" [(ngModel)]="selectedDate"
+                  (bsValueChange)="onDateChange($event)"  >
 
 </div>
 <div class="col-4">
 
-  <label cLabel for="exampleFormControlInput1">  Date</label>
+  <label cLabel for="exampleFormControlInput1">  Location</label>
   <ng-select
  [items]="(holidayCalenderService.locationList$|async)"
  bindLabel="locations"
  placeholder="Select Location"
  bindValue="locations"
+ [(ngModel)]="selectedLocation"
+ [clearable]="false"
  (change)="onLocationChange($event)"
 >
 </ng-select>
@@ -43,16 +47,37 @@
       <thead>
       <tr class="header-tr">
          <th scope="col">Date </th>
-        <!-- <th scope="col">Location</th> -->
-        <!-- <th scope="col">Date</th> -->
+         <th scope="col">Location</th>
+         <th scope="col">Breafast</th>
+         <th scope="col">Lunch</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let lunch of (canteenMenuService.CanteenMenusList$|async)">
+      <tbody   *ngIf="canteenMenuService.CanteenMenusList$ | async as canteenMenu">
+      <tr >
 
-        <td>{{lunch.date| date:'dd-MM-yyyy'}}</td>
-        <!-- <td class="desc-div">{{lunch.locations}} </td> -->
+        <td>
+          {{canteenMenu?.date| date:'dd-MM-yyyy'}}
+        </td>
+        <td>
+          {{canteenMenu?.location}}
+        </td>
+        <td class="desc-div"> <div  *ngIf="canteenMenu?.breakfastList">
+
+        <span *ngFor="let breakfast of  canteenMenu.breakfastList">
+
+          {{breakfast.breakFastName}},
+        </span>
+        </div>
+      </td>
+        <td class="desc-div"> <div  *ngIf="canteenMenu?.lunchList">
+
+        <span *ngFor="let lunch of  canteenMenu.lunchList">
+
+          {{lunch.lunchName}},
+        </span>
+        </div>
+      </td>
         <!-- <td> {{lunch.date| date:'dd-MM-yyyy'}}   </td> -->
         <td>
         <div>
@@ -77,7 +102,7 @@
               <c-spinner size="sm" variant="grow"></c-spinner><span>Loading...</span>
               </div>
                   </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end  mb-5 "
           *ngIf="pagination">
           <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems"
@@ -86,7 +111,7 @@
               firstText="&laquo;" lastText="&raquo;" [maxSize]="5" [rotate]="true">
           </pagination>
       </div>
-  </div>
+  </div> -->
       </c-card-body>
     </c-card>
   </div>

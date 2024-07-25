@@ -17,7 +17,7 @@ export class CanteenMenuService {
   baseUrl = environment.apiUrl1;
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
-  CanteenMenusList$=  new BehaviorSubject<any>([]);
+  CanteenMenusList$=  new BehaviorSubject<any>(null);
    locationList$=  new BehaviorSubject<any>([]);
   constructor(private http:HttpClient,private router: Router) {
 

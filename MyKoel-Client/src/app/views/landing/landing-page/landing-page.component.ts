@@ -185,7 +185,7 @@ openFile(url: string) {
 getNewHiresList(){
   this.isNewHiresLoading$.next(true);
   this.unsubscribe.add(
-    this.landingPageService.getSectionList('New Hires',5).subscribe((res)=>{
+    this.landingPageService.getSectionList('New Hires',6).subscribe((res)=>{
 console.log(res);
 this.landingPageService.newHiresList$.next(res);
 

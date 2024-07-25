@@ -20,6 +20,7 @@ export class LunchService {
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
   LunchList$=  new BehaviorSubject<any>([]);
+  LunchDropdownList$=  new BehaviorSubject<any>([]);
    locationList$=  new BehaviorSubject<any>([]);
   constructor(private http:HttpClient,private router: Router) {
 
@@ -74,6 +75,13 @@ addLunch(formValue:any=null)
 updateLunch(formValue:any=null)
 {
   return this.http.post(this.baseUrl + 'Lunch/UpdateLunchDetails',formValue);
+
+}
+
+
+getLunchDropdownList()
+{
+  return this.http.get(this.baseUrl + 'Lunch/LunchDropdownList');
 
 }
 }

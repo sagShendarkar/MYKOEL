@@ -37,6 +37,7 @@ import { LUNCHComponent } from './components/canteen-menu/lunch/lunch.component'
 
 
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AddCanteenMenuComponent } from './components/canteen-menu/add-canteen-menu/add-canteen-menu.component';
 @NgModule({
   declarations: [
     CompanyAnnouncementComponent,
@@ -58,7 +59,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     QuickLinksListComponent,
     AddQuickLinksComponent,
     CanteenMenuComponent,
-    LUNCHComponent, BREAKFASTComponent
+    LUNCHComponent, BREAKFASTComponent, AddCanteenMenuComponent
   ],
   imports: [
     CommonModule,
